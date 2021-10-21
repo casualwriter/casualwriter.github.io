@@ -3,7 +3,7 @@
 
 ### Powerpage for Desktop Applications
 
-PowerPage is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
+[**PowerPage**](https://github.com/casualwriter/powerpage) is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
 
 Powerpage will connect to database, load startup page using Microsoft web-browser control (equivalent to IE11), and communicate 
 with html/js page by pb:// or ps:// protocol to provide below features
@@ -29,17 +29,17 @@ ps: due to the limitation of Microsoft web-browser control, Powerpage web browse
 
 ### Powerpage Markdown Editor
 
-``Powerpage Markdown Editor`` is a lightweight markdown editor using [**Powerpage**](https://github.com/casualwriter/powerpage) with 
+[**Powerpage Markdown EditorPowerPage**](https://github.com/casualwriter/powerpage-md-editor)`` is a lightweight markdown editor using **Powerpage** with 
  js library of [*simplemde-markdown-editor*](https://github.com/sparksuite/simplemde-markdown-editor). 
  
- It is a simple html/js application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage).
+ It is a simple javascript/html application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage).
  
 ![Powerpage Markdown Editor](pp-md-editor.jpg "width=80%")
 
 
 ### Powerpage Web Crawler
 
-``Powerpage Web Crawler`` is a portable lightweight web crawler using [**Powerpage**](https://github.com/casualwriter/powerpage). 
+[Powerpage Web Crawler](https://github.com/casualwriter/powerpage-web-crawler) is a portable lightweight web crawler using **Powerpage**.
  
 It is a simple html/js application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage). 
 
