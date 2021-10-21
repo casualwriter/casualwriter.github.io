@@ -543,57 +543,59 @@ should be unordered list
 <table border=1><tr><th>Markdown<th>HTML</tr>
 <tr><td>
 ~~~
-* Link to 
- [google](https://google.com)
-* Link with title 
- [youtube](https://youtube.com "google")
-* url text as link <https://youtube.com> 
+* Link to [google](https://google.com)
+* Link with title [youtube](https://youtube.com "google")
+* Link in new tab [google](https://google.com "new")
+* quick link: <https://youtube.com> 
+* direct link: https://youtube.com   
 * link as text [https://youtube.com]() 
 
 * Show Image 
-  ![Powerpage Document](powerpage.gif)
+  ![Powerpage Document](pp-web-crawler.jpg)
        
-* Show Image with additional options (width=380px or 300px+border)
+* Show Image with options (width=380px or style="width:70%")
 
-  ![Powerpage Document](powerpage.gif "width=380px")
+  ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](powerpage.gif "width=300px; style='border:1px solid red'")     
+  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
 ~~~
 
 <td><xmp>
-* Link to 
- [google](https://google.com)
-* Link with title 
- [youtube](https://youtube.com "google")
-* url text as link <https://youtube.com> 
+* Link to [google](https://google.com)
+* Link with title [youtube](https://youtube.com "google")
+* Link in new tab [google](https://google.com "new")
+* quick link: <https://youtube.com> 
+* direct link: https://youtube.com   
 * link as text [https://youtube.com]() 
 
 * Show Image 
-  ![Powerpage Document](powerpage.gif)
+  ![Powerpage Document](pp-web-crawler.jpg)
        
-* Show Image with additional options (width=380px or 300px+border)
+* Show Image with options (width=380px or style="width:70%")
 
-  ![Powerpage Document](powerpage.gif "width=380px")
+  ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](powerpage.gif "width=300px; style='border:1px solid red'")     
+  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
 </xmp><td>
 </tr></table>
 
-** Rendered Layout **
+ **Rendered Layout**
 
 * Link to [google](https://google.com)
 * Link with title [youtube](https://youtube.com "google")
-* url text as link <https://youtube.com> 
+* Link in new tab [google](https://google.com "new")
+* quick link: <https://youtube.com> 
+* direct link: https://youtube.com   
 * link as text [https://youtube.com]() 
 
 * Show Image 
-  ![Powerpage Document](powerpage.gif)
+  ![Powerpage Document](pp-web-crawler.jpg)
        
-* Show Image with additional options (width=380px or 300px+border)
+* Show Image with options (width=380px or style="width:70%")
 
-  ![Powerpage Document](powerpage.gif "width=380px")
+  ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](powerpage.gif "width=300px; style='border:1px solid red'")     
+  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
   
    
 ### Escaping Characters
