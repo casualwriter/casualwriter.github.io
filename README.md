@@ -29,15 +29,73 @@ ps: due to the limitation of Microsoft web-browser control, Powerpage web browse
 
 ### Powerpage Markdown Editor
 
+``Powerpage Markdown Editor`` is a lightweight markdown editor using [**Powerpage**](https://github.com/casualwriter/powerpage) with 
+ js library of [*simplemde-markdown-editor*](https://github.com/sparksuite/simplemde-markdown-editor). 
+ 
+ It is a simple html/js application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage).
+ 
+![Powerpage Markdown Editor](pp-md-editor.jpg "width=80%")
+
+
 ### Powerpage Web Crawler
+
+``Powerpage Web Crawler`` is a portable lightweight web crawler using [**Powerpage**](https://github.com/casualwriter/powerpage). 
+ 
+It is a simple html/js application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage). 
+
+Powerpage Web Crawler (v0.60) is powerful and easy-to-use web scrawler suitable for blog site crawling and offline-reading. 
+
+Just simply define below
+
+* base-url := the home page of favor blog site
+* index-pattern := RegExp of the url pattern of category page
+* page-pattern := RegExp of the url pattern of category page
+* content-css := css selector for blog content 
+
+Program will
+ 
+* crawl all category page.
+* find out all url of content pages. 
+* crawl content for one page, or all pages. 
+* save setting and links ato database (support multiple sites)
+* save content pages to local files.
+* off-line reading from local files.
+
 
 ### Powerpage Markdown Documents
 
+[powerpage-md-documents](https://github.com/casualwriter/powerpage-md-document/) is a simple document framework to present documents from markdown (e.g. github md file). 
+
+
+#### Motivation
+
+Documentation is always a boring job for developer. When working on the document of [Powerpage](https://github.com/casualwriter/powerpage), 
+There are some markdown files composed for github (e.g. README.md). Wanna to setup a document framewok to serve the following purpose by 
+**same copy** of markdown files.
+
+* use **github** to edit/show document (by markdown)
+* show in **web site** by copy markdown files to web hosting.
+* call within powerpage with API enabled.
+
+#### Deployment
+
+the program, is a simple javascript/html/css page in **pure javascript without any dependancy**.
+
+Simply edit or submit markdown files to github, the documentation is already available by using CDN
+
+* github raw: [https://github.com/casualwriter/powerpage/tree/main/source/doc]()
+* github page: https://casualwriter.github.io/powerpage
+* via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
+* via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
+
+
 ### Powerpage Report Utility
+
+To be development
 
 ### Powerpage Markdown Parser
 
-
+Will substract the program from 
 
 ## Misc Projects
 
@@ -70,5 +128,10 @@ Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
 
 ## History and Activities
 
+* 2021/05/07, [Powerpage](https://github.com/casualwriter/powerpage) first release, beta version, v0.41 
+* 2021/05/14, Release Powerpage Markdown Editor. [powerpage-md-editor](https://github.com/casualwriter/powerpage-md-editor)
+* 2021/07/02, Release Powerpage web Crawle. [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
+* 2021/10/06, code document framework. [powerpage-md-document](https://github.com/casualwriter/powerpage-md-document)
+* 2021/10/14, align powerpage packages to version, v0.60
 * 2021/10/21 setup github page
 
