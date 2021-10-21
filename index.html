@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>PowerPage</title>
+<title>Casualwriter</title>
 <style>
 html { box-sizing:border-box } *,*:before, *:after {box-sizing:inherit}
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
@@ -40,9 +40,9 @@ td    { border:1px solid grey;  padding:6px; }
 
 <body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
 <div id=header>
-  <span id=title>Powerpage <small>(documentation)</small></span>
+  <span id=title>casualwriter.github.io
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
+    <button onclick="loadMdFile( location.href.split('?file=')[1]||'README.md', this.innerText )">Home</button>
     <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
