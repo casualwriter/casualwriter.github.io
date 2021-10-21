@@ -1,6 +1,45 @@
-# casualwriter.github.io
 
-## Projects
+# Powerpage & Applications
+
+## Powerpage for Desktop Applications
+
+PowerPage is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
+
+Powerpage will connect to database, load startup page using Microsoft web-browser control (equivalent to IE11), and communicate 
+with html/js page by pb:// or ps:// protocol to provide below features
+
+* (Run) Call External Program
+* (File) Access file system
+* (DB) Database Accessibility
+* (PB) Call Powerbuilder Windows/Functions
+* (Misc) Global variables, sessions information
+
+#### Features
+
+* Portable solution. No installation
+* Single execute file. No deployment.
+* No dependance, pure js/html/css
+* Code-and-Play instantly
+* Make use of all javascript library (which support IE11)
+* Command Line for multiple purpose (e.g. save url page, generate PDF)
+* Work with Powerbuilder (e.g. call powerbuilder window/function/datawindow)
+
+ps: due to the limitation of Microsoft web-browser control, Powerpage web browser is equivalent to IE11 (not chrome)!
+
+
+## Powerpage Markdown Editor
+
+## Powerpage Web Crawler
+
+## Powerpage Markdown Documents
+
+## Powerpage Report Utility
+
+## Powerpage Markdown Parser
+
+
+
+## Misc Projects
 
 ### CalibriPage - simple PHP content server
 
@@ -28,35 +67,8 @@ Portable, no installation needed
 Simple SQL definition for general purpose
 Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
 
-### Powerpage - a lightweight browser for app dev by javascript/html/css
 
-PowerPage is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
+## History and Activities
 
-Powerpage will connect to database, load startup page using Microsoft web-browser control (equivalent to IE11), and communicate 
-with html/js page by pb:// or ps:// protocol to provide below features
-
-* (Run) Call External Program
-* (File) Access file system
-* (DB) Database Accessibility
-* (PB) Call Powerbuilder Windows/Functions
-* (Misc) Global variables, sessions information
-
-#### Features
-
-* Portable solution. No installation
-* Single execute file. No deployment.
-* No dependance, pure js/html/css
-* Code-and-Play instantly
-* Make use of all javascript library (which support IE11)
-* Command Line for multiple purpose (e.g. save url page, generate PDF)
-* Work with Powerbuilder (e.g. call powerbuilder window/function/datawindow)
-
-ps: due to the limitation of Microsoft web-browser control, Powerpage web browser is equivalent to IE11 (not chrome)!
-
-
-## Powerpage
-
-* powerpage-db-report
-* powerpage-md-parser
-* powerpage-md-parser
+* 2021/10/21 setup github page
 
