@@ -30,7 +30,6 @@ td    { border:1px solid grey;  padding:6px; }
 #right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
 
 @media print{
-  @page { size: A4 landscape; }
   #header, #left-panel { display:none!important }
   #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
 }
