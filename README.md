@@ -1,6 +1,7 @@
 
 ## Powerpage & Applications
-
+  
+---------------------------------------  
 ### Powerpage for Desktop Applications
 
 [**PowerPage**](https://github.com/casualwriter/powerpage) is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
@@ -27,8 +28,9 @@ with html/js page by pb:// or ps:// protocol to provide below features
 * Work with Powerbuilder (e.g. call powerbuilder window/function/datawindow)
 
 ps: due to the limitation of Microsoft web-browser control, Powerpage web browser is equivalent to IE11 (not chrome)!
-
-
+  
+  
+---------------------------------------  
 ### Powerpage Markdown Editor
 
 [**Powerpage Markdown EditorPowerPage**](https://github.com/casualwriter/powerpage-md-editor)`` is a lightweight markdown editor using **Powerpage** with 
@@ -37,8 +39,9 @@ ps: due to the limitation of Microsoft web-browser control, Powerpage web browse
  It is a simple javascript/html application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage).
  
 ![Powerpage Markdown Editor](powerpage/pp-md-editor.jpg "width=80%")
-
-
+  
+  
+---------------------------------------  
 ### Powerpage Web Crawler
 
 [Powerpage Web Crawler](https://github.com/casualwriter/powerpage-web-crawler) is a portable lightweight web crawler using **Powerpage**.
@@ -65,7 +68,8 @@ Program will
 * save content pages to local files.
 * off-line reading from local files.
 
-
+  
+---------------------------------------  
 ### Powerpage Markdown Documents
 
 [powerpage-md-documents](https://github.com/casualwriter/powerpage-md-document/) is a simple document framework to present documents from markdown (e.g. github md file). 
@@ -92,19 +96,24 @@ Simply edit or submit markdown files to github, the documentation is already ava
 * github page: https://casualwriter.github.io/powerpage
 * via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
 * via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
-
-
+  
+  
+---------------------------------------  
 ### Powerpage Report Utility
 
 To be development
-
+  
+  
+---------------------------------------  
 ### Powerpage Markdown Parser
 
 Will substract the program from https://github.com/casualwriter/powerpage-md-document/blob/main/source/index.html
 
 
+  
 ## Misc Projects
-
+   
+---------------------------------------
 ### CalibriPage - simple PHP content server
 
 calibrePage is simple PHP content server for calibre.
@@ -120,7 +129,9 @@ It is a single file in very simple PHP coding, provides the following features
 * Search book by keyword
 * show details of selected books
 * download books
-
+  
+  
+---------------------------------------  
 ### Simple Node Web-Service
 
 node-simple-ws is simple web-service program for general data retrieval.
@@ -130,8 +141,9 @@ Self-contained, no depandence
 Portable, no installation needed
 Simple SQL definition for general purpose
 Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
-
-
+  
+  
+---------------------------------------  
 ## History and Activities
 
 * 2021/05/07, [Powerpage](https://github.com/casualwriter/powerpage) first release, beta version, v0.41 
@@ -139,5 +151,5 @@ Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
 * 2021/07/02, Release Powerpage web Crawle. [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
 * 2021/10/06, code document framework. [powerpage-md-document](https://github.com/casualwriter/powerpage-md-document)
 * 2021/10/14, align powerpage packages to version, v0.60
-* 2021/10/21 setup github page
+* 2021/10/21, setup github page. https://casualwriter.github.io/
 
