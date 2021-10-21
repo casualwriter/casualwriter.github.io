@@ -98,9 +98,9 @@ To be development
 Will substract the program from https://github.com/casualwriter/powerpage-md-document/blob/main/source/index.html
 
 
-# Misc Projects
+## Misc Projects
 
-## CalibriPage - simple PHP content server
+### CalibriPage - simple PHP content server
 
 calibrePage is simple PHP content server for calibre.
 
@@ -116,7 +116,7 @@ It is a single file in very simple PHP coding, provides the following features
 * show details of selected books
 * download books
 
-## Simple Node Web-Service
+### Simple Node Web-Service
 
 node-simple-ws is simple web-service program for general data retrieval.
 
