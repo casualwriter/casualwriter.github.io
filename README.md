@@ -83,7 +83,7 @@ the program, is a simple javascript/html/css page in **pure javascript without a
 
 Simply edit or submit markdown files to github, the documentation is already available by using CDN
 
-* github raw: [https://github.com/casualwriter/powerpage/tree/main/source/doc]()
+* github raw: https://github.com/casualwriter/powerpage/tree/main/source/doc
 * github page: https://casualwriter.github.io/powerpage
 * via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
 * via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
