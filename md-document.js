@@ -1,51 +1,18 @@
 //######################################################################################
-// Program: Show document by markdown (for powerpage documentation, may run directly via CDN)  
-// Author: CK Hung
+// Program: Markdown parser for powerpage documentation 
+// Author: casualwriter
 // Github: https://github.com/casualwriter/powerpage-md-document
-//
-// This program may run directly via CDN service
-//
-//   github-page: https://casualwriter.github.io/
-//   RawGit:      https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
-//   gitHack:     https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
-//
-// Last update on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+// Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+//######################################################################################
+// simpleTOC( srcElementId, tocElementId, title, scrollspy )
+// simpleMarkdown ( mdText )
 //######################################################################################
 
-//=== toggle HTML in right-panel. (this is a hidden function for developer)
-function toggleHTML() {
-
-  var html = document.getElementById('right-panel').innerHTML
-  
-  if (html.substr(0,5)=='<xmp>') {
-     document.getElementById('right-panel').innerHTML = html.substr(5, html.length-11)
-  } else {
-     document.getElementById('right-panel').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'xmp&gt;') + '</xmp>' 
-  }
-    
-}
-
-//=== load and parser markdown file. 
-function loadMdFile( fname, title ) {
-
-  var xmlhttp = new XMLHttpRequest();
-  
-  xmlhttp.onload = function (e) {
-    document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
-    simpleTOC( title||fname )
-    if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
-  }
-  
-  xmlhttp.open("GET", fname , true)
-  xmlhttp.send();
-  
-}
-
 //=== simpleTOC: show Table of Content (updated on 2021/10/21)
-function simpleTOC( title, srcDiv, toDiv ) {
+function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
 
   // retrieve he,h3[,h4,h5] DOM elements
-  var toc = document.getElementById(srcDiv||'right-panel').querySelectorAll('h2,h3')
+  var toc = document.getElementById(srcDiv).querySelectorAll('h2,h3')
   var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
   
   for (var i=0; i<toc.length; i++ ) {
@@ -64,22 +31,23 @@ function simpleTOC( title, srcDiv, toDiv ) {
     
   }
   
-  document.getElementById(toDiv||'left-panel').innerHTML = html
-}
-
-//=== scrollspy feature  (updated on 2021/10/21)
-document.getElementById('right-panel').onscroll = function () {
-
-  // get links and get viewport position   
-  var list = document.getElementById('left-panel').querySelectorAll('li')
-  var divScroll = document.getElementById('right-panel').scrollTop - 10
-  var divHeight = document.getElementById('right-panel').offsetHeight
+  document.getElementById(tocDiv||'toc-panel').innerHTML = html 
   
-  // loop for each header element, highlight if within viewport
-  for (var i=0; i<list.length; i++) {
-    var div = document.getElementById( list[i].title.substr(1) )
-    var pos = (div? div.offsetTop - divScroll : 0 )  
-    list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+  //=== scrollspy := 'none | bold | style'  (updated on 2021/10/22)
+  if ( (scrollSpy||'bold') !== 'none' ) {
+    document.getElementById(srcDiv).onscroll = function () {
+      // get links and get viewport position   
+      var list = document.getElementById(tocDiv||'toc-panel').querySelectorAll('li')
+      var divScroll = document.getElementById(srcDiv).scrollTop - 10
+      var divHeight = document.getElementById(srcDiv).offsetHeight
+      
+      // loop for each header element, highlight if within viewport
+      for (var i=0; i<list.length; i++) {
+        var div = document.getElementById( list[i].title.substr(1) )
+        var pos = (div? div.offsetTop - divScroll : 0 )  
+        list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+      }
+    }
   }
   
 }
@@ -128,8 +96,7 @@ function simpleMarkdown(mdText) {
       // links syntax: [title](url) => <a href="url" title="title">text</a>          
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "new"\)/gm, '<a href="$2" target=_new>$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<a href="$2" title="$3">$1</a>')
-      //mdstr = mdstr.replace(/<http(.*?)\>/gm, '<a href="http$1">http$1</a>')
-      mdstr = mdstr.replace(/[<\s](http[s]\:\/\/.*?)[\s\>]/gm, '<a href="$1">$1</a>')
+      mdstr = mdstr.replace(/([<\s])(http[s]\:\/\/.*?)([\s\>])/gm, '$1<a href="$2">$2</a>$3')
       mdstr = mdstr.replace(/\[(.*?)\]\(\)/gm, '<a href="$1">$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>')
                 

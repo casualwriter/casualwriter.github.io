@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <title>Casualwriter</title>
 
-<link rel="stylesheet" href="https://casualwriter.github.io/md-document.css">
-<script src="https://casualwriter.github.io/md-document.js"></script>
+<link  href="md-document.css" rel="stylesheet">
+<script src="md-document.js"></script>
 
 <body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
 
@@ -21,10 +21,47 @@
 </div>
 
 <div id=content>
-  <div id="left-panel"></div>
-  <div id="right-panel"></div>
+  <div id="left-panel" style=""></div>
+  <div id="right-panel" style=""></div>
 </div>
 
 </body>
-
 </html>
+
+<script>
+//###########################################################################################
+// Program: Show document by markdown (for powerpage documentation, may run directly via CDN)  
+// Github: https://github.com/casualwriter/powerpage-md-document
+//
+// This program may run directly via CDN service
+//
+//   github-page: https://casualwriter.github.io/powerpage
+//   RawGit:      https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
+//   gitHack:     https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
+//###########################################################################################
+
+//=== toggle HTML in right-panel. (this is a hidden function for developer)
+function toggleHTML() {
+  var html = document.getElementById('right-panel').innerHTML
+  
+  if (html.substr(0,5)=='<xmp>') {
+     document.getElementById('right-panel').innerHTML = html.substr(5, html.length-11)
+  } else {
+     document.getElementById('right-panel').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'xmp&gt;') + '</xmp>' 
+  }
+}
+
+//=== load and parser markdown file. 
+function loadMdFile( fname, title ) {
+  var xmlhttp = new XMLHttpRequest();
+  
+  xmlhttp.onload = function (e) {
+    document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
+    simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
+    if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
+  }
+  
+  xmlhttp.open("GET", fname , true)
+  xmlhttp.send();
+}
+</script>

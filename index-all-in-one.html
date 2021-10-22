@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>PowerPage</title>
+<title>Casualwriter</title>
 <style>
 html { box-sizing:border-box } *,*:before, *:after {box-sizing:inherit}
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
@@ -21,7 +21,7 @@ table { margin:12px; border-collapse: collapse; }
 th    { border:1px solid grey; background:lightgrey; padding:6px; }
 td    { border:1px solid grey;  padding:6px; }
 
-#header { background-color:#58b; #695874; color:white; width:100%; height:50px; }
+#header { background-color:#695874; color:white; width:100%; height:50px; }
 #title 	{ float:left; font-size:18px; font-weight:700; padding:8px }
 #menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
 #menu button:hover, #menu a:hover { color:#000; background-color:#ccc }
@@ -33,50 +33,48 @@ td    { border:1px solid grey;  padding:6px; }
 #right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
 
 @media print{
-  ;@page { size: A4 landscape; }
   #header, #left-panel { display:none!important }
   #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
 }
 </style>
-
 <body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
-<div id=header>
-  <span id=title>Powerpage <small>(documentation)</small></span>
+
+<div id=header style="background:#58b;">
+
+  <span id=title>casualwriter.github.io</span>
+
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
-    <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
-    <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
-    <button onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</button>
-    <button onclick="loadMdFile( 'pp-md-editor.md', this.innerText )">Markdown Editor</button>
-    <button onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )">Web Crawler</button>
+    <button onclick="loadMdFile( location.href.split('?file=')[1]||'README.md', this.innerText )">Home</button>
+    <a href="./powerpage">Powerpage</a>
+    <button disabled>Campo</button> 
+    <button disabled>Misc</button> 
     <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
 </div>
+
 <div id=content>
-  <div id="left-panel"></div>
-  <div id="right-panel"></div>
+  <div id="left-panel" style=""></div>
+  <div id="right-panel" style=""></div>
 </div>
+
 </body>
+</html>
 
 <script>
-//######################################################################################
+//###########################################################################################
 // Program: Show document by markdown (for powerpage documentation, may run directly via CDN)  
-// Author: CK Hung
 // Github: https://github.com/casualwriter/powerpage-md-document
 //
 // This program may run directly via CDN service
 //
-//   github-page: https://casualwriter.github.io/
+//   github-page: https://casualwriter.github.io/powerpage
 //   RawGit:      https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
 //   gitHack:     https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
-//
-// Last update on 2021/10/21, v0.66, minor fix on markdown parser, TOC
-//######################################################################################
+//###########################################################################################
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
 function toggleHTML() {
-
   var html = document.getElementById('right-panel').innerHTML
   
   if (html.substr(0,5)=='<xmp>') {
@@ -84,30 +82,37 @@ function toggleHTML() {
   } else {
      document.getElementById('right-panel').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'xmp&gt;') + '</xmp>' 
   }
-    
 }
 
 //=== load and parser markdown file. 
 function loadMdFile( fname, title ) {
-
   var xmlhttp = new XMLHttpRequest();
   
   xmlhttp.onload = function (e) {
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
-    simpleTOC( title||fname )
+    simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
   }
   
   xmlhttp.open("GET", fname , true)
   xmlhttp.send();
-  
 }
 
+//######################################################################################
+// Program: Markdown parser for powerpage documentation 
+// Author: casualwriter
+// Github: https://github.com/casualwriter/powerpage-md-document
+// Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+//######################################################################################
+// simpleTOC( srcElementId, tocElementId, title, scrollspy )
+// simpleMarkdown ( mdText )
+//######################################################################################
+
 //=== simpleTOC: show Table of Content (updated on 2021/10/21)
-function simpleTOC( title, srcDiv, toDiv ) {
+function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
 
   // retrieve he,h3[,h4,h5] DOM elements
-  var toc = document.getElementById(srcDiv||'right-panel').querySelectorAll('h2,h3')
+  var toc = document.getElementById(srcDiv).querySelectorAll('h2,h3')
   var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
   
   for (var i=0; i<toc.length; i++ ) {
@@ -126,22 +131,23 @@ function simpleTOC( title, srcDiv, toDiv ) {
     
   }
   
-  document.getElementById(toDiv||'left-panel').innerHTML = html
-}
-
-//=== scrollspy feature  (updated on 2021/10/21)
-document.getElementById('right-panel').onscroll = function () {
-
-  // get links and get viewport position   
-  var list = document.getElementById('left-panel').querySelectorAll('li')
-  var divScroll = document.getElementById('right-panel').scrollTop - 10
-  var divHeight = document.getElementById('right-panel').offsetHeight
+  document.getElementById(tocDiv||'toc-panel').innerHTML = html 
   
-  // loop for each header element, highlight if within viewport
-  for (var i=0; i<list.length; i++) {
-    var div = document.getElementById( list[i].title.substr(1) )
-    var pos = (div? div.offsetTop - divScroll : 0 )  
-    list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+  //=== scrollspy := 'none | bold | style'  (updated on 2021/10/22)
+  if ( (scrollSpy||'bold') !== 'none' ) {
+    document.getElementById(srcDiv).onscroll = function () {
+      // get links and get viewport position   
+      var list = document.getElementById(tocDiv||'toc-panel').querySelectorAll('li')
+      var divScroll = document.getElementById(srcDiv).scrollTop - 10
+      var divHeight = document.getElementById(srcDiv).offsetHeight
+      
+      // loop for each header element, highlight if within viewport
+      for (var i=0; i<list.length; i++) {
+        var div = document.getElementById( list[i].title.substr(1) )
+        var pos = (div? div.offsetTop - divScroll : 0 )  
+        list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+      }
+    }
   }
   
 }
@@ -190,8 +196,7 @@ function simpleMarkdown(mdText) {
       // links syntax: [title](url) => <a href="url" title="title">text</a>          
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "new"\)/gm, '<a href="$2" target=_new>$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<a href="$2" title="$3">$1</a>')
-      //mdstr = mdstr.replace(/<http(.*?)\>/gm, '<a href="http$1">http$1</a>')
-      mdstr = mdstr.replace(/[<\s](http[s]\:\/\/.*?)[\s\>]/gm, '<a href="$1">$1</a>')
+      mdstr = mdstr.replace(/([<\s])(http[s]\:\/\/.*?)([\s\>])/gm, '$1<a href="$2">$2</a>$3')
       mdstr = mdstr.replace(/\[(.*?)\]\(\)/gm, '<a href="$1">$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>')
                 

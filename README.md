@@ -44,7 +44,7 @@ ps: due to the limitation of Microsoft web-browser control, Powerpage web browse
 ---------------------------------------  
 ### Powerpage Web Crawler
 
-[Powerpage Web Crawler](https://github.com/casualwriter/powerpage-web-crawler) is a portable lightweight web crawler using **Powerpage**.
+[**Powerpage Web Crawler**](https://github.com/casualwriter/powerpage-web-crawler) is a portable lightweight web crawler using **Powerpage**.
  
 It is a simple html/js application demonstrating developing application using [Powerpage](https://github.com/casualwriter/powerpage). 
 
@@ -72,40 +72,42 @@ Program will
 ---------------------------------------  
 ### Powerpage Markdown Documents
 
-[powerpage-md-documents](https://github.com/casualwriter/powerpage-md-document/) is a simple document framework to present documents from markdown (e.g. github md file). 
+[**powerpage-md-documents**](https://github.com/casualwriter/powerpage-md-document/) is a simple document framework to present documents from markdown (e.g. github md file). 
 
 ![Powerpage Markdown Document](powerpage/pp-md-document.gif "width=80%")
 
 #### Motivation
 
 Documentation is always a boring job for developer. When working on the document of [Powerpage](https://github.com/casualwriter/powerpage), 
-There are some markdown files composed for github (e.g. README.md). Wanna to setup a document framewok to serve the following purpose by 
+There are some markdown files composed for github (e.g. README.md). Wanna to setup a document framework to serve multiple purposes by 
 **same copy** of markdown files.
 
-* use **github** to edit/show document (by markdown)
-* show in **web site** by copy markdown files to web hosting.
-* call within powerpage with API enabled.
+* use **github** to edit/show document (git markdown layout)
+* show in **web site** by copy markdown files to web hosting (web page).
+* call within Powerpage with API enabled .
 
 #### Solution
 
-the program, is a simple javascript/html/css page in **pure javascript without any dependancy**.
+A simple javascript/html/css page works fine for above purposes, in **pure javascript without any dependancy**.
 
 Simply edit or submit markdown files to github, the documentation is already available by using CDN
 
-* github raw: https://github.com/casualwriter/powerpage/tree/main/source/doc
-* github page: https://casualwriter.github.io/powerpage
-* via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
-* via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
+* github raw: https://github.com/casualwriter/powerpage/tree/main/source/doc 
+* github page: https://casualwriter.github.io/powerpage 
+* via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html 
+* via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html 
   
   
 ---------------------------------------  
 ### Powerpage Report Utility
 
-To be development
+coding, coming soon...
   
   
 ---------------------------------------  
 ### Powerpage Markdown Parser
+
+coming soon...
 
 Will substract the program from https://github.com/casualwriter/powerpage-md-document/blob/main/source/index.html
 
@@ -122,7 +124,7 @@ calibrePage is simple PHP content server for calibre.
 * Self-contained, no depandence
 * Responsive design, fit for mobile and desktop
 
-It is a single file in very simple PHP coding, provides the following features
+It is a single PHP program in beginner coding style, provides the following features
 
 * List latest books
 * List books by labels, author or publisher
@@ -136,11 +138,11 @@ It is a single file in very simple PHP coding, provides the following features
 
 node-simple-ws is simple web-service program for general data retrieval.
 
-Single js file in about 60 lines code.
-Self-contained, no depandence
-Portable, no installation needed
-Simple SQL definition for general purpose
-Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
+* Single js file in about 60 lines code.
+* Self-contained, no depandence
+* Portable, no installation needed
+* Simple SQL definition for general purpose
+* Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
   
   
 ---------------------------------------  
