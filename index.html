@@ -4,14 +4,15 @@
 <link  href="md-document.css" rel="stylesheet">
 <script src="md-document.js"></script>
 
-<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
+<body onload="loadMdFile( location.href.split('?file=')[1]||'index.md', '<b>Home</b>' )">
 
 <div id=header style="background:#58b;">
 
   <span id=title>casualwriter.github.io</span>
 
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile( location.href.split('?file=')[1]||'README.md', this.innerText )">Home</button>
+    <button onclick="loadMdFile( location.href.split('?file=')[1]||'index.md', this.innerText )">Home</button>
+    <a href="./blog">Blog</a>
     <a href="./powerpage">Powerpage</a>
     <button disabled>Campo</button> 
     <button disabled>Misc</button> 
