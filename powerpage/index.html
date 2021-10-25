@@ -24,7 +24,7 @@ td    { border:1px solid grey;  padding:6px; }
 
 #header { background-color:#695874; color:white; width:100%; height:50px; }
 #title 	{ float:left; font-size:18px; font-weight:700; padding:8px }
-#menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
+#menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit!important; }
 #menu button:hover, #menu a:hover { color:#000; background-color:#ccc }
 #menu button:disabled {cursor:not-allowed; opacity:0.5}: disabled *{pointer-events:none}
 #toc          { list-style-type:none; padding:0; margin:0 }
@@ -47,13 +47,13 @@ td    { border:1px solid grey;  padding:6px; }
   
   <span id=menu style="float:right; padding:12px">
     <a href="../index.html">Home</a>
-    <button onclick="loadMdFile( 'README.md', this.innerText )">README</button>
-    <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
-    <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
-    <button onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</button>
-    <button onclick="loadMdFile( 'pp-md-editor.md', this.innerText )">Markdown Editor</button>
-    <button onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )">Web Crawler</button>
-    <button onclick="window.print()">Print</button> 
+    <a href=# onclick="loadMdFile( 'README.md', this.innerText )">README</a>
+    <a href=# onclick="loadMdFile( 'interface.md', this.innerText )">API</a>
+    <a href=# onclick="loadMdFile( 'development.md', this.innerHTML )">Development</a>
+    <a href=# onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</a>
+    <a href=# onclick="loadMdFile( 'pp-md-editor.md', this.innerText )">Markdown Editor</a>
+    <a href=# onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )">Web Crawler</a>
+    <a href=# onclick="window.print()">Print</a> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
   

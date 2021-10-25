@@ -121,6 +121,17 @@ height= window-height
 ~~~
 
 -------------------------------------------------------------------
+## Mini Buttons
+
+* [A] - About dialog
+* [B] - goback()
+* [C] - Console
+* [E] - Edit
+* [R] - Reload page
+* [W] - Openin web browser
+
+
+-------------------------------------------------------------------
 ## Samples
 
 Several sample applications are provided to demonstrated the powerpage application:
