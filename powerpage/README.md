@@ -53,8 +53,6 @@ Powerpage is a single executable program. No installation is needed, just downlo
 
 ### Files & Applications
 
-Powerpage is developed by Powerbuilder 10.5, source code is powerpage.pbl  
-
 * ``powerpage.exe`` is the executable file of powerpage. (single executable file)
 * ``powerpage.html`` is the startup html file (i.e. javascript/html application)
 * ``powerpage.ini`` is the config file for DB connection and misc setup
@@ -63,10 +61,12 @@ Powerpage is developed by Powerbuilder 10.5, source code is powerpage.pbl
 
 **Source code**
 
-* `powerpage.pbl` is powerbuilder source code (only one file)
-* `powerpage.pbt` is powerbuilder project target
-* exported source entries can be found under folder `src\*`
-* to compile the program, add `powerpage.pbt` in workspace, and compile by `p_powerpage` 
+Powerpage is developed by Powerbuilder 10.5, source code is powerpage.pbl (only one file)  
+
+* `powerpage.pbl` is powerbuilder source code 
+* `powerpage.pbt` is powerbuilder target file
+* exported source entries can be found under folder [src\*](https://github.com/casualwriter/powerpage/tree/main/source/src)
+* to compile the program, add `powerpage.pbt` to workspace, and compile by `p_powerpage` 
 
 **Applications**
 
@@ -171,7 +171,7 @@ Powerpage is released with some sample applications.
 * 2021/10/14, v0.60, align all version (powerpage-md-editor,powerpage-web-crawler) to v0.60
 * 2021/10/15, v0.61, support commandline option: /select={selector}
 * 2021/10/20, v0.62, minor fix of markdown parser; show [system document](https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html) directly from github  
-* 2021/11/02, v0.63, update pb source \src\*.*; remove local document \doc\*.*, host in [github-page](https://casualwriter.github.io/powerpage) now.
+* 2021/11/02, v0.63, update pb source \src\*.*; remove local documents, host in [github-page](https://casualwriter.github.io/powerpage) now.
  
 
 ## To-Do List

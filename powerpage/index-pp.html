@@ -81,7 +81,7 @@ td    { border:1px solid grey;  padding:6px; }
 var sql1 = "SELECT * from Products where SupplierID=20";
 var sql2 = "SELECT * from Customers where City='London' ";
 var sql3 = "UPDATE Products set UnitsOnOrder = UnitsOnOrder + 1 where SupplierID=20 ";
-var keys = 'js=mycallback/run=notepad.exe/title=Untitled - Notepad/ms=500/test/ms=300/{bs}/ms=300/123/ms=500/456/~new line'
+var keys = 'run=notepad.exe/title=Untitled - Notepad/ms=500/test/ms=300/{bs}/ms=300/123/ms=500/456/~new line'
 
 //=== onCallback will be called if no callback specified. set default callback for type=json/table/sql/file/dir
 function onCallback(result, type, url) {
@@ -92,7 +92,8 @@ function onCallback(result, type, url) {
 
 //=== enable powerpage API call with document. ie. pb://..
 function markupForPowerpage() {
-  text = document.getElementById('right-panel').innerHTML
+  var text = document.getElementById('right-panel').innerHTML
+
   // special handling for github (call chrome for github.com as not support IE11)
   text = text.replace(/<a href="https:\/\/github/g,'<a href="pb://shell/file=chrome.exe,parm=https://github')
   
@@ -100,9 +101,9 @@ function markupForPowerpage() {
   text = text.replace(/<a href="(.*?).md"/gim,'<a href="javascript:loadMdFile(\'$1.md\',\'$1\')"')
   
   // call pb.function for API
-  text = text.replace(/<code\>javascript:(.*?)<\/code\>/gm,'<code><a href="javascript:$1">javascript:$1</a></code>')
-  text = text.replace(/<code\>pb:\/\/(.*?)<\/code\>/gm,'<code><a href="pb://$1">pb://$1</a></code>')
-  text = text.replace(/<code\>ps:\/\/(.*?)<\/code\>/gm,'<code><a href="ps://$1">ps://$1</a></code>')
+  text = text.replace(/<code\>javascript:(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="javascript:$1">javascript:$1</a></code>')
+  text = text.replace(/<code\>pb:\/\/(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="pb://$1">pb://$1</a></code>')
+  text = text.replace(/<code\>ps:\/\/(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="ps://$1">ps://$1</a></code>')
   document.getElementById('right-panel').innerHTML = text
 } 
 //==================== END of script for powerpage.exe =========================================

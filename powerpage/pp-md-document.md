@@ -27,7 +27,7 @@ it will do the following
 3. show in right-panel with TOC+scrollspy by js function `simpleTOC( srcDIV, toDiv, title )`
 
 
-### User Guide
+### Usage Guide
 
 Please direct modify index.html to link up the top-menu to your markdown files
  
@@ -644,3 +644,4 @@ however, be aware compatibility issue if document will be parsed by other parser
 * 2021/10/11, v0.63, rewrite code-block, highlight remarks and keywords 
 * 2021/10/12, v0.64, support table syntax 
 * 2021/10/20, v0.66, minor fixes. support nested unordered list. 
+* 2021/11/02, v0.67, remove local document, hosted on github-page now. 
