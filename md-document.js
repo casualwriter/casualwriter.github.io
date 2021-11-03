@@ -1,6 +1,6 @@
 //######################################################################################
 // Program: Markdown parser for powerpage documentation 
-// Author: casualwriter
+// Author: CK Hung
 // Github: https://github.com/casualwriter/powerpage-md-document
 // Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
 //######################################################################################
@@ -52,7 +52,7 @@ function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
   
 }
 
-//=== simple markdown parser (updated on 2021/10/21, v0.67, minor fix)
+//=== simple markdown parser (updated on 2021/11/03, v0.68, minor fix)
 function simpleMarkdown(mdText) {
 
   // function for REGEXP to convert html tag. ie. <TAG> => &lt;TAG*gt;  
@@ -60,14 +60,18 @@ function simpleMarkdown(mdText) {
   
   // function for REGEXP to format code-block, highlight remarks/keywords 
   var formatCode = function(m,p1,p2){
-    p2 = p2.replace(/</g,'&lt;').replace(/\>/g,'&gt;').replace(/\/\/(.*)$/gm,'<rem>//$1</rem>')   
-    p2 = p2.replace(/(function |return |var |let |const |else |if |for |while |continue |break |case |switch )/gim,'<b>$1</b>')
+    p2 = p2.replace(/</g,'&lt;').replace(/\>/g,'&gt;').replace(/\t/g,'   ')
+    p2 = p2.replace(/^\/\/(.*)/gm,'<rem>//$1</rem>').replace(/\s\/\/(.*)/gm,' <rem>//$1</rem>')   
+    p2 = p2.replace(/(\s)(function|return|var|let|const|if|then|else|elseif|end|for|next|do|while|loop|continue|break|case|switch|try|catch|finally)(\s)/gim,'$1<b>$2</b>$3')
     return '<pre title="' + p1 + '"><code>'  + p2 + '</code></pre>'
   }
 
   // function to convert mdString into HTML string  
   var formatMD = function( mdstr ) {
   
+      // horizontal rule => <hr> 
+      mdstr = mdstr.replace(/^-{3,}|^\_{3,}|^\*{3,}$/gm, '<hr>').replace(/\n\n<hr\>/g, '\n<br><hr>')
+
       // header => <h1>..<h5> 
       mdstr = mdstr.replace(/^##### (.*?)\s*#*$/gm, '<h5>$1</h5>')
                 .replace(/^#### (.*?)\s*#*$/gm, '<h4>$1</h4>')
@@ -75,9 +79,6 @@ function simpleMarkdown(mdText) {
                 .replace(/^## (.*?)\s*#*$/gm, '<h2>$1</h2>')
                 .replace(/^# (.*?)\s*#*$/gm, '<h1>$1</h1>')
                 .replace(/^<h(\d)\>(.*?)\s*{(.*)}\s*<\/h\d\>$/gm, '<h$1 id="$3">$2</h$1>')
-                    
-      // horizontal rule => <hr> 
-      mdstr = mdstr.replace(/^-{3,}|^\_{3,}|^\*{3,}$/gm, '<hr/>')
       
       // inline code-block: `code-block` => <code>code-block</code>    
       mdstr = mdstr.replace(/``(.*?)``/gm, function(m,p){ return '<code>' + formatTag(p).replace(/`/g,'&#96;') + '</code>'} ) 
@@ -86,8 +87,8 @@ function simpleMarkdown(mdText) {
       // blockquote, max 2 levels => <blockquote>{text}</blockquote>
       mdstr = mdstr.replace(/^\>\> (.*$)/gm, '<blockquote><blockquote>$1</blockquote></blockquote>')
       mdstr = mdstr.replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
-      mdstr = mdstr.replace(/<\/blockquote\>\n<blockquote\>/g, '\n' )
       mdstr = mdstr.replace(/<\/blockquote\>\n<blockquote\>/g, '\n<br>' )
+      mdstr = mdstr.replace(/<\/blockquote\>\n<br\><blockquote\>/g, '\n<br>' )
                 
       // image syntax: ![title](url) => <img alt="title" src="url" />          
       mdstr = mdstr.replace(/!\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<img alt="$1" src="$2" $3 />')
@@ -117,7 +118,6 @@ function simpleMarkdown(mdText) {
       // mdstr = mdstr.replace(/_(\w.*?[^\\])_/gm, '<u>$1</u>')  // NOT support!! 
       mdstr = mdstr.replace(/~~(\w.*?)~~/gm, '<del>$1</del>')
       mdstr = mdstr.replace(/\^\^(\w.*?)\^\^/gm, '<ins>$1</ins>')
-      mdstr = mdstr.replace(/\{\{(\w.*?)\}\}/gm, '<mark>$1</mark>')
                 
       // table syntax
       mdstr = mdstr.replace(/\n\|([\s\S]*)\|\s*\n\s*\n/g, function (m,p) {

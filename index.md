@@ -101,13 +101,13 @@ Simply edit or submit markdown files to github, the documentation is already ava
 ---------------------------------------  
 ### Powerpage Report Utility
 
-coding, coming soon...
+developing...
   
   
 ---------------------------------------  
 ### Powerpage Markdown Parser
 
-coming soon...
+developing...
 
 Will substract the program from https://github.com/casualwriter/powerpage-md-document/blob/main/source/index.html
 
@@ -154,4 +154,5 @@ node-simple-ws is simple web-service program for general data retrieval.
 * 2021/10/06, code document framework. [powerpage-md-document](https://github.com/casualwriter/powerpage-md-document)
 * 2021/10/14, align powerpage packages to version, v0.60
 * 2021/10/21, setup github page. https://casualwriter.github.io/
+* 2021/11/03, move/update document to github page. https://casualwriter.github.io/powerpage
 
