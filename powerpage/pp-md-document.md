@@ -521,7 +521,7 @@ should be unordered list
 
   ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
+  ![Powerpage Document](pp-md-editor.jpg "style='width:75%;border:1px solid red'")     
 ~~~
 
 <td><xmp>
