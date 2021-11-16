@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <title>Casualwriter</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link  href="md-document.css" rel="stylesheet">
 <script src="md-document.js"></script>
 
@@ -43,6 +43,7 @@
 //   gitHack:     https://raw.githack.com/casualwriter/powerpage-md-document/main/source/index.html
 //
 // Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+// Last updated on 2021/11/16, v0.67, support mobile. responsive css with touch support.
 //######################################################################################
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
@@ -65,6 +66,7 @@ function loadMdFile( fname, title ) {
     xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
 	  xhr.send();  
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
+    document.getElementById('right-panel').scrollTop = 0
     simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
   }
@@ -73,10 +75,31 @@ function loadMdFile( fname, title ) {
   xmlhttp.send();
 }
 
-// log leave time at unload event
-window.onbeforeunload = function() { 
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open( 'get', 'https://blog.campodesktop.com/action.php?a=leave&p='+location.href, true);
-	xmlhttp.send(); 
-};
+// touch event for mobile (swipe to show/hide right-panel)
+if (window.innerWidth<900) {
+
+  function toggleTOC(show) {
+    var disp = document.getElementById('left-panel').style.display
+    document.getElementById('left-panel').style.display = show||(disp=='none')? 'block' : 'none'
+    document.getElementById('right-panel').style.display = show||(disp=='none')? 'none' : 'block' 
+  }
+  
+  window.addEventListener( 'touchstart', function(e) { document.touch=e.changedTouches[0] } )
+  
+  window.addEventListener( 'touchend', function(e) { 
+  	 var distX = e.changedTouches[0].clientX - document.touch.clientX
+  	 var distY = e.changedTouches[0].clientY - document.touch.clientY
+  	 if ( Math.abs(distY) < 15 && distX > 30 ) {
+  			e.preventDefault(); 
+        toggleTOC(true)
+  	 } else if ( Math.abs(distY) < 15 && distX < -20 ) {
+  			e.preventDefault(); 
+        toggleTOC(false) 
+  	 }
+    } );
+    
+    document.getElementById('left-panel').onclick = function() {toggleTOC(false)}
+    document.getElementById('title').onclick = function() {toggleTOC()} 
+}
+
 </script>

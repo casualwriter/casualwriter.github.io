@@ -4,17 +4,17 @@
 <link  href="../md-document.css" rel="stylesheet">
 <script src="../md-document.js"></script>
 
-<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
+<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md' )">
 <div id=header>
   <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
-    <a href="javascript:loadMdFile( 'README.md', this.innerText )">README</a>
-    <a href="javascript:loadMdFile( 'interface.md', this.innerText )">API</a>
-    <a href="javascript:loadMdFile( 'development.md', this.innerText )">Development</a>
-    <a href="javascript:loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</a>
-    <a href="javascript:loadMdFile( 'pp-md-editor.md', this.innerText )">Markdown Editor</a>
-    <a href="javascript:loadMdFile( 'pp-web-crawler.md', this.innerText )">Web Crawler</a>
-    <a href="javascript:window.print()">Print</a> 
+    <button onclick="loadMdFile( 'README.md', this.innerText )">README</button>
+    <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
+    <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
+    <button onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</button>
+    <button onclick="loadMdFile( 'pp-md-editor.md', this.innerText )">Markdown Editor</button>
+    <button onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )">Web Crawler</button>
+    <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
 </div>
@@ -80,9 +80,10 @@ function loadMdFile( fname, title ) {
   
   xmlhttp.onload = function (e) {
     var xhr = new XMLHttpRequest(); 
-    xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=powerpage&p='+location.href, true);
+    xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
 	  xhr.send();
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
+    document.getElementById('right-panel').scrollTop = 0
     if (pb) markupForPowerpage();
     simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') )

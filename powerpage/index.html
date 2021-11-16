@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <title>PowerPage</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link  href="../md-document.css" rel="stylesheet">
 <script src="../md-document.js"></script>
 
-<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
+<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md' )">
 <div id=header>
   <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
@@ -49,6 +49,7 @@ function loadMdFile( fname, title ) {
     xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
 	  xhr.send();
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
+    document.getElementById('right-panel').scrollTop = 0    
     simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') )
   }
@@ -63,4 +64,31 @@ window.onbeforeunload = function() {
 	xmlhttp.open( 'get', 'https://blog.campodesktop.com/action.php?a=leave&p='+location.href, true);
 	xmlhttp.send(); 
 };
+ 
+// touch event for mobile (swipe to show/hide right-panel)
+if (window.innerWidth<900) {
+
+  function toggleTOC(show) {
+    var disp = document.getElementById('left-panel').style.display
+    document.getElementById('left-panel').style.display = show||(disp=='none')? 'block' : 'none'
+    document.getElementById('right-panel').style.display = show||(disp=='none')? 'none' : 'block' 
+  }
+  
+  window.addEventListener( 'touchstart', function(e) { document.touch=e.changedTouches[0] } )
+  
+  window.addEventListener( 'touchend', function(e) { 
+  	 var distX = e.changedTouches[0].clientX - document.touch.clientX
+  	 var distY = e.changedTouches[0].clientY - document.touch.clientY
+  	 if ( Math.abs(distY) < 15 && distX > 30 ) {
+  			e.preventDefault(); 
+        toggleTOC(true)
+  	 } else if ( Math.abs(distY) < 15 && distX < -20 ) {
+  			e.preventDefault(); 
+        toggleTOC(false) 
+  	 }
+    } );
+    
+    document.getElementById('left-panel').onclick = function() {toggleTOC(false)}
+    document.getElementById('title').onclick = function() {toggleTOC()} 
+}
 </script>

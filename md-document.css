@@ -31,3 +31,14 @@ td    { border:1px solid grey;  padding:6px; }
   #header, #left-panel { display:none!important }
   #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
 }
+
+@media screen and (min-width: 600px) and (max-width: 900px){ 
+  #header { background-color:#695874; color:white; width:100%; height:80px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+}
+@media screen and (max-width: 600px) {
+  #header { background-color:#695874; color:white; width:100%; height:100px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
+}

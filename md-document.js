@@ -13,7 +13,7 @@ function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
 
   // retrieve he,h3[,h4,h5] DOM elements
   var toc = document.getElementById(srcDiv).querySelectorAll('h2,h3')
-  var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
+  var html = (title? '<h4> '+title+' </h4>':'') + '<ul id="toc">';
   
   for (var i=0; i<toc.length; i++ ) {
   
