@@ -65,16 +65,21 @@ function showList( yr ) {
   
   document.getElementById('left-panel').innerHTML = html + '</ul><div>'
   document.getElementById('hints').innerHTML = 'Total ' + document.querySelectorAll('li').length + ' Posts'
-  if (window.screen.width>700) document.querySelector('li').click()
+  if (window.innerWidth>700) document.querySelector('li').click()
 }
 
 //==== show post contents
 function showPost(n) {
   var key = document.getElementById('keyword').value
-  var html = '<h2>' + p[n].text.replace('\n\n', '</h2><small>Posted on ' + p[n].time + '</small><p>' )
+  var html = '<small>From <a target=_new href="'+ p[n].post_url + '">Facebook</a>, posted on ' + p[n].time + '</small>'
+  if ( p[n].image && p[n].image.indexOf('facebook.com')<0 ) {
+      html += '<img style="padding:20px; width:95%" src="' + p[n].image + '" />'
+  } 
+  html = '<h2>' + p[n].text.replace('\n\n', '</h2>' + html + '<p>'  )
   if (key) html = html.replace( new RegExp(key,'gim'),'<mark>$&</mark>')
+  
   document.getElementById('main').innerHTML = html.replace(/\n\n/g, '</p><p>').replace(/\n/g,'<br><br>')
-  if (window.screen.width<=700) {
+  if (window.innerWidth<=700) {
     document.getElementById('right-panel').style.display = 'block'
 	  history.pushState(null, null, '#nbb');
   } 
