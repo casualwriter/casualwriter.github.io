@@ -155,4 +155,5 @@ node-simple-ws is simple web-service program for general data retrieval.
 * 2021/10/14, align powerpage packages to version, v0.60
 * 2021/10/21, setup github page. https://casualwriter.github.io/
 * 2021/11/03, move/update document to github page. https://casualwriter.github.io/powerpage
+* 2022/03/08, update document of powerpage - interface. https://casualwriter.github.io/powerpage/?file=interface.md
 

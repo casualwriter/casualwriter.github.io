@@ -85,20 +85,6 @@ Prompt for confirmation, then run command
 * `javascript:pb.confirm('Open notepad?').run('notepad.exe')`
 * `pb://?Open notepad?/run/notepad.exe` 
 
-#### Source Code (powerbuilder)
-
-~~~ powerbuilder
-//=== powerbuilder.event titlechange()
-// handle prompt message
-if mid(text,4,4) = '///?' and pos(text,'?/',7) > 0 then	
-	if messagebox( 'Confirmation', mid( text, 8, pos(text,'?/',7) - 7 ), Question!, YesNo! ) <> 1 then 
-		return
-	else
-		text = left(text,5) + mid( text, pos(text,'?/',7) + 2 )
-	end if
-end if     
-~~~
- 
   
 -----------------------------------------------------------------------------------
 ### @js Variable Replacement
@@ -896,40 +882,149 @@ end if
           var3 = remarks: this is a test message
           var4 = user: { "id":"admin", "role":"admin", "group":"IT" } 
 
-to update session variables, may use protocol ``pb://session/remarks/new content`` or by javascript ``pb.session('remarks','new content')``   
+when page loaded, pb.session will be initialed as 
+
+          pb.session = { name: 'PowerPage', 
+                         version: 'version 0.38, updated on 2021/05/05',
+                         remarks: 'this is a test message', 
+                         user: { "id":"admin", "role":"admin", "group":"IT" } 
+                       }
+to retrieve session variables, may use `pb.session[{name}]` in javascript, or function ``pb.session({name})`` 
+ 
+to update session variables, may use protocol ``pb://session/remarks/new content`` or by javascript ``pb.session({name}, {new-value})``   
 
 
 -----------------------------------------------------
-### pb.popup(url,callback) 
+### pb.popup( url, callback) 
 
-Pop HTML Dialog within pwoerpage
+Pop HTML Dialog within powerpage
 
-To open url in popup dialog (share session info), use protocol ``pb://popup/height=400,url=dialog.html`` or javascript ``pb.popup('width=800,url=dialog.html')`` 
+#### Syntax
 
-To popup dialog with callback, by protocol ``pb://callback/mycallback/popup/height=400,url=dialog.html`` or 
-by javascript ``pb.popup('width=500,url=dialog.html','mycallback') or pb.callback('mycallback').popup('width=500,url=dialog.html')``
+* simple url := {link} 
+* complex url := height={height}, width={width}, top={top}, left={left}, url={link}, mode={modeOpts}
+* {modeOpts} := print | preview | crawl 
+* use alt. delimiter, e.g. `delim=| height={height} | width={width} | top={top} | left={left} | url={link} 
+* use alt. delimiter, e.g. `delim=| height={height} | width={width} | top={top} | left={left} | url={link}
+
+#### Samples
+
+* popup dialog by javascript, `javascript:pb.popup('width=800,url=pp-dialog.html')`
+* popup dialog by protocol, `pb://popup/height=400,url=pp-dialog.html` 
+* popup dialog with callback, by protocol ``pb://callback/mycallback/popup/height=400,url=pp-dialog.html`` or 
+* popup dialog with callback, ``javascript:pb.popup('width=500,url=pp-dialog.html','mycallback')``
+* popup dialog with callback, ``javascript:pb.callback('mycallback').popup('width=500,url=pp-dialog.html')``
+* popup dialog and print preview ``javascript:pb.popup('width=500,url=pp-dialog.html,mode=preview')``
 
 -----------------------------------------------------
+
 ### pb.print( opt, callback )
 
+Calling IE print functions. (i.e. print, preview, print immediately, print setup)
+
 * Print (default, with prompt) => ``pb://print`` or js ``pb.print()``
-* Print without prompt => ``pb://print.now`` or js ``pb.print('now')``
+* Print without prompt => ``pb://print/now`` or js ``pb.print('now')``
 * Print Preview => ``pb://print/preview`` or js ``pb.print('preview')`` 
 * Print Setup => ``pb://print/setup`` or js ``pb.print('setup')``
 
+-----------------------------------------------------
+### pb.pdf( opt, parm, callback ) {api-pdf} 
+
+Generate PDF from current html page, for preview or printing. 
+This function required `wkhtmltopdf.exe` as pdf-factory. 
+
+#### Syntax
+
+* protocol: ` pb://pdf/{optoins}/{querySelector} `
+* javascript: ` pb.pdf( {options}, {querySelector}, {callback})`
+* {options} := print | open | dialog | select
+
+#### Samples
+
+* print this document. ``javascript: pb.pdf('print')``
+* open this document in pdf-reader. ``javascript: pb.pdf('open')``
+* preview index. ``javascript: pb.pdf('dialog', 'h3, h4')``
+
+
+### Source Code (Powerbuilder)
+
+~~~ Powerbuilder
+//## pb://pdf, pb://pdf/print|open|dialog|divs/querySelector
+if is_type = 'pdf' then
+	
+	ls_opts = profilestring(gnv_app.is_ini, 'system', 'pdf-preview', 'width=1024,height=768')
+    ls_run = profilestring(gnv_app.is_ini, 'system', 'pdf-factory', 'wkhtmltopdf.exe')
+	 
+    ll_timeout = long( profilestring(gnv_app.is_ini, 'system', 'pdf-timeout', '10') )
+	 
+	if not fileexists(ls_run) then
+		event ue_pb_error( 'PDF factory not found.', is_command )
+		return '{"status":-1, "message":"PDF factory not found." } '
+	end if
+		
+	ll_file = fileopen( gnv_app.is_temp_file+'.html', LineMode!, Write!, LockWrite!, Replace!, EncodingUTF8! )
+	
+	if ll_file<=0 then 
+		event ue_pb_error( 'Canot open temp file for PDF generation.', is_command )
+		return '{"status":-2, "message":"Canot open temp file for PDF generation" } '
+	end if
+	
+	filewriteex( ll_file, of_get_html(ls_parm) )
+	fileclose(ll_file)
+
+	of_run_wait( ls_run +  '  ' + gnv_app.is_temp_file +'.html ' + gnv_app.is_temp_file + '.pdf', 0 )
+
+	filedelete( gnv_app.is_temp_file+ +'.html' )
+	
+	// open pdf file. 
+	if ls_name = 'print' then
+		ll_rtn = ShellExecute( handle(this), 'print',  gnv_app.is_temp_file+'.pdf', gnv_app.is_currentPath, ls_null, 1)
+	elseif ls_name = 'open' then
+		ll_rtn = ShellExecute( handle(this), 'open',  gnv_app.is_temp_file+'.pdf', gnv_app.is_currentPath, ls_null, 1)
+	elseif ls_name = 'dialog' then
+		ll_rtn = openwithparm( w_power_dialog, ls_opts + ',mode=print,url='+gnv_app.is_temp_file+'.pdf' )
+		filedelete( gnv_app.is_temp_file+ +'.pdf' )
+	else
+		ll_rtn = openwithparm( w_power_dialog, ls_opts + ',url='+gnv_app.is_temp_file+'.pdf' )
+		filedelete( gnv_app.is_temp_file+ +'.pdf' )
+	end if
+	
+	return '{"status":' + string(ll_rtn) + ' } '
+	
+end if
+~~~
 
 -----------------------------------------------------
-### pb.pdf( opt, parm, callback )  
+### pb.spider( url, key, callback )
 
+This function maily developed for [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler). 
 
------------------------------------------------------
-### pb.pdf( opt, parm, callback )  
+It will load url in a hidden browser, and calling pb.crawl() to return html result.
 
+~~~ powerpage.js
+// powerpage.js
+pb.crawl = function ( key ) {
+  var i, text='', html='', links=[], divs=[], url  
+  try {
+    divs = (key=='a'? document.getElementsByTagName('a') : document.querySelectorAll(key||'body'))
+    for (i=0; i<divs.length; i++) { 
+      text += divs[i].innerText + '\n'
+      html += divs[i].outerHTML + '\n'
+      if (typeof divs[i].href=="string") links.push( { url: decodeURI(divs[i].href), text:divs[i].innerText } );
+    }
+  } catch (e) {
+    html = text = 'Error: ' + e.message 
+  }   
+  return JSON.stringify( { url:location.href, title:document.title, text:text, html:html, links:links } )
+}
+~~~
 
------------------------------------------------------
-### pb.spider
+#### Samples
 
+* crawl goolge ``javascript:pb.spider('https://www.google.com/', '*', 'alert')``
+* crawl Powerpage document ``javascript:pb.spider('https://casualwriter.github.io/powerpage/', 'right-panel', 'alert')``
 
+ 
 -----------------------------------------------------
 ## Modification History
 
@@ -938,5 +1033,5 @@ by javascript ``pb.popup('width=500,url=dialog.html','mycallback') or pb.callbac
 * 2021/09/30  update document using markdown
 * 2021/10/05  update document (run/shell)
 * 2021/11/03  update document (db/file/pb functions)
-
-
+* 2022/03/08  update document (Misc Features)
+ 
