@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>顏純鈎</title>
+  <title>facebook</title>
   <meta http-equiv="x-ua-compatible" content="ie=9">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">        
@@ -28,11 +28,10 @@ button, input { font-family:calibri,arial; }
 </style>
 <body onload="showList()">
 <div id="header">
-  <div id="heading" style="float:left;font-size:14px;font-weight:bold">顏純鈎 (facebook posts)</div>
+  <div id="heading" style="float:left;font-size:14px;font-weight:bold">facebook backup</div>
   <div id="hints" style="float:left; margin:10px; font-size:9px; color:yellow">total 0 posts</div>
   <div id="top-right" style="float:right">
     <input id=keyword placeholder="keyword" size=10 onchange="showList()" /> 
-    <button onclick="showList('2022')">2022</button>
     <button onclick="showList('2021')">2021</button>
     <button onclick="showList('2020')">2020</button>
     <button onclick="showList('2019')">2019</button>
@@ -48,35 +47,48 @@ button, input { font-family:calibri,arial; }
 </div>
 </html>
 
-<script src="nganshunkau.js"></script>
 <script>
 //==== show list of posts
 function showList( yr ) {
   var key = document.getElementById('keyword').value
   var html = '<div><ul class=list>'
   
-  for (var i=0; i<p.length; i++) { 
-    if ( !yr || (p[i].time.substr(0,4)==yr) )
-      if ( !key ||  p[i].text.toLowerCase().indexOf(key.toLowerCase())>=0 ) { 
-        html += '<li onclick=showPost('+i+')><small>' + p[i].time.substr(0,10) + '</small> ';
-        html += p[i].text.substr( 0, p[i].text.indexOf('\n\n') ).replace( new RegExp(key,'gim'),'<mark>$&</mark>') + '</li>\n'
+  for (var i=0; i<posts.length; i++) { 
+    if ( !yr || (posts[i].time.substr(0,4)==yr) )
+      if ( !key ||  posts[i].text.toLowerCase().indexOf(key.toLowerCase())>=0 ) { 
+        html += '<li onclick="showPost('+i+')" title="#' + i + ': ' + posts[i].post_text
+        html += '"><small>' + posts[i].time.substr(0,10) + '</small> ';
+        html += postTitle(posts[i].text).replace( new RegExp(key,'gim'),'<mark>$&</mark>') + '</li>\n'
       }
   }
   
   document.getElementById('left-panel').innerHTML = html + '</ul><div>'
   document.getElementById('hints').innerHTML = 'Total ' + document.querySelectorAll('li').length + ' Posts'
   if (window.innerWidth>700) document.querySelector('li').click()
+
+  // set title
+  document.title = fbName
+  document.getElementById('heading').innerText = fbName + ' (fb:' + fbKey + ')'   
+}
+
+//==== get post title
+function postTitle(text) {
+  if ( text.substr( 0, text.indexOf('\n') ) =='YOUTUBE.COM' ) {
+    return 'youtube: ' + text.split('\n')[1] 
+  } else {
+    return text.substr( 0, text.indexOf('\n') )
+  }
 }
 
 //==== show post contents
 function showPost(n) {
   var key = document.getElementById('keyword').value
-  var html = '<small>From <a target=_new href="'+ p[n].post_url + '">Facebook</a>, posted on ' + p[n].time + '</small>'
-  if ( p[n].image && p[n].image.indexOf('facebook.com')<0 ) {
-      html += '<img style="padding:20px; width:95%" src="' + p[n].image + '" />'
-  } 
-  html = '<h2>' + p[n].text.replace('\n\n', '</h2>' + html + '<p>'  )
+  var html = '<small>From <a target=_new href="'+ posts[n].post_url + '">Facebook</a>, posted on ' + posts[n].time + '</small>'
+  html = '<h2>' + posts[n].text.replace('\n', '</h2>' + html + '<p>'  )
   if (key) html = html.replace( new RegExp(key,'gim'),'<mark>$&</mark>')
+  if ( posts[n].image && posts[n].image.indexOf('facebook.com')<0 ) {
+      html += '<img style="padding:20px; width:95%" src="' + posts[n].image + '" />'
+  } 
   
   document.getElementById('main').innerHTML = html.replace(/\n\n/g, '</p><p>').replace(/\n/g,'<br><br>')
   if (window.innerWidth<=700) {
@@ -94,6 +106,11 @@ window.addEventListener('popstate', function() {
 var filter, ftsize = 16
 document.getElementById('left-panel').style.height = (window.innerHeight - 50) + 'px' 
 document.getElementById('right-panel').style.height = (window.innerHeight - 50) + 'px' 
+
+// load script
+var script = document.createElement('script');
+script.src = (window.location.href.split('#')[1]||'nganshunkau')+'.js'
+document.head.appendChild(script);
 </script>
 </html>
 
