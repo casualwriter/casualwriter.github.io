@@ -54,11 +54,11 @@ function showList( yr ) {
   var html = '<div><ul class=list>'
   
   for (var i=0; i<posts.length; i++) { 
-    if ( !yr || (posts[i].time.substr(0,4)==yr) )
-      if ( !key ||  posts[i].text.toLowerCase().indexOf(key.toLowerCase())>=0 ) { 
+    if ( !yr || ((posts[i].time||'').substr(0,4)==yr) )
+      if ( !key ||  (posts[i].text||'').toLowerCase().indexOf(key.toLowerCase())>=0 ) { 
         html += '<li onclick="showPost('+i+')" title="#' + i + ': ' + posts[i].post_text
-        html += '"><small>' + posts[i].time.substr(0,10) + '</small> ';
-        html += postTitle(posts[i].text).replace( new RegExp(key,'gim'),'<mark>$&</mark>') + '</li>\n'
+        html += '"><small>' + (posts[i].time||'').substr(0,10) + '</small> ';
+        html += postTitle(posts[i].text||'').replace( new RegExp(key,'gim'),'<mark>$&</mark>') + '</li>\n'
       }
   }
   
@@ -96,6 +96,9 @@ function showPost(n) {
 	  history.pushState(null, null, '#nbb');
   } 
 }
+
+//==== simulate function in facebook-scraper.js, e.g. datetime.datetime(2022, 1, 9, 5, 30, 55)
+var datetime = { datetime: function (a,b,c,d,e,f) { return a + '/' + (b<10? '0':'')+b + '/' + (c<10?'0':'') + c + ' ' + d + ':' + e + (f? ':'+f: '') } }
 
 // back button for mobile
 window.addEventListener('popstate', function() {
