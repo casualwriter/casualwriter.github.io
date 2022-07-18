@@ -2,7 +2,7 @@
 // Program: Markdown parser for powerpage documentation 
 // Author: CK Hung
 // Github: https://github.com/casualwriter/powerpage-md-document
-// Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+// Last updated on 2022/07/18, v0.70, enhance table syntax
 //######################################################################################
 // simpleTOC( srcElementId, tocElementId, title, scrollspy )
 // simpleMarkdown ( mdText )
@@ -68,7 +68,13 @@ function simpleMarkdown(mdText) {
 
   // function to convert mdString into HTML string  
   var formatMD = function( mdstr ) {
-  
+      // table syntax
+      mdstr = mdstr.replace(/\n(.+?)\n.*?\-\-\|\-\-.*?\n([\s\S]*?)\n\s*?\n/g, function (m,p1,p2) {
+          var thead = '<thead>\n<tr><th>' + p1.replace(/\|/g,'<th>') + '</th></thead>'
+          var tbody = p2.replace(/(.+)/gm,'<tr><td>$1</td></tr>').replace(/\|/g,'<td>')
+          return '\n<table>' + thead + '\n<tbody>' + tbody + '\n</tbody></table>\n\n' 
+      } )  
+    
       // horizontal rule => <hr> 
       mdstr = mdstr.replace(/^-{3,}|^\_{3,}|^\*{3,}$/gm, '<hr>').replace(/\n\n<hr\>/g, '\n<br><hr>')
 
@@ -118,13 +124,6 @@ function simpleMarkdown(mdText) {
       // mdstr = mdstr.replace(/_(\w.*?[^\\])_/gm, '<u>$1</u>')  // NOT support!! 
       mdstr = mdstr.replace(/~~(\w.*?)~~/gm, '<del>$1</del>')
       mdstr = mdstr.replace(/\^\^(\w.*?)\^\^/gm, '<ins>$1</ins>')
-                
-      // table syntax
-      mdstr = mdstr.replace(/\n\|([\s\S]*)\|\s*\n\s*\n/g, function (m,p) {
-          var thead = p.substr(0, p.indexOf('\n')-1).replace(/\|/g,'<th>')
-          var tbody = p.replace(/.*\n\|\-(.*)\-\|\n/g, '').replace(/\|\s*\n/g,'\n<tr>').replace(/\|/g,'<td>')
-          return '\n<table><thead>\n<tr><th>' + thead + '</thead>\n<tr>' + tbody + '\n</tr></table>\n\n' 
-      } )   
                 
       // line break and paragraph => <br/> <p>                
       mdstr = mdstr.replace(/  \n/g, '\n<br/>').replace(/\n\s*\n/g, '\n<p>\n')

@@ -521,7 +521,7 @@ should be unordered list
 
   ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](pp-md-editor.jpg "style='width:75%;border:1px solid red'")     
+  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
 ~~~
 
 <td><xmp>
@@ -540,7 +540,7 @@ should be unordered list
   ![Powerpage Document](powerpage.gif "width=500px")
        
   ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
-</xmp><td>
+</xmp></td>
 </tr></table>
 
  **Rendered Layout**
@@ -587,20 +587,20 @@ should be unordered list
 below is a typical table 
 
 ~~~
-| header1 | Header2 | Header3 |
-|--------------------------|
-| row1,c1 | row1, c2 | row1, c3 |
-| r2,col1 | r2,col2 | r2,col3 |
-| row3,col1 | row3,col2 | row3,col3 |
+ header1 | Header2 | Header3 
+---------|---------|--------
+ row1,c1 | row1, c2 | row1, c3 
+ r2,col1 | r2,col2 | r2,col3 
+ row3,col1 | row3,col2 | row3,col3 
 ~~~
 
 the render output like below
 
-| header1 | Header2 | Header3 |
-|--------------------------|
-| row1,c1 | row1, c2 | row1, c3 |
-| r2,col1 | r2,col2 | r2,col3 |
-| row3,col1 | row3,col2 | row3,col3 |
+ header1 | Header2 | Header3 
+---------|---------|--------
+ row1,c1 | row1, c2 | row1, c3 
+ r2,col1 | r2,col2 | r2,col3 
+ row3,col1 | row3,col2 | row3,col3 
 
 
 ### Enhanced Syntax  {enhanced-syntax}
@@ -645,3 +645,4 @@ however, be aware compatibility issue if document will be parsed by other parser
 * 2021/10/12, v0.64, support table syntax 
 * 2021/10/20, v0.66, minor fixes. support nested unordered list. 
 * 2021/11/02, v0.67, remove local document, hosted on github-page now. 
+* 2022/07/18, v0.70, refine table syntax
