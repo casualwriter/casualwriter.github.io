@@ -1,3 +1,28 @@
+## Casual-Markdown
+
+### casual-markdown parser
+
+[casual-markdown](https://github.com/casualwriter/casual-markdown) is a super lightweight RegExp-based markdown parser, with TOC and scrollspy support
+
+It revises from simple-markdown-parser of [Powerpage Markdown Document](https://github.com/casualwriter/powerpage-md-document) 
+for the following features
+
+* simple, super lightweight (less than 180 lines)
+* vanilla javascript, no dependance
+* support all browsers (IE9+, Chrome, Firfox, Brave, etc..)
+* straight-forward coding style, hopefully readable.
+* support [basic syntax](https://casualwriter.github.io/casual-markdown/casual-markdown-syntax.html) according [Basic Markdown Syntax (markdownguide.org)](https://www.markdownguide.org/basic-syntax/)  
+* support subset of [extended-syntax](https://casualwriter.github.io/casual-markdown/casual-markdown-syntax.html#enhanced-syntax)
+* TOC and scrollspy support
+* highlight comment and keyword in code-block
+* extendable (by override md.before, md.after, md.formatCode)
+
+### casual-markdown viewer
+
+### casual-markdown document
+
+### casual-markdown blog
+  
 
 ## Powerpage & Applications
   
@@ -104,21 +129,24 @@ Simply edit or submit markdown files to github, the documentation is already ava
 developing...
   
   
----------------------------------------  
-### Powerpage Markdown Parser
 
-developing...
-
-Will substract the program from https://github.com/casualwriter/powerpage-md-document/blob/main/source/index.html
-
-
-  
 ## Misc Projects
+
+---------------------------------------
+### Document DB Schema (by hta script)
+
+[hta-db-schema](https://github.com/casualwriter/hta-db-schema) 
+is a simple html application to document oracle/mysql tables.
+
+For Oracle, it use OLEDB (driver=MSDAORA)
+For MySQL, it use ODBC for MySQL
+no more dependance.
+
    
 ---------------------------------------
 ### CalibriPage - simple PHP content server
 
-calibrePage is simple PHP content server for calibre.
+[calibrePage](https://github.com/casualwriter/calibrePage) is simple PHP content server for calibre.
 
 * Single php file
 * Self-contained, no depandence
@@ -136,7 +164,7 @@ It is a single PHP program in beginner coding style, provides the following feat
 ---------------------------------------  
 ### Simple Node Web-Service
 
-node-simple-ws is simple web-service program for general data retrieval.
+[node-simple-ws](https://github.com/casualwriter/node-simple-ws) is simple web-service program for general data retrieval.
 
 * Single js file in about 60 lines code.
 * Self-contained, no depandence
@@ -156,4 +184,6 @@ node-simple-ws is simple web-service program for general data retrieval.
 * 2021/10/21, setup github page. https://casualwriter.github.io/
 * 2021/11/03, move/update document to github page. https://casualwriter.github.io/powerpage
 * 2022/03/08, update document of powerpage - interface. https://casualwriter.github.io/powerpage/?file=interface.md
+* 2022/07/21, release [casual-markdown](https://github.com/casualwriter/casual-markdown) v0.82
+
 
