@@ -12,12 +12,12 @@ for the following features
 
 * simple, super lightweight (less than 180 lines)
 * vanilla javascript, no dependance
-* support all browsers (IE9+, Chrome, Firfox, Brave, etc..)
+* support all browsers (IE9+, Chrome, Firefox, Brave, etc..)
 * straight-forward coding style, hopefully readable.
 * support [basic syntax](#markdown-syntax) according [Basic Markdown Syntax (markdownguide.org)](https://www.markdownguide.org/basic-syntax/)  
 * support subset of [extended-syntax](#enhanced-syntax)
-* TOC and scrollspy support
-* highlight comment and keyword in code-block
+* table-of-content (TOC) and scrollspy support
+* auto highlight comment and keyword in code-block
 * extendable (by override md.before, md.after, md.formatCode)
 * frontmatter for simple YAML
 
@@ -548,9 +548,9 @@ however, be aware compatibility issue if document will be parsed by other parser
     
 ### Frontmatter for simple YAML
 
-Support Frontmatter for simple YAML, only support string value (i.e. key = value)
+Support frontmatter for simple YAML, only support string value at first level (i.e. key = value) 
 
-frontmatter start with `---` (at least three) in first line of markdown document, for example
+Frontmatter start with `---` (at least three) in first line of markdown document, for example
 
 ```
 -----------------------------------------------------------------------------
@@ -574,13 +574,11 @@ and html string with ``{{ name }}`` will be replaced with related values
 
 ### Modification History
 
-* 2021/10/05, v0.48, initial version
-* 2021/10/06, v0.50, html version, and minor revision
+* 2021/10/06, v0.50, initial version
 * 2021/10/09, v0.60, add scrollspy feature
 * 2021/10/11, v0.63, rewrite code-block, highlight remarks and keywords 
 * 2021/10/12, v0.64, support table syntax 
 * 2021/10/20, v0.66, minor fixes. support nested unordered list. 
-* 2021/11/02, v0.67, remove local document, hosted on github-page now. 
 * 2022/07/18, v0.70, refine table syntax
 * 2022/07/19, v0.80, toc support with scrollspy
 * 2022/07/21, v0.82, refine toc/scrollspy, add md.before(), md.after()
