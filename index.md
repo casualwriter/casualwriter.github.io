@@ -26,7 +26,6 @@ for the following features
 
 ## Powerpage & Applications
   
----------------------------------------  
 ### Powerpage for Desktop Applications
 
 [**PowerPage**](https://github.com/casualwriter/powerpage) is a lightweight web browser with DB capability and windows accessibility, for rapid development of javascript/html/css application.
@@ -55,7 +54,6 @@ with html/js page by pb:// or ps:// protocol to provide below features
 ps: due to the limitation of Microsoft web-browser control, Powerpage web browser is equivalent to IE11 (not chrome)!
   
   
----------------------------------------  
 ### Powerpage Markdown Editor
 
 [**Powerpage Markdown EditorPowerPage**](https://github.com/casualwriter/powerpage-md-editor)`` is a lightweight markdown editor using **Powerpage** with 
@@ -66,7 +64,6 @@ ps: due to the limitation of Microsoft web-browser control, Powerpage web browse
 ![Powerpage Markdown Editor](powerpage/pp-md-editor.jpg "width=80%")
   
   
----------------------------------------  
 ### Powerpage Web Crawler
 
 [**Powerpage Web Crawler**](https://github.com/casualwriter/powerpage-web-crawler) is a portable lightweight web crawler using **Powerpage**.
@@ -94,7 +91,6 @@ Program will
 * off-line reading from local files.
 
   
----------------------------------------  
 ### Powerpage Markdown Documents
 
 [**powerpage-md-documents**](https://github.com/casualwriter/powerpage-md-document/) is a simple document framework to present documents from markdown (e.g. github md file). 
@@ -123,7 +119,6 @@ Simply edit or submit markdown files to github, the documentation is already ava
 * via gitHack:    https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html 
   
   
----------------------------------------  
 ### Powerpage Report Utility
 
 developing...
@@ -132,7 +127,7 @@ developing...
 
 ## Misc Projects
 
----------------------------------------
+
 ### Document DB Schema (by hta script)
 
 [hta-db-schema](https://github.com/casualwriter/hta-db-schema) 
@@ -143,7 +138,6 @@ For MySQL, it use ODBC for MySQL
 no more dependance.
 
    
----------------------------------------
 ### CalibriPage - simple PHP content server
 
 [calibrePage](https://github.com/casualwriter/calibrePage) is simple PHP content server for calibre.
@@ -160,8 +154,7 @@ It is a single PHP program in beginner coding style, provides the following feat
 * show details of selected books
 * download books
   
-  
----------------------------------------  
+ 
 ### Simple Node Web-Service
 
 [node-simple-ws](https://github.com/casualwriter/node-simple-ws) is simple web-service program for general data retrieval.
@@ -173,7 +166,6 @@ It is a single PHP program in beginner coding style, provides the following feat
 * Connect via OLE DB driver for Oracle, MSSQL, MS Access, MySql, ODBC, etc..
   
   
----------------------------------------  
 ## History and Activities
 
 * 2021/05/07, [Powerpage](https://github.com/casualwriter/powerpage) first release, beta version, v0.41 
@@ -184,6 +176,7 @@ It is a single PHP program in beginner coding style, provides the following feat
 * 2021/10/21, setup github page. https://casualwriter.github.io/
 * 2021/11/03, move/update document to github page. https://casualwriter.github.io/powerpage
 * 2022/03/08, update document of powerpage - interface. https://casualwriter.github.io/powerpage/?file=interface.md
+* 2022/07/06, release [hta-db-schema](https://github.com/casualwriter/hta-db-schema) v0.70, for Oracle DB
+* 2022/07/11, release [hta-db-schema](https://github.com/casualwriter/hta-db-schema) v0.80, for mysql DB
 * 2022/07/21, release [casual-markdown](https://github.com/casualwriter/casual-markdown) v0.82
-
 

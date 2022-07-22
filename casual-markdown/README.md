@@ -1,6 +1,6 @@
-## casual-markdown
+## Casual Markdown
 
-A super lightweight RegExp-based markdown parser, with TOC and scrollspy support
+[casual-markdown](https://github.com/casualwriter/casual-markdown) is a super lightweight RegExp-based markdown parser, with TOC and scrollspy support
 
 It revises from simple-markdown-parser of [Powerpage Markdown Document](https://github.com/casualwriter/powerpage-md-document) 
 for the following features
@@ -18,7 +18,7 @@ for the following features
 
 ### Usage Guide
 
-just simply include [casual-markdown.js](source/casual-markdown.js) in web page, (from local or CDN).  
+just simply include [casual-markdown.js](https://github.com/casualwriter/casual-markdown/blob/main/source/casual-markdown.js) in web page, (from local or CDN).  
 
 ~~~ 
 <link rel="stylesheet" href="casual-markdown.css">
