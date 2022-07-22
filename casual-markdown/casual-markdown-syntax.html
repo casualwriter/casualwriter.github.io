@@ -19,6 +19,44 @@ for the following features
 * TOC and scrollspy support
 * highlight comment and keyword in code-block
 * extendable (by override md.before, md.after, md.formatCode)
+* frontmatter for simple YAML
+
+### Usage
+
+just simply include [casual-markdown.js](https://github.com/casualwriter/casual-markdown/blob/main/source/casual-markdown.js) 
+ from local or CDN.  
+
+
+CDN, jsdelivr
+
+~~~ 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.css">
+<script src="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.js"></script>
+~~~ 
+
+or github-page (may specify version no)
+
+~~~ 
+<link rel="stylesheet" href="https://casualwriter.github.io/dist/casual-markdown@0.85.css">
+<script src="https://casualwriter.github.io/dist/casual-markdown@0.85.js"></script>
+~~~
+
+Then may call markdown-parser by md.html(), or TOC by md.toc()
+
+~~~
+// get markdown source from element
+var mdText = document.getElementById('source').innerHTML
+
+// parse markdown, and render content
+document.getElementById('content').innerHTML = md.html( mdText )
+
+// render TOC, add scrollspy to document.body
+md.toc( 'content', 'toc', { css:'h2,h3,h4', title:'Table of Contents', scrollspy:'body' } )
+
+// render TOC, title=Index, add scrollspy to <div id=content>
+md.toc( 'content', 'toc', { title:'Index', scrollspy:'content' } )
+~~~ 
+
 
 
 ## Supported Markdown Syntax {markdown-syntax} 
@@ -508,6 +546,29 @@ however, be aware compatibility issue if document will be parsed by other parser
 * ^^^mark text^^^ by `^\^\^highlight^\^\^` => ``<mark>text</mark>``, ^^^supported within code-block^^^
 * Escaping Characters `` \` \~ \_ \* \+ \- \. \^ \\ &lt; &gt; \( \) \[ \] ``
     
+### Frontmatter for simple YAML
+
+Support Frontmatter for simple YAML, only support string value (i.e. key = value)
+
+frontmatter start with `---` (at least three) in first line of markdown document, for example
+
+```
+-----------------------------------------------------------------------------
+title   : Casual Markdown 
+toc     : leftspy
+github  : https://github.com/casualwriter/casual-markdown 
+version : v0.85, last updated on 2022/07/22
+-----------------------------------------------------------------------------
+
+## ^^^{{ title }}^^^
+
+[casual-markdown](^^^{{github}}^^^) is a super lightweight RegExp-based markdown parser, with TOC and scrollspy support
+
+```
+
+After called md.html(), js program may refer these values by `md.yaml[name]` (i.e. md.yaml = { title:'Casual Markdown', toc:'leftspy', .... }) 
+and html string with ``{{ name }}`` will be replaced with related values
+
     
 ## Notes
 
@@ -523,6 +584,7 @@ however, be aware compatibility issue if document will be parsed by other parser
 * 2022/07/18, v0.70, refine table syntax
 * 2022/07/19, v0.80, toc support with scrollspy
 * 2022/07/21, v0.82, refine toc/scrollspy, add md.before(), md.after()
+* 2022/07/22, v0.85, frontmatter for simple YAML
 
 ### To-Do
 
@@ -531,7 +593,7 @@ however, be aware compatibility issue if document will be parsed by other parser
 - [v] enhance code-block
 - [v] support table syntax
 - [v] toc with scrollspy support
-- [ ] Frontmatter :=  ---\n Name: value \n--- 
+- [v] simple frontmatter :=  ---\n Name: value \n--- 
 - [ ] use Frontmatter for markdown-document
 - [ ] use Frontmatter for markdown-blog-site 
 - [ ] use Frontmatter for markdown-application 
