@@ -15,7 +15,7 @@
 .toc .H3 { margin-left:2em }
 .toc .H4 { margin-left:4em }
 .toc .active { color:#0057b7  }
-.toc li:hover { background:#f0f0f0 }
+.toc li:hover { background:#ffd700 }
 
 /* ==== style for casual-markdown-doc.css ==== */
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; display:none }
@@ -23,8 +23,7 @@ code, xmp { white-space : pre-wrap; font-size:90% }
 img  { margin:auto; max-width:990px; padding: 2px 10px }
 h1, h2 { border-bottom: 1px solid grey; margin:20px 0px; color:#06c; padding:8px 1px; page-break-before:always; }
 h3, h4 { margin-top:24px 0px; padding:8px 1px; color:#66e; } 
-a { text-decoration:none; } a:hover{ background:lightgreen }
-.markdown th { background:#ffd700!important }
+a { text-decoration:none; } a:hover{ background:#ffd700 }
 
 header { font-size:32px; margin-bottom:24px; padding:16px; background:#0057b7; color:white }
 #tocbox { background: rgba(210,210,210,0.8); border:1px solid grey; }
