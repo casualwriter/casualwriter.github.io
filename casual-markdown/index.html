@@ -1,41 +1,121 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<title>mdSite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="casual-markdown.css">
 <script src="casual-markdown.js"></script>
 
 <style>
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
-pre, code { font-family:"Segoe UI Mono",Consolas,Monaco,monospace; background:#f0f0f0; }
-img  { margin:auto; max-width:990px; padding: 2px 10px }
-.container  { margin:auto; max-width:1280px; padding:4px; }
-h1, h2 { border-bottom: 1px solid grey; margin:20px 0px; color:#0057b7; padding:8px 1px; page-break-before:always; }
-h3, h4 { margin-top:24px 0px; padding:8px 1px; color:#0057b7; } 
-a { text-decoration:none; } a:hover{ background:#ffd700 }
-header { font-size:32px; margin-bottom:24px; padding:16px; background:#0057b7; color:white }
-footer { display: block; position: fixed; bottom: 0pt; right:60px;  }
+a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hover { outline-width:0; background:#ffd700 }
 
-#tocbox { background: rgba(210,210,210,0.8); border:1px solid grey; }
-#tocbox { position:fixed; right:8px; top:8px; padding:4px;  }
-#tocbox-left  { float:left; width:200px; right:8px; top:8px; padding:4px; border:1px solid red; }
-##content { float:right; width:1024px; height:600px; overflow:auto;}
+#header       { background:#695874; color:white; width:100%; height:50px; }
+#header button { background:#695874; }
+#title 	{ float:left; font-size:18px; font-weight:700; padding:8px }
+#menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
+#menu button:hover, #menu a:hover { color:#000; background-color:#ffd700 }
+#menu button:disabled {cursor:not-allowed; opacity:0.5}: disabled *{pointer-events:none}
+#left-panel 	{ position:absolute; left:0; bottom:0; width:380px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
+#right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
 
-@media print {
- header { margin-top:60px; color:black; border-bottom:2px solid grey;}
- #toc  { position:relative; font-size:18px; margin:12px; line-height:160%; page-break-after: always;  }
- #toc button { display:none }
+@media print{
+  #header, #left-panel { display:none!important }
+  #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px){ 
+  #header { background-color:#695874; color:white; width:100%; height:80px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+}
+@media screen and (max-width: 600px) {
+  #header { background-color:#695874; color:white; width:100%; height:100px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
 }
 </style>
 
+<body onload="md.load( location.href.split('?file=')[1]||'index.md' )">
+
+<div id=header style="background:#0057b7;">
+  <span id=title>casual-markdown</span>
+  <span id=menu style="float:right; padding:12px"></span>
+</div>
+
+<div id=content>
+  <div id="left-panel" style=""></div>
+  <div id="right-panel" style=""></div>
+</div>
+
+<button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
+</body>
+</html>
+
 <script>
-var xmlhttp = new XMLHttpRequest();
- 
-xmlhttp.onload = function (e) {
-  var html = '<div class="container"><header id=heading>Casual Markdown</header>'
-  html += '\n<div id=tocbox class="left"><button style="float:right" onclick="this.parentElement.style.display=\'none\'">'
-  html += 'X</button><div id="toc"></div></div> <div id="content">'
-  document.body.innerHTML = html + md.html(this.responseText) + '</div></div>'; 
-  md.toc( 'content', 'toc'  )
+//######################################################################################
+// Program: Show document by markdown (using casual-markdown)  
+// Author: CK Hung
+// Last updated on 2022/07/31
+//######################################################################################
+
+//=== toggle HTML in right-panel. (this is a hidden function for developer)
+function toggleHTML() {
+  var html = document.getElementById('right-panel').innerHTML
+  
+  if (html.substr(0,5)=='<xmp>') {
+     document.getElementById('right-panel').innerHTML = html.substr(5, html.length-11)
+  } else {
+     document.getElementById('right-panel').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'xmp&gt;') + '</xmp>' 
+  }
 }
 
-xmlhttp.open("GET", 'index.md' , true)
-xmlhttp.send();  
+//=== load and parser markdown file. 
+md.load = function (fname) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onload = function (e) {
+    document.getElementById('right-panel').innerHTML = md.html(md.text=this.responseText) + '<br>'
+    document.getElementById('right-panel').scrollTop = 0
+    md.toc( 'right-panel', 'left-panel', { scrollspy:'right-panel'} )
+    if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
+    
+    document.getElementById('title').innerText = md.yaml.title || document.title
+    var i=0, html='';
+    /*
+    while (md.yaml['menu'+(++i)]) {
+      html += md.yaml['menu'+i].replace(/\[(.*?)\]\((.*?)\)/, '<a href="?file=$2">$1</a>')
+    } */
+    for (i in md.yaml.menu) html += '<a href="?file=' + md.yaml.menu[i] + '">' + i + '</a>' 
+    document.getElementById('menu').innerHTML = html 
+  }
+  xmlhttp.open("GET", fname , true)
+  xmlhttp.send();
+}
+
+
+//=== touch event for mobile (swipe to show/hide left-panel)
+if (window.innerWidth<900) {
+
+  function toggleTOC(show) {
+    var disp = document.getElementById('left-panel').style.display
+    document.getElementById('left-panel').style.display = show||(disp=='none')? 'block' : 'none'
+    document.getElementById('right-panel').style.display = show||(disp=='none')? 'none' : 'block' 
+  }
+  
+  window.addEventListener( 'touchstart', function(e) { document.touch=e.changedTouches[0] } )
+  
+  window.addEventListener( 'touchend', function(e) { 
+  	 var distX = e.changedTouches[0].clientX - document.touch.clientX
+  	 var distY = e.changedTouches[0].clientY - document.touch.clientY
+  	 if ( Math.abs(distY) < 15 && distX > 30 ) {
+  			e.preventDefault(); 
+        toggleTOC(true)
+  	 } else if ( Math.abs(distY) < 15 && distX < -20 ) {
+  			e.preventDefault(); 
+        toggleTOC(false) 
+  	 }
+    } );
+    
+    document.getElementById('left-panel').onclick = function() {toggleTOC(false)}
+    document.getElementById('title').onclick = function() {toggleTOC()} 
+}
+
 </script>

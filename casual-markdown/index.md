@@ -1,8 +1,11 @@
 -----------------------------------------------------------------------------
-title   : Casual Markdown 
-toc     : leftspy
 github  : https://github.com/casualwriter/casual-markdown 
-version : v0.85, last updated on 2022/07/22
+title   : Casual-Markdown 
+menu    :    
+  Home         : index.md
+  cmd-Syntax   : cmd-syntax.md
+  cmd-Site     : cmd-site.md
+  cmd-Blog     : cmd-blog.md
 -----------------------------------------------------------------------------
 
 ## {{ title }} 
@@ -17,10 +20,7 @@ for the following features
 * support all browsers (IE9+, Chrome, Firfox, Brave, etc..)
 * straight-forward coding style, hopefully readable.
 * support [basic syntax](https://casualwriter.github.io/casual-markdown/casual-markdown-syntax.html) according [Basic Markdown Syntax (markdownguide.org)](https://www.markdownguide.org/basic-syntax/)  
-* support subset of [extended-syntax](https://casualwriter.github.io/casual-markdown-syntax.html#enhanced-syntax)
-* TOC and scrollspy support
-* highlight comment and keyword in code-block
-* front matter for simple YAML
+* support subset of [extended-syntax](https://casualwrit=
 * extendable (by override md.before, md.after, md.formatCode)
 
 
@@ -133,3 +133,4 @@ md.after = function (str) {
 
 * 2022/07/19, v0.80, initial release.
 * 2022/07/21, v0.82, refine toc/scrollspy, add dummy function for extension
+* 
