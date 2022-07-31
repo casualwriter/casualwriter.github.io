@@ -6,6 +6,7 @@ menu    :
   cmd-Syntax   : cmd-syntax.md
   cmd-Page     : cmd-page.md
   cmd-Blog     : cmd-blog.md
+  [DarkMode]   : javascript:darkmode()  
 -----------------------------------------------------------------------------
 
 ## Introduction

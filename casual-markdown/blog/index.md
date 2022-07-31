@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
-title   : Casualwriter's Blogs 
+title   : Casual-Markdown Sample Blogs 
 style   : #header { background: SlateBlue }
 menu    : 
   Search  : .

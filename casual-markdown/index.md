@@ -1,13 +1,13 @@
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Casual-Markdown 
-style   : #header { background: SlateBlue }
+style   : #header { background: SteelBlue }
 menu    :    
   Home         : index.md
   cmd-Syntax   : cmd-syntax.md
   cmd-Page     : cmd-page.md
   cmd-Blog     : cmd-blog.md
-  DarkMode     : javascript:darkmode()
+  [DarkMode]   : javascript:darkmode()
 -----------------------------------------------------------------------------
 
 ## {{ title }} 
@@ -126,13 +126,14 @@ md.after = function (str) {
 
 ### Applications
 
-* casual-md-view.html?file={md-file}&toc={left|right|top|none}  // show markdown as document.
-* casual-md-blog.html  // use markdown for blogging
+* casual-md-page.html?file={md-file}  // show markdown as web-page
+* casual-md-blog.html  // blogging by markdown
 * casual-md-doc.js     // document by markdown
 
 
-### Update History
+### Modification History
 
 * 2022/07/19, v0.80, initial release.
-* 2022/07/21, v0.82, refine toc/scrollspy, add dummy function for extension
-* 
+* 2022/07/22, v0.85, refine toc/scrollspy, extend function, and simple yaml
+* 2022/07/31, v0.90, refine frontmatter for indent yaml; code casual-md-page.html
+ 
