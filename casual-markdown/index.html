@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<title>mdSite</title>
+<title>cmdPage</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="casual-markdown.css">
 <script src="casual-markdown.js"></script>
 
-<style>
+<style>  
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
 a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hover { outline-width:0; background:#ffd700 }
+.toc li:hover { background:#ffd700!important }
 
-#header       { background:#695874; color:white; width:100%; height:50px; }
-#header button { background:#695874; }
+#header { background:#0057b7; color:white; width:100%; height:50px; }
 #title 	{ float:left; font-size:18px; font-weight:700; padding:8px }
 #menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
-#menu button:hover, #menu a:hover { color:#000; background-color:#ffd700 }
+#menu button:hover, #menu a:hover { color:#000; background:#ffd700 }
 #menu button:disabled {cursor:not-allowed; opacity:0.5}: disabled *{pointer-events:none}
 #left-panel 	{ position:absolute; left:0; bottom:0; width:380px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
 #right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
@@ -23,12 +23,12 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 }
 
 @media screen and (min-width: 600px) and (max-width: 900px){ 
-  #header { background-color:#695874; color:white; width:100%; height:80px; }
+  #header { width:100%; height:80px; }
   #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
   #right-panel 	{ position:absolute; left:0px; width:100%;; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
 }
 @media screen and (max-width: 600px) {
-  #header { background-color:#695874; color:white; width:100%; height:100px; }
+  #header { width:100%; height:100px; }
   #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
   #right-panel 	{ position:absolute; left:0px; width:100%;; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
 }
@@ -36,7 +36,7 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 
 <body onload="md.load( location.href.split('?file=')[1]||'index.md' )">
 
-<div id=header style="background:#0057b7;">
+<div id=header class="theme">
   <span id=title>casual-markdown</span>
   <span id=menu style="float:right; padding:12px"></span>
 </div>
@@ -47,15 +47,17 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 </div>
 
 <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
-</body>
-</html>
+<button style="display:none" onclick="darkmode()" accesskey=k>Dark</button> 
+<style id=theme></style>
 
 <script>
-//######################################################################################
-// Program: Show document by markdown (using casual-markdown)  
-// Author: CK Hung
-// Last updated on 2022/07/31
-//######################################################################################
+/*****************************************************************************
+ * casual-markdown-page - view markdown as web page
+ * last updated on 2022/07/31, v0.60. initial version  
+ *
+ * Copyright (c) 2022, Casualwriter (MIT Licensed)
+ * https://github.com/casualwriter/casual-markdown
+*****************************************************************************/
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
 function toggleHTML() {
@@ -68,23 +70,33 @@ function toggleHTML() {
   }
 }
 
+function darkmode() {
+  var dark = ' body, pre, code { background:#333!important; color:#eee!important } #header, a {background:#666;} ' 
+  var css = document.getElementById('theme').textContent
+  document.getElementById('theme').textContent = (css===(md.yaml.style||'')? dark : md.yaml.style||'')
+  console.log( dark )
+}
+
 //=== load and parser markdown file. 
-md.load = function (fname) {
+md.load = function (fname) { 
   var xmlhttp = new XMLHttpRequest();
+  
   xmlhttp.onload = function (e) {
+  
     document.getElementById('right-panel').innerHTML = md.html(md.text=this.responseText) + '<br>'
     document.getElementById('right-panel').scrollTop = 0
     md.toc( 'right-panel', 'left-panel', { scrollspy:'right-panel'} )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
     
-    document.getElementById('title').innerText = md.yaml.title || document.title
-    var i=0, html='';
-    /*
-    while (md.yaml['menu'+(++i)]) {
-      html += md.yaml['menu'+i].replace(/\[(.*?)\]\((.*?)\)/, '<a href="?file=$2">$1</a>')
-    } */
-    for (i in md.yaml.menu) html += '<a href="?file=' + md.yaml.menu[i] + '">' + i + '</a>' 
-    document.getElementById('menu').innerHTML = html 
+    document.title = document.getElementById('title').innerText = md.yaml.title || 'Markdown Page' 
+    document.getElementById('theme').textContent = md.yaml.style ||''
+    
+    var i, html = ''
+    for (i in md.yaml.menu) { 
+       html += '<a href="' + (md.yaml.menu[i].substr(-3)==='.md'? '?file=' : '' )
+       html += md.yaml.menu[i] + '">' + i + '</a>' 
+    }
+    document.getElementById('menu').innerHTML = html
   }
   xmlhttp.open("GET", fname , true)
   xmlhttp.send();
@@ -105,10 +117,10 @@ if (window.innerWidth<900) {
   window.addEventListener( 'touchend', function(e) { 
   	 var distX = e.changedTouches[0].clientX - document.touch.clientX
   	 var distY = e.changedTouches[0].clientY - document.touch.clientY
-  	 if ( Math.abs(distY) < 15 && distX > 30 ) {
+  	 if ( Math.abs(distY) < 15 && distX > 90 ) {
   			e.preventDefault(); 
         toggleTOC(true)
-  	 } else if ( Math.abs(distY) < 15 && distX < -20 ) {
+  	 } else if ( Math.abs(distY) < 15 && distX < -30 ) {
   			e.preventDefault(); 
         toggleTOC(false) 
   	 }

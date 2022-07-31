@@ -1,11 +1,13 @@
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Casual-Markdown 
+style   : #header { background: SlateBlue }
 menu    :    
   Home         : index.md
   cmd-Syntax   : cmd-syntax.md
-  cmd-Site     : cmd-site.md
+  cmd-Page     : cmd-page.md
   cmd-Blog     : cmd-blog.md
+  DarkMode     : javascript:darkmode()
 -----------------------------------------------------------------------------
 
 ## {{ title }} 

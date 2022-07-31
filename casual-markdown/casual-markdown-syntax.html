@@ -554,10 +554,13 @@ Frontmatter start with `---` (at least three) in first line of markdown document
 
 ```
 -----------------------------------------------------------------------------
-title   : Casual Markdown 
-toc     : leftspy
 github  : https://github.com/casualwriter/casual-markdown 
-version : v0.85, last updated on 2022/07/22
+title   : Casual-Markdown 
+toc     : leftspy
+menu    :    
+  Syntax       : cmd-syntax.md
+  cmd-Document : cmd-document.md
+  cmd-Blog     : cmd-blog.md
 -----------------------------------------------------------------------------
 
 ## ^^^{{ title }}^^^
@@ -583,7 +586,8 @@ and html string with ``{{ name }}`` will be replaced with related values
 * 2022/07/19, v0.80, toc support with scrollspy
 * 2022/07/21, v0.82, refine toc/scrollspy, add md.before(), md.after()
 * 2022/07/22, v0.85, frontmatter for simple YAML
-
+* 2022/07/31, v0.90, support indent YAML, use md file for https://casualwriter.github.io/casual-markdown/
+ 
 ### To-Do
 
 - [v] some enhance synatx (underline,Strikethrough,highlight)
@@ -592,7 +596,7 @@ and html string with ``{{ name }}`` will be replaced with related values
 - [v] support table syntax
 - [v] toc with scrollspy support
 - [v] simple frontmatter :=  ---\n Name: value \n--- 
-- [ ] use Frontmatter for markdown-document
-- [ ] use Frontmatter for markdown-blog-site 
+- [.] use Frontmatter for markdown-document
+- [.] use Frontmatter for markdown-blog-site 
 - [ ] use Frontmatter for markdown-application 
 </body>

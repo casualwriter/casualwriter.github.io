@@ -1,10 +1,11 @@
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Build blog site using Casual-Markdown 
+style   : #header { background: CornflowerBlue }
 menu    :    
   Home         : index.md
   cmd-Syntax   : cmd-syntax.md
-  cmd-Site     : cmd-site.md
+  cmd-Page     : cmd-page.md
   cmd-Blog     : cmd-blog.md
 -----------------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ in web server. or simply host in github.
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Build blog site using Casual-Markdown 
-style   : default | show-label | show-months 
+style   : #header { background: CornflowerBlue }
 labels  : Javascript, html, css, markdown, database
 menu    :    
   javascript : label/javascript

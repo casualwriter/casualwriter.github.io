@@ -4,7 +4,7 @@ title   : Supported Syntax of Casual-Markdown
 menu    :    
   Home         : index.md
   cmd-Syntax   : cmd-syntax.md
-  cmd-Site     : cmd-site.md
+  cmd-Page     : cmd-page.md
   cmd-Blog     : cmd-blog.md
 -----------------------------------------------------------------------------
 
@@ -442,7 +442,7 @@ should be unordered list
 
   ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
+  ![Powerpage Document](pp-md-editor.jpg "style='width:75%;border:1px solid red'")     
 ~~~
 
 <td><xmp>
@@ -460,7 +460,7 @@ should be unordered list
 
   ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
+  ![Powerpage Document](pp-md-editor.jpg "style='width:75%;border:1px solid red'")     
 </xmp></td>
 </tr></table>
 
@@ -480,7 +480,7 @@ should be unordered list
 
   ![Powerpage Document](powerpage.gif "width=500px")
        
-  ![Powerpage Document](pp-mm-editor.jpg "style='width:75%;border:1px solid red'")     
+  ![Powerpage Document](pp-md-editor.jpg "style='width:75%;border:1px solid red'")     
   
    
 ### Escaping Characters
