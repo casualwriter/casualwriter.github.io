@@ -2,11 +2,12 @@
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Supported Syntax of Casual-Markdown 
 menu    :    
-  Home         : index.md
-  cmd-Syntax   : cmd-syntax.md
-  cmd-Page     : cmd-page.md
-  cmd-Blog     : cmd-blog.md
-  [DarkMode]   : javascript:darkmode()  
+  Home            : index.md
+  Supported Syntax: md-syntax.md
+  md-as-Doc       : md-as-doc.md
+  md-as-Page      : md-as-page.md
+  md-as-Blog      : md-as-blog.md
+  [DarkMode]      : javascript:darkmode()
 -----------------------------------------------------------------------------
 
 ## Introduction

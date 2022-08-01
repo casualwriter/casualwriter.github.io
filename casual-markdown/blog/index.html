@@ -14,8 +14,8 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 #menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
 #menu button:hover, #menu a:hover { color:#000; background:#ffd700 }
 #menu button:disabled {cursor:not-allowed; opacity:0.5}: disabled *{pointer-events:none}
-#left-panel 	{ position:absolute; left:0; bottom:0; width:380px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
-#right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
+#left-panel 	{ position:absolute; left:0; bottom:0; width:380px; top:48px; border:1px solid grey; overflow:auto; padding:8px }
+#right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:8px 16px }
 
 @media print{
   #header, #left-panel { display:none!important }
@@ -48,7 +48,7 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 
 <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
 <button style="display:none" onclick="darkmode()" accesskey=k>Dark</button> 
-<style id=theme></style>
+<style id=theme comment="for additional style"></style>
 
 <script>
 /*****************************************************************************
@@ -62,7 +62,6 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
 function toggleHTML() {
   var html = document.getElementById('right-panel').innerHTML
-  
   if (html.substr(0,5)=='<xmp>') {
      document.getElementById('right-panel').innerHTML = html.substr(5, html.length-11)
   } else {
@@ -70,11 +69,12 @@ function toggleHTML() {
   }
 }
 
+//=== apply dark mode style
 function darkmode() {
-  var dark = ' body, pre, code { background:#333!important; color:#eee!important } #header, a {background:#666;} tr:nth-child(even) {color:#222}' 
   var css = document.getElementById('theme').textContent
+  var dark = ' body, pre, code { background:#333!important; color:#ccc!important } '
+  dark += '\n #header, a {background:#555;} th, tr:nth-child(even) {color:#333}' 
   document.getElementById('theme').textContent = (css===(md.yaml.style||'')? dark : md.yaml.style||'')
-  console.log( dark )
 }
 
 //=== load and parser markdown file. 
@@ -85,7 +85,7 @@ md.load = function (fname) {
   
     document.getElementById('right-panel').innerHTML = md.html(md.text=this.responseText) + '<br>'
     document.getElementById('right-panel').scrollTop = 0
-    md.toc( 'right-panel', 'left-panel', { scrollspy:'right-panel'} )
+    md.toc( 'right-panel', 'left-panel', { title:'none', scrollspy:'right-panel'} )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
     
     document.title = document.getElementById('title').innerText = md.yaml.title || 'Markdown Page' 
@@ -98,6 +98,7 @@ md.load = function (fname) {
     }
     document.getElementById('menu').innerHTML = html
   }
+  
   xmlhttp.open("GET", fname , true)
   xmlhttp.send();
 }

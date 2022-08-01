@@ -1,10 +1,10 @@
 -----------------------------------------------------------------------------
 github  : https://github.com/casualwriter/casual-markdown 
 title   : Casual-Markdown Sample Blogs 
-style   : #header { background: SlateBlue }
+style   : #header { background: linear-gradient(to bottom right, #06c, #fc0); }
 menu    : 
   Search  : .
-  List   : .
+  Dark    : javascript:darkmode()
   About   : about.md
 -----------------------------------------------------------------------------
    
