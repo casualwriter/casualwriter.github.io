@@ -13,8 +13,8 @@ menu    :
 
 ## {{ title }} 
 
-[Casual-Markdown](https://github.com/casualwriter/casual-markdown) provide a quick solution 
-to use markdown as documentation.
+[Casual-Markdown-Doc](https://github.com/casualwriter/casual-markdown-doc) provide a quick solution 
+to use markdown as document.
 
 * include javascript lib `casual-markdown-doc.js`
 * include css style `casual-markdown-doc.css`
@@ -24,6 +24,11 @@ then start write document in markdown format!
 check the sample document
 at https://casualwriter.github.io/casual-markdown/casual-markdown-syntax.html
 
+### Credit
+
+This project based on the design idea of [Strapdown.js](https://strapdownjs.com/). 
+but use [casual-markdown](https://github.com/casualwriter/casual-markdown) parser, 
+build-in css, vanilla javascript without any dependence. (support all browsers include IE9) 
 
 ### Usage Guide
 
@@ -61,7 +66,7 @@ content in markdown format
 
 ### How it works
 
-The main program is very simple by doing the following steps. (in 15 lines).
+The main program is very simple by doing the following steps.
 
 1. read markdown content from ``<body>``
 1. update document title 
@@ -80,12 +85,9 @@ window.onload = function () {
   html += 'X</button><div id="toc"></div></div>' 
   html += '\n<div id=content>' + md.html(document.body.innerHTML.replace(/\&gt;/g,'>')) + '</div></div>'; 
 
-  // add shortcut for edit current page.
-  html += '<a href=# onclick="tocToggle()" accesskey=t style="display:none">TOC</a>';
-  html += '<a href=# onclick="debug()" accesskey=x style="display:none">HTML</a>';
-  
   document.body.innerHTML = html
   document.body.style.display = 'block';
+
   md.toc( 'content', 'toc', { scrollspy:'body' } )
   
 }
@@ -94,5 +96,5 @@ window.onload = function () {
 
 ### Modification History
 
-* 2022/07/22, v0.70, initial release.
+* 2022/08/02, v0.70, initial release.
  
