@@ -1,27 +1,32 @@
 /*****************************************************************************
  * casual-markdown - a lightweight regexp-base markdown parser with TOC support
- * last updated on 2022/07/22, v0.85, code formatter, toc, scrollspy and front matter  
+ * last updated on 2022/07/31, v0.90, refine frontmatter (simple yaml)  
  *
  * Copyright (c) 2022, Casualwriter (MIT Licensed)
  * https://github.com/casualwriter/casual-markdown
 *****************************************************************************/
 ;(function(){ 
 
-  // define md object, and extent function (which is a dummy function for user extension)
+  // define md object, and extent function (which is a dummy function)
   var md = { yaml:{}, before: function (str) {return str}, after: function (str) {return str} }
 
   // function for REGEXP to convert html tag. ie. <TAG> => &lt;TAG*gt;  
   md.formatTag = function (html) { return html.replace(/</g,'&lt;').replace(/\>/g,'&gt;'); }
 
-  // front matter for simple YAML (support 1 level only)
+  // frontmatter for simple YAML (support multi-level, but string value only)
   md.formatYAML = function (front, matter) {
-    matter.replace( /^\s*([^:]+):(.*)$/gm, function(m,key,val) { md.yaml[key.trim()] = val.trim() } );
+    var level = {}, latest = md.yaml;
+    matter.replace( /^\s*#(.*)$/gm, '' ).replace( /^( *)([^:^\n]+):(.*)$/gm, function(m, sp, key,val) { 
+        level[sp] = level[sp] || latest
+        latest = level[sp][key.trim()] = val.trim() || {}
+        for (e in level) if(e>sp) level[e]=null;
+      } );
     return ''
   }
 
   //===== format code-block, highlight remarks/keywords for code/sql
   md.formatCode = function (match, title, block) {
-    // convert tag <> to &lt; &gt; tab to 3 space, support mark code using ^^^
+    // convert tag <> to &lt; &gt; tab to 3 space, support marker using ^^^
     block = block.replace(/</g,'&lt;').replace(/\>/g,'&gt;')
     block = block.replace(/\t/g,'   ').replace(/\^\^\^(.+?)\^\^\^/g, '<mark>$1</mark>')
     
@@ -40,10 +45,10 @@
   
   //===== parse markdown string into HTML string (exclude code-block)
   md.parser = function( mdstr ) {
-
+  
     // apply yaml variables
     for (var name in this.yaml) mdstr = mdstr.replace( new RegExp('\{\{\\s*'+name+'\\s*\}\}', 'gm'), this.yaml[name] )
-
+    
     // table syntax
     mdstr = mdstr.replace(/\n(.+?)\n.*?\-\-\|\-\-.*?\n([\s\S]*?)\n\s*?\n/g, function (m,p1,p2) {
         var thead = p1.replace(/^\|(.+)/gm,'$1').replace(/(.+)\|$/gm,'$1').replace(/\|/g,'<th>')
@@ -153,7 +158,7 @@
     
     document.getElementById(tocDiv).innerHTML = html + "</ul>";
 
-    //===== scrollspy support (ps: add to document if element(scroll) not found)
+    //===== scrollspy support (ps: add to document.body if element(scrollspy) not found)
     if ( options && options.scrollspy ) {
       
       (document.getElementById(options.scrollspy)||document).onscroll = function () {
@@ -187,42 +192,3 @@
      this.md=md;
   }
 }).call( function(){ return this||(typeof window!=='undefined'?window:global)}() );
-
-//=============================================================================
-// 20220805, convert markdown-document in <body> tag into HTML document
-//=============================================================================
-window.onload = function () {
-
-  var html = '<div class="container" style="margin:auto; max-width:1024px; padding:4px;">'
-  html += '<header id=heading>' + (document.body.title||document.title) + '</header>'
-  html += '\n<div id=tocbox><button style="float:right" onclick="this.parentElement.style.display=\'none\'">'
-  html += 'X</button><div id="toc"></div></div>' 
-  md.text = document.body.innerHTML.replace(/^\n/,'').replace(/\&gt;/g,'>')
-  html += '\n<div id=content>' + md.html( md.text ) + '</div></div>'; 
-
-  // add shortcut for toc/debug.
-  html += '<a href=# onclick="tocToggle()" accesskey=t style="display:none">TOC</a>';
-  html += '<a href=# onclick="debug()" accesskey=x style="display:none">HTML</a>';
-  
-  document.body.innerHTML = html
-  document.body.style.display = 'block';
-  md.toc( 'content', 'toc', { scrollspy:'body' } )
-  
-}
-
-// toggle TOC 
-function tocToggle(show) {
-  var disp = document.getElementById('tocbox').style.display
-  document.getElementById('tocbox').style.display = show||(disp=='none')? 'block' : 'none'
-}
-
-// debug: show HTML
-function debug() {
-  var html = document.getElementById('content').innerHTML
-  if (html.substr(0,5)=='<xmp>') {
-     document.getElementById('content').innerHTML = html.substr(5, html.length-11)
-  } else {
-     document.getElementById('content').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'|xmp>') + '</xmp>' 
-  }
-}
-
