@@ -40,10 +40,10 @@
   
   //===== parse markdown string into HTML string (exclude code-block)
   md.parser = function( mdstr ) {
-
     // apply yaml variables
+    console.log( 'BEFORE==>', mdstr.substr(0,100) )
     for (var name in this.yaml) mdstr = mdstr.replace( new RegExp('\{\{\\s*'+name+'\\s*\}\}', 'gm'), this.yaml[name] )
-
+    console.log( 'AFTER==>', mdstr.substr(0,100) )
     // table syntax
     mdstr = mdstr.replace(/\n(.+?)\n.*?\-\-\|\-\-.*?\n([\s\S]*?)\n\s*?\n/g, function (m,p1,p2) {
         var thead = p1.replace(/^\|(.+)/gm,'$1').replace(/(.+)\|$/gm,'$1').replace(/\|/g,'<th>')
@@ -80,7 +80,7 @@
     // links syntax: [title "title"](url) => <a href="url" title="title">text</a>          
     mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "new"\)/gm, '<a href="$2" target=_new>$1</a>')
     mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<a href="$2" title="$3">$1</a>')
-    mdstr = mdstr.replace(/([<\s])(http[s]\:\/\/.*?)([\s\>])/gm, '$1<a href="$2">$2</a>$3')
+    mdstr = mdstr.replace(/([<\s])(https?\:\/\/.*?)([\s\>])/gm, '$1<a href="$2">$2</a>$3')
     mdstr = mdstr.replace(/\[(.*?)\]\(\)/gm, '<a href="$1">$1</a>')
     mdstr = mdstr.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>')
                   
@@ -189,7 +189,7 @@
 }).call( function(){ return this||(typeof window!=='undefined'?window:global)}() );
 
 //=============================================================================
-// 20220805, convert markdown-document in <body> tag into HTML document
+// 20220719, convert markdown-document in <body> tag into HTML document
 //=============================================================================
 window.onload = function () {
 
@@ -197,10 +197,9 @@ window.onload = function () {
   html += '<header id=heading>' + (document.body.title||document.title) + '</header>'
   html += '\n<div id=tocbox><button style="float:right" onclick="this.parentElement.style.display=\'none\'">'
   html += 'X</button><div id="toc"></div></div>' 
-  md.text = document.body.innerHTML.replace(/^\n/,'').replace(/\&gt;/g,'>')
-  html += '\n<div id=content>' + md.html( md.text ) + '</div></div>'; 
+  html += '\n<div id=content>' + md.html(document.body.innerHTML.replace(/\&gt;/g,'>')) + '</div></div>'; 
 
-  // add shortcut for toc/debug.
+  // add shortcut for edit current page.
   html += '<a href=# onclick="tocToggle()" accesskey=t style="display:none">TOC</a>';
   html += '<a href=# onclick="debug()" accesskey=x style="display:none">HTML</a>';
   
