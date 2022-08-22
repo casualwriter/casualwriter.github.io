@@ -2,18 +2,22 @@
 github     : https://github.com/casualwriter/casual-markdown-blog
 title      : Sample Blog of Casual-Markdown 
 subtitle   : By Casual-Markdown-Blog
-navigation : left|right|none, latest-5, tags, month 
-css-header : background: linear-gradient(to bottom right, #06c, #fc0);
+nav-group  : featured, new-3, tags, months
+nav-width  : 360px
 menu       : 
-   Home    : index.md
+   Home    : ?home=index.md
    Dark    : javascript:darkmode()
-   About   : about.md
+   About   : ?page=about.md
 -----------------------------------------------------------------------------
 <style comment="additional style">
-#header { {{css-header}} }
+#header { background: linear-gradient(to bottom right, #06c, #fc0); }
 h1 { border-bottom:1px dotted grey }
-.toc .H1 { list-style-type:none; font-weight:600; padding:4px; }
-.toc .H2 { list-style-type:none; font-weight:400;  margin-left:1em }
+.nav-post a  { color: teal }
+.nav-tag  a  { color: #06c }
+.nav-month a { color: black }
+.post-date   { font-size:10px; color:aaa; }
+.post-title  { font-size:16px; }
+.post-tags   { background:#eee; left-margin:20px; padding:4px; font-size:10px }
 </style>
 
 <div id="md-post">
@@ -30,14 +34,14 @@ h1 { border-bottom:1px dotted grey }
 > ![does regexp make the code not readable?](campo03.jpg)
 > date: 2022/08/10, tags: `#regexp, #web-dev`
 > 
-> Suer not. But does regexp make the code not readable?
+> Sure not. But does regexp make the code not readable?
 
 ## [My dream web browser](20220803-my-dream-web-browser.md)
 > ![My Dream brwoser](campo02.jpg)
 > date: 2022/08/03, tags: `#wev, #dev, #html`
 > 
-> basically, web browser is a powerful GUI render engine.
-> have to work with web-server or web-service to more functionality.
+> web browser is a powerful GUI render engine.
+> have to work with web-server or web-service for app. dev.
 > can we put them all together?
 
 <div id="hidden-labels" style="display:none">
@@ -52,9 +56,9 @@ h1 { border-bottom:1px dotted grey }
    
 ### Aug 2022
                     
-* 2022/08/20: [Markdown as blog](20220820-markdown-as-blog.md) { #markdown, #blog }
-* 2022/08/10: [Is RegExp readable?](20220810-is-regexp-readable.md) { #regexp, #web-dev }
-* 2022/08/03: [My dream web browser](20220803-my-dream-web-browser.md) { #web, #dev }
+* 2022/08/20: [Markdown as blog](20220820-markdown-as-blog.md) { #markdown, #blog, #featured }
+* 2022/08/10: [Is RegExp readable?](20220810-is-regexp-readable.md) { #regexp }
+* 2022/08/03: [My dream web browser](20220803-my-dream-web-browser.md) { #web }
 
 ### July 2022
                     
@@ -63,8 +67,8 @@ h1 { border-bottom:1px dotted grey }
 
 ### Oct 2021
 
-* 2021/10/20: [Code a markdown editor within 80 lines](20211020-powerpage-markdown-editor.md) { #powerpage, #markdown }
-* 2021/07/20: [Crawl web page by powerpage-web-crawler](20210720-powerpage-web-crawler.md) { #powerpage }
-* 2021/06/18: [Develop html/css/jsavscript application by PowerPage](20210618-powerpage-application.md) { #featured, #powerpage }
+* 2021/10/20: [Code a markdown editor in 80 lines](20211020-powerpage-markdown-editor.md) { #powerpage, #markdown }
+* 2021/07/20: [Crawl blogs by powerpage-web-crawler](20210720-powerpage-web-crawler.md) { #powerpage }
+* 2021/06/18: [Develop html application by PowerPage](20210618-powerpage-html-application.md) { #powerpage }
 
 </div>
