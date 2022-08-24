@@ -1,23 +1,26 @@
 -----------------------------------------------------------------------------
 github     : https://github.com/casualwriter/casual-markdown-blog
-title      : Sample Blog of Casual-Markdown 
+title      : Casual-Markdown's Blog 
 subtitle   : By Casual-Markdown-Blog
 nav-group  : featured, new-3, tags, months
-nav-width  : 360px
+nav-width  : 320px
+css-header : background:linear-gradient(to bottom right, #06c, #fc0); color:white
 menu       : 
-   Home    : ?home=index.md
+   Home    : ?
    Dark    : javascript:darkmode()
    About   : ?page=about.md
 -----------------------------------------------------------------------------
 <style comment="additional style">
-#header { background: linear-gradient(to bottom right, #06c, #fc0); }
+#header { {{css-header}}  }
+#left-panel  { width:{{nav-width}} }
+#right-panel { left: calc({{nav-width}} + 20px) }
 h1 { border-bottom:1px dotted grey }
 .nav-post a  { color: teal }
 .nav-tag  a  { color: #06c }
-.nav-month a { color: black }
-.post-date   { font-size:10px; color:aaa; }
-.post-title  { font-size:16px; }
-.post-tags   { background:#eee; left-margin:20px; padding:4px; font-size:10px }
+.nav-month a { color: grey }
+.post-date   { font-size:12px; font-weight:400; }
+.post-title  { font-size:16px; color:#333 }
+.post-tags   { left-margin:20px; padding:4px; font-size:10px; color:green; font-weight:400 }
 </style>
 
 <div id="md-post">
@@ -44,13 +47,6 @@ h1 { border-bottom:1px dotted grey }
 > have to work with web-server or web-service for app. dev.
 > can we put them all together?
 
-<div id="hidden-labels" style="display:none">
-# Labels 
-### powerpage
-### markdown
-### teamwork
-### personal
-</div>
 
 # Archives
    
