@@ -41,7 +41,7 @@ I prefer to read the first code if donot need to figure out how regexp work.
 I finally realized that make the code not readable is the "Complexity" instead of "RegExp". 
 "RegExp" solve the problem, and contain the "Complexity" in a piece of code. 
 
-That's why it is hard to read!
+That's why RegExp is not readable, and it make other code more readable in most situation.
 
 
 ![](campo03.jpg)
