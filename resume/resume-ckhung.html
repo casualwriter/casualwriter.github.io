@@ -4,34 +4,32 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.css">
 <script src="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.js"></script>
 <style>  
-  body { line-height:1.5; margin:auto; padding:3px; max-width:1024px; display:none; font-family:"Segoe UI",arial }
-  h1  { font-size:200%; padding:12px; border:1px solid grey; background:PowderBlue; }
-  h2  { border-bottom:1px solid grey; padding:6px; color:teal }  
+  body { line-height:1.5; margin:auto; padding:3px; max-width:1024px; display:none; FONT-FAMILY:"Segoe UI",ARIAL }
+  h1  { font-size:200%; padding:16px; border:1px solid lightgrey; BACKGROUND:STEELBLUE; COLOR:WHITE }
+  h2  { border-bottom:1px solid grey; padding:2px; color:STEELBLUE  }
 </style>
-<body onload="document.body.innerHTML=md.html(document.body.innerHTML); document.body.style.display='block'">
+<body onload="document.body.innerHTML=md.html(document.body.innerHTML); document.body.style.display='block'; 
+              document.getElementById('qrcode').src='https://chart.googleapis.com/chart?cht=qr&chs=177x177&chl='+location.href" >
+<img id=qrcode style="float:right; margin:5px; border:1px solid lightgrey; width:70px" />
+<!--======= COPY ABOVE CODE AS HEADER, THEN FOLLOW WITH RESUME CONTENT IN MARKDOWN FORMAT =========-->
 
-<image style="float:right;border-radius:50%;width:60px;padding:6px" src="avatar-ckhung.jpg">
-<span style="float:right;padding:6px"> hungchongki@gmail.com <br> mobile: +852 90811450 </span>
+<span style="float:right;padding:6px;color:white"> 
+  hungchongki@gmail.com <br> mobile: +852 90811450 <br> Nationality: Chinese
+</span>
 
-# CK Hung
+# Hung Chong Ki (¬x·É²N)
 
-## Education
+## Summary
 
-* Xiamen University, China (1986 - 1990)
-* Bachelor of Computer Science (Sep 1990)
-
-## Highlight
-
-* Strong in project management (18 years)
-* Team management and IT operation (15 years)
+* (18 years+) Strong project management skill with outstanding analysis ability
+* (15 years+) Solid experience in team management and IT operation 
 * Proven abilities in communicating with all parties effectively
-* Strong project management skill with outstanding analysis ability
 * Understand business and new technology
 * Exposure in Healthcare, Banking, Government industry
 
 ## Technical Skill
 
-* Project Management: SLDC, Waterfall, Agile, PRINCE2
+* Project Management: CI/CD, SLDC, Waterfall, Agile, PRINCE2
 * Database: Oracle, MS SQL server, Sybase, MySQL
 * Web Development: JavaScript, Java, .NET, PHP, Tomcat, Node.js
 * Client/Server: PowerBuilder, Java, .NET
@@ -39,39 +37,50 @@
 ## Working Experience
 
 * Hong Kong Adventist Hospital (IT Manager, `2007/03 - present`)
-  + Lead a small team (3-5 members) to develop internal applications
-  + work with vendors for integration/implementation of outsource project
+  + Lead team of 3-6, communicate with other dept. to gather user requirement, develop and delivery internal applications 
+  + work with vendors for integration and implementation of outsource projects
   + work with support team for daily operation support
   + work with management for IT budgeting and resource planning.
 * New World Telecommunications Limited (System Analyst, `2005/12 - 2007/02`)
 * Carico Holdings Limited** (Contract Consultant, `2005/01 - 2005/11`)
 * NanYang Commercial Bank, Ltd. (System Analyst, `2003/05 - 2004/12`)
-* Armitage Technologies Company (Center Manager, `2001/07 - 2002/11`)
+* Armitage Technologies Ltd. (Center Manager, `2001/07 - 2002/11`)
 * Hownew Company Ltd. (Project Manager, `2000/08 - 2001/06`)
 * IT People Ltd. (Contract Consultant, `1997/10 - 2000/05`)
 * American Consolidation Service, Ltd. (Analyst Programmer, `1997/04 - 1997/10`)
 * Nanyang Commercial Bank, Ltd. (IT Officer, `1992/11 - 1997/04`)
 * Immigrated to Hong Kong (`1992/09`)
 
-## Projects Hightlight
+## Projects Highlight
 
-* (2008-2023) Clinical Info. System - core system for clinical operation
-* (2008-2023) Medical Record consolidation and management
-* (2008-2022) Pharmacy management system
-* (2016-2022) Nursing Info. System - for inpatient nursing, outsource project
-* (2020-2022) Warehouse management system
-* (2005-2007) Rating and billing system (for New World Telecom)
-* (2005) Trading System (for Carico Holdings Limited)
-* (2003-2004) MIS, BI, data warehouse (for NanYang Commercial Bank)
-* (2002) Setup and manage ShenZhen Development Center (40 staffs)
-* (2000-2001) develop web portal (for Hownew Company Ltd.)
-* (1997-2000) traffic operation system (for HKPF, resp. IT people Ltd)
+* (2008-2023) Lead to develop `Clinical Info System` which is one of the core system of Adventist Hospital, using CI/CD under SOA Principles.
+* (2008-2023) Lead to develop programs for `Medical Record System` to consolid and manage patient medical records from multiple sources. 
+* (2020-2022) Lead to revamp `Warehouse management system` from PB6.5 to web-base application.
+* (2016-2022) Integrate/implement outsource project: `Nursing Info. System` for inpatient nursing.
+* (2008-2022) Enhance and support `Pharmacy management system`, migrate partial rules to ORACLE DB.
+* (2005-2007) Enhance and support `Rating and billing system` (for New World Telecom)
+* (2005) Develop `Carico Trading System` (for Carico Holdings Limited, stock:729)
+* (2003-2004) Develop applications for MIS, BI, data warehouse (for NanYang Commercial Bank)
+* (2002) Setup and manage daily operation of `ShenZhen Development Center` (40 staffs, for Armitage Technologies Ltd.)
+* (2000-2001) Lead to develop internet TV streaming portal `www.hownew.com` (for Hownew Company Ltd.)
+* (1997-2000) Participate the development of `Traffic Operation Management System` (for HKPF, resp. IT people Ltd)
+
+## Products 
+
+I am the author of some open-source softwares. 
+
+* (2022) [Casual-Markdown](https://github.com/casualwriter/casual-markdown) - A lightweight RegExp markdown parser
+* (2021) [Powerpage](https://github.com/casualwriter/powerpage) - A lightweight web browser for html/css/js application
+* (1997-2003) [Casualwriter](http://www.geocities.ws/ck4hung/) - Document and Code Mangement Tool for Powerbuilder
+
+## Education
+
+* Xiamen University, China (1986 - 1990)
+* Bachelor of Computer Science (Sep 1990)
 
 ## Personal
 
-* Citizenship : Chinese
 * Date of Birth : Dec 1969
 * Marital Status : Married
-* Languages : English (good), Mandarin (Fluent), Cantonese (Fluent)
-* Interests : Hiking, Jogging, Reading
-
+* Languages : English (Good), Mandarin (Fluent), Cantonese (Fluent)
+* Availability: 1 month's notice
