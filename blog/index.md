@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------
-github     : https://github.com/casualwriter/casual-markdown-blog
-title      : Casual-Markdown-Blog 
-subtitle   : By Casual-Markdown-Blog
-nav-group  : featured, new-5, tags, months
+github     : https://github.com/casualwriter
+title      : Casualwriter's Blog
+subtitle   : Simple is the best
+nav-group  : new-5, tags, months
 nav-width  : 380px
 menu       : 
    Home    : ?
@@ -11,7 +11,7 @@ menu       :
    About   : ?page=about.md
 -----------------------------------------------------------------------------
 <style comment="show nav at right">
-#header { xbackground: linear-gradient(to bottom right, #06c, #fc0); }
+#header { background: linear-gradient(to bottom right, #06c, #fc0); }
 #left-panel  { right:0; left:auto; width: {{nav-width}} }
 #right-panel { left:0; border-right:1px solid grey; right:calc({{nav-width}} + 20px) }
 h1 { border-bottom:1px dotted grey }
@@ -49,7 +49,7 @@ h1 { border-bottom:1px dotted grey }
    
 ### Aug 2022
                     
-* 2022/08/20: [Markdown as blog](20220820-markdown-as-blog.md) { #markdown, #featured }
+* 2022/08/20: [Markdown as blog](20220820-markdown-as-blog.md) { #markdown }
 * 2022/08/10: [Is RegExp readable?](20220810-is-regexp-readable.md) { #regexp }
 
 ### July 2022
