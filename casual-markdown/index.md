@@ -193,3 +193,6 @@ and html string with ``{{ name }}`` will be replaced with related values
 * 2022/07/21, v0.82, refine toc/scrollspy, add dummy function for extension
 * 2022/07/22, v0.85, frontmatter for simple YAML
 * 2022/07/31, v0.90, refine frontmatter. code casual-markdown-doc.js, casual-markdown-page.html
+
+<noscript>casual-markdown, casualwriter, javascript, html, regexp</noscript>
+
