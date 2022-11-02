@@ -10,7 +10,7 @@ with TOC and scrollspy features
 It revises from simple-markdown-parser of [Powerpage Markdown Document](https://github.com/casualwriter/powerpage-md-document) 
 for the following features
 
-* simple, super lightweight (less than 180 lines)
+* simple, super lightweight (190 lines)
 * vanilla javascript, no dependance
 * support all browsers (IE9+, Chrome, Firefox, Brave, etc..)
 * straight-forward coding style, hopefully readable.
@@ -23,7 +23,7 @@ for the following features
 
 ### Usage
 
-just simply include [casual-markdown.js](https://github.com/casualwriter/casual-markdown/blob/main/source/casual-markdown.js) 
+simply include [casual-markdown.js](https://github.com/casualwriter/casual-markdown/blob/main/source/casual-markdown.js) 
  from local or CDN.  
 
 
@@ -34,11 +34,11 @@ CDN, jsdelivr
 <script src="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.js"></script>
 ~~~ 
 
-or github-page (may specify version no)
+or github-page (may specify version no: 0.85 or 0.90)
 
 ~~~ 
-<link rel="stylesheet" href="https://casualwriter.github.io/dist/casual-markdown@0.85.css">
-<script src="https://casualwriter.github.io/dist/casual-markdown@0.85.js"></script>
+<link rel="stylesheet" href="https://casualwriter.github.io/dist/casual-markdown@0.90.css">
+<script src="https://casualwriter.github.io/dist/casual-markdown@0.90.js"></script>
 ~~~
 
 Then may call markdown-parser by md.html(), or TOC by md.toc()
@@ -558,9 +558,9 @@ github  : https://github.com/casualwriter/casual-markdown
 title   : Casual-Markdown 
 toc     : leftspy
 menu    :    
-  Syntax       : cmd-syntax.md
-  cmd-Document : cmd-document.md
-  cmd-Blog     : cmd-blog.md
+  Syntax    : cmd-syntax.md
+  Document  : cmd-document.md
+  Blog      : cmd-blog.md
 -----------------------------------------------------------------------------
 
 ## ^^^{{ title }}^^^
@@ -588,15 +588,4 @@ and html string with ``{{ name }}`` will be replaced with related values
 * 2022/07/22, v0.85, frontmatter for simple YAML
 * 2022/07/31, v0.90, support indent YAML, use md file for https://casualwriter.github.io/casual-markdown/
  
-### To-Do
-
-- [v] some enhance synatx (underline,Strikethrough,highlight)
-- [v] some enhance synatx (link as tex, header id, image property)
-- [v] enhance code-block
-- [v] support table syntax
-- [v] toc with scrollspy support
-- [v] simple frontmatter :=  ---\n Name: value \n--- 
-- [.] use Frontmatter for markdown-document
-- [.] use Frontmatter for markdown-blog-site 
-- [ ] use Frontmatter for markdown-application 
 </body>
