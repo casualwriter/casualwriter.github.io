@@ -1,2 +1,6 @@
 # casualwriter.github.io
-github page for casualwriter
+
+github page https://casualwriter.github.io 
+
+for https://github.com/casualwriter
+
