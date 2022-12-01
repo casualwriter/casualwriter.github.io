@@ -4,8 +4,9 @@ title     : Casualwriter
 menu      :    
   Home            : index.md
   Blog            : ./blog
-  Powerpage       : ./powerpage
   Casual-Markdown : ./casual-markdown
+  PowerPage       : ./powerpage
+  PowerChrome     : ./powerchrome
   Print           : javascript:print() 
 -----------------------------------------------------------------------------
 
@@ -31,6 +32,16 @@ Casualwriter is an old programmer like all simple things.
 He believes simplicity is most close to truth, but most difficult to close.
 in alternative, he work on lightweight, portable, independance solutions, in his spare time.
 
+[powerchrome](#powerchrome) - a portable chromimum-base (cef) web browser for html/javascript application. (pb-2019R3)
+
+Powerchrome is a browser for **html/javascript desktop application**. Portable, chromimum-web-engine, 
+Javascript ES6, sync-mode interface, code-and-play, etc..
+
++ powerchrome-md-editor (in development)
++ powerchrome-web-crawler (in development)
++ powerchrome-db-schema (in development)
++ powerchrome-db-report (in development)
+
 [casual-markdown](#casual-markdown) - a regexp-base markdown parser (javascript)
 
 + [casual-markdown-doc](#casual-markdown-doc) - markdown as documenation
@@ -44,18 +55,44 @@ in alternative, he work on lightweight, portable, independance solutions, in his
 + [powerpage-web-crawler](#powerpage-web-crawler) - a lightweight web crawler using Powerpage.
 + [powerpage-md-document](#powerpage-md-document) - A simple document framework, using markdown as document.
 
-[powerchrome](#powerchrome) - a portable chromimum-base (cef) web browser for html/javascript application. (pb-2019R3)
-
-+ in development, going to release on Dec 2022
-+ powerchrome-md-editor (in development)
-+ powerchrome-web-crawler (in development)
-
 [Misc projects](#misc-projects)
 
 + [hta-db-schema](#hta-db-schema) - a simple script program to document oracle/mysql database. (hta script)
 + [calibrePage](#calibrePage) is simple PHP content server for calibre. (php)
 + [node-simple-ws](#node-simple-ws) - a simple web-service framework for general data retrieval. (node.js)
    
+## PowerChrome for Desktop Application {powerchrome}
+
+[PowerChrome](https://github.com/casualwriter/powerchrome)
+ is a portable chromimum-base (cef) web browser for html/javascript desktop application development.
+
+![](./powerchrome/powerchrome.jpg) 
+ 
+PowerChrome provides a natual approach for html/javascript application development. It enabled HTML page for the 
+accessibility of window shell / file system / database, and also provide additional application support 
+by **PowerChome-Javascript-Interface** (run in **sync mode**)
+
+Example of PowerChome-Javascript-Interface:
+
+* Call notepad.exe ``pb.run('notepad.exe')``
+* Eexecute file ``pb.shell('calc.exe')``
+* Copy File  ``pb.fileCopy( sourceFile, targetFile )``
+* Connect to oracle database ``pb.dbConnect( 'O90', dbParm, dbServer, logID, logPass )``
+* Run SQL query (sync mode) ``rsStr = pb.dbQuery( 'select * from tablename' )``
+* Run SQL query, and convert to json. ``rs = JSON.parse( pb.dbQuery( sql ) )``
+* Get HTML source (sync mode) ``rs = pb.httpSource('https://hacker-news.firebaseio.com/v0/item/160705.json')`` 
+* Popup html dialog ``pb.popup( 'sample-dialog.html', {width:1024,height:700} )``
+
+#### Features
+
+* Portable, no installation.
+* Chromimum-base, may use Chrome/Chromimum for testing/debug.
+* HTML as application. Javascript ES6 for programming.
+* API run in **sync mode**. no callback, no promise object.
+* Work with Powerbuilder for advanced functionality.
+* Simple console support.
+* Cloud-App Enabled.
+
    
 ## Casual-Markdown  {casual-markdown}
 
@@ -136,7 +173,7 @@ is a simple solution for markdown online resume. It also fit for other purpose, 
   
   
   
-## Powerpage for Desktop Applications
+## Powerpage for Desktop Application
 
 [PowerPage](https://github.com/casualwriter/powerpage) 
 is a lightweight IE-based web browser for html/javascript desktop application development.
@@ -243,3 +280,4 @@ It is a very simple hta script (275 lines). no dependance. Just click-and-run.
 * 2022/08/24, release [casual-markdown-blog](https://github.com/casualwriter/casual-markdown-blog) v0.60
 * 2022/09/20, release [casual-markdown-cv](https://github.com/casualwriter/casual-markdown-cv)
 * 2022/11/20, rebuilt this page using [casual-markdown-page](https://github.com/casualwriter/casual-markdown-page)
+* 2022/12/01, release [powerchrome](https://github.com/casualwriter/powerchrome) v0.56

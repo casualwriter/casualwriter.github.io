@@ -1,3 +1,24 @@
+-----------------------------------------------------------------------------
+title     : PowerChrome for HTML/javascript application
+menu      :    
+  Home         : index.md
+  github       : https://github.com/casualwriter/casual-markdown 
+  Print        : javascript:print() 
+-----------------------------------------------------------------------------
+<style title="ukraine color theme">
+#header { background: linear-gradient(to bottom right, #06c, #fc0); }
+body { background:#333!important; color:#bbb!important; FONT-FAMILY:CONSOLAS,ARIAL; } 
+pre, code { background:#444!important; color:#ddd!important; border-radius:6px;}
+a { color:#eee; } 
+ul { margin:8px }
+th, tr:nth-child(even) { color:#333; background:#aaa!important}
+.markdown { max-width:900px; margin:auto }
+.toc .active { color:#fc0!important }
+.toc li:hover, a:hover{ background:#06c!important }
+h1, h2 { border-bottom:1px solid grey }
+h2, h3 { color:skyblue!important }
+</style>
+
 ## PowerChrome for HTML/javascript application
 
 PowerChrome is a portable chromimum-base (cef) web browser for html/javascript desktop application development.
