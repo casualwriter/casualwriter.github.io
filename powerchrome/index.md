@@ -2,8 +2,10 @@
 title     : PowerChrome for HTML/javascript application
 menu      :    
   Home         : index.md
-  github       : https://github.com/casualwriter/casual-markdown 
-  Print        : javascript:print() 
+  Get Started  : get-started.md
+  Interface    : interface.md
+  Development  : development.md
+  github       : https://github.com/casualwriter/powerchrome
 -----------------------------------------------------------------------------
 <style title="ukraine color theme">
 #header { background: linear-gradient(to bottom right, #06c, #fc0); }
@@ -48,7 +50,7 @@ Example of PowerChome-Javascript-Interface:
 * Simple console support.
 * Cloud-App Enabled.
 
-### Get Started
+### Get Started 
 
 Please download [powerchrome-0.56-with-runtime.zip](download/powerchrome-0.56-with-runtime.zip) 
 and unzip the all-in-one package. Run powerchrome.exe.
