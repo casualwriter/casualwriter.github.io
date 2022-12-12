@@ -23,10 +23,12 @@ h2, h3 { color:skyblue!important }
 
 ## Introduction
 
-sorry, not complete yet...
+PowerChrome is a powerful and portable web browser that uses the Chromium engine to enable 
+fast and easy development of desktop applications using HTML and JavaScript. 
 
+With PowerChrome, you can quickly and easily write and run your own desktop applications, 
+providing a seamless user experience for your users.
 
-## Get Started
 
 ### Files 
 
@@ -44,14 +46,13 @@ sample.mdb      | sample database (MS access)
 sample-dialog.html | sample html dialog 
 sample-dialog.js  | sample javascript for html dialog 
 
-### Run Powerchrome
+### Run PowerChrome
 
-Please download [powerchrome-0.56-with-runtime.zip](download/powerchrome-0.56-with-runtime.zip) 
-and unzip the all-in-one package. Run powerchrome.exe.
+1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
+2. Run `powerchrome.exe`.
+3. `powerchrome.html` will be loaded to demonstrate how PowerChrome works with an HTML desktop application.
 
-`powerchrome.html` will be loaded to demonstates how PowerChrome work with html desktop application.
-
-![](powerchrome.jpg)
+![](https://casualwriter.github.io/powerchrome/powerchrome.jpg)
 
 ### Application Startup
 
@@ -66,18 +67,25 @@ after page loaded, `powerchrome.js` will be imported to initialize interface, th
 
 To start coding, just simply create ``index.html`` and write your code in any text editor
 
-### first application
+### Code first application
 
-Let's make a hello world program. Please save below code to "index.html", abd run pwerchrome.exe again.
+Let's make a hello world program. Please save below code to "index.html".
 
 ```
 <h2>hello world</h2>
-<button onclick="pb.alert('hello')"> Alert </button>
-<button onclick="pb.console('hello world')"> Console </button>
-<button onclick="pb.msgbox('hello')"> MsgBox </button>
+<button onclick="pb.alert('hello')"> Hello </button>
+<button onclick="pb.msgbox('title','hello world')"> MsgBox </button>
+<button onclick="pb.api('console')"> Toggle Console </button>
 ```
 
-## Commandline Options
+and run pwerchrome.exe again. 
+
+![](powerchrome-sample1.jpg)
+
+
+## PowerChrome Parameters
+
+### Commandline Options
 
 ``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
 
@@ -87,7 +95,7 @@ Let's make a hello world program. Please save below code to "index.html", abd ru
 * crawl page by css-selector, and save to html file ``/ulr={link} /save={name.html} /css=selector``
 * print page to pdf file ``/ulr={link} /save={name.pdf}``
 
-## powerchrome.ini 
+### powerchrome.ini 
 
 ~~~
 [System]
@@ -97,7 +105,7 @@ icon    = {icon}
 watch   = [debug][api][sql][js]
 console = 400px
 
-[broser]
+[browser]
 top    = 100
 left   = 20
 width  = 1024
@@ -108,14 +116,16 @@ DBMS=ODBC
 DBParm=connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'
 ~~~
 
-## Mini Button
+### Mini Button
 
-Up to 6 mini-button are available in the bottom-right cornor. 
+Up to 6 mini-buttons are available in the bottom-right cornor. 
 
 ~~~
+function onPageReady() {
   pb.api( 'minibutton', 'clear' )
   pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )
   pb.api( 'minibutton', {script:'pb.about()', title:'About', icon:'toolkitabout!'} )
+}  
 ~~~
 
 
