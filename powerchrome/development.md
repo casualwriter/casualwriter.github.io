@@ -90,4 +90,5 @@ Similar to run application from lcoal web server, but run from internet.
 
 ### Document History
 
-* 2
+* 2022/12/12, v0.60
+

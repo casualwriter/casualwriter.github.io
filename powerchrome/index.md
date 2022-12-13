@@ -154,5 +154,5 @@ with significant improvement.
 
 * 2022/12/01, release version v0.56
 * 2022/12/09, release v0.60, implement security for cloud mode.
-* 2022/12/12, thanks chatGPT to refine some description
+* 2022/12/12, use chatGPT to refine some description
 

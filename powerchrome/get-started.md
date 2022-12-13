@@ -46,6 +46,7 @@ sample.mdb      | sample database (MS access)
 sample-dialog.html | sample html dialog 
 sample-dialog.js  | sample javascript for html dialog 
 
+
 ### Run PowerChrome
 
 1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
@@ -53,6 +54,7 @@ sample-dialog.js  | sample javascript for html dialog
 3. `powerchrome.html` will be loaded to demonstrate how PowerChrome works with an HTML desktop application.
 
 ![](https://casualwriter.github.io/powerchrome/powerchrome.jpg)
+
 
 ### Application Startup
 
@@ -66,6 +68,7 @@ Powerchrome load the startup page by the following sequence:
 after page loaded, `powerchrome.js` will be imported to initialize interface, then call js function `onPageRead()`
 
 To start coding, just simply create ``index.html`` and write your code in any text editor
+
 
 ### Code first application
 
@@ -85,6 +88,8 @@ and run pwerchrome.exe again.
 
 ## PowerChrome Parameters
 
+PowerChrome may accept parameters from `command line`  -> `powerchrome.ini` -> `javascript API`
+
 ### Commandline Options
 
 ``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
@@ -96,6 +101,8 @@ and run pwerchrome.exe again.
 * print page to pdf file ``/ulr={link} /save={name.pdf}``
 
 ### powerchrome.ini 
+
+PowerChrome will load initial setting from `powerchrome.ini`. For example
 
 ~~~
 [System]
@@ -114,11 +121,49 @@ height = 700
 [database]
 DBMS=ODBC
 DBParm=connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'
+ServerName = 
+LogId   = 
+logPass = 
 ~~~
+
+All setting can be configurated by javascript API. It is recommended use `powerchrome.ini` in development 
+environment, and use javascript to config application in production.
+
+
+### Encrypt sensitive information
+
+`secret-string` is an encrypted string leading with '@'. The string could be used for the following sensitive 
+paramaters in `commandline` or `powerchrome.ini`. 
+
+for example, use secret-string for startup url in command line. 
+
+~~~
+powerchrome.exe /app=@fmdmnmeqlqdqargpdqmpjtduftkpfppobpmp
+powerchrome.exe /app=https://google.com
+~~~
+
+for database connection in `powerchrome.ini`
+
+~~~
+[database]
+DBMS = O90
+ServerName = tnsname
+LogId  = @secretstring
+logPass= @secretstring
+DBParm = @secretstring
+~~~
+
+to generate `secret string`, please call out console in PowerChrome, and run 
+
+~~~
+pb.api( 'secret', keystring )
+pb.api( 'secret', 'https://google.com' )
+~~~
+
 
 ### Mini Button
 
-Up to 6 mini-buttons are available in the bottom-right cornor. 
+Up to 6 mini-buttons are available in the bottom-right cornor. Normally, it is setup in the event of `onPageReady()`
 
 ~~~
 function onPageReady() {
@@ -128,27 +173,39 @@ function onPageReady() {
 }  
 ~~~
 
+parameter `script` could be any javascript, or below pre-defined action:
+
+* `console`: toggle console panel
+* `refresh`: refresh the page. => `location.reload()`
+* `back`: go back to previous page. => `history.back()`
+* `forward`: go forward. => `history.forward()`
+* `about`: popup about-dialog. => `pb.about()` 
+* `login`: popup login-dialog. => `pb.login()`
+
 
 ## Sample application
 
-let's make a markdown editor...
+let's make a markdown editor
+
+...
+...
 
 
 ## Deployment
 
-### deploy to same folder
+### quick deployment (same folder)
 
-* Deploy `powerchrome.exe, powerchrome.js` to client's folder
-* Deploy `powerbuilder runtime` to same folder
+* deploy `powerchrome.exe, powerchrome.js` to client's folder
+* deploy `powerbuilder runtime` to same folder
 * copy html program to the same folder
 
 ### deploy runtime to another folder
 
-* Deploy `powerbuilder runtime` to a folder, e.g. c:\app\pb2019-runtime
+* deploy `powerbuilder runtime` to a folder, e.g. c:\app\pb2019-runtime
 * add the folder to PATH, `PATH=c:\app\pb2019-runtime;%PATH%`
-* Deploy `powerchrome.exe, powerchrome.js` and html program
+* deploy `powerchrome.exe, powerchrome.js` and html program to any folder
 
-### HTML Application
+### deploy application
 
 HTML application would be deployed to different folder of powerchrome.exe, and run by `powerchrome.exe /app={url}`
 
@@ -159,12 +216,8 @@ powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
 ~~~
 
 
-### Encrypt sensitive information
-
-* use for database connection
-* use for startup url
-
-call out console, run ``pb.api('secret', keystring)``
+### To-Be-Continue...
 
 
-## To-Be-Continue...
+
+

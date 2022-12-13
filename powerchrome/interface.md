@@ -23,15 +23,15 @@ h2, h3 { color:skyblue!important }
 
 ## Overview (API)
 
-PowerChrome is written for html/jsvascript application. Basically it is a chromimum-base (cef) web browser with 
+PowerChrome is written for html/javascript application. Basically it is a chromium-base (cef) web browser with 
 interface with Powerbuilder application engine.
 
 The interface provides the following all application supports.
 
-* access `window shell` to run/execute command
+* access `windows shell` to run/execute command
 * access `file system` 
 * access `database`  
-* make `Http Request`
+* make `http request`
 * application property and variables
 * application services (e.g. call html-dialog)
 * printing, and reporting service
@@ -41,8 +41,8 @@ Please note that interface call is running in **Synchronization Modes**. no need
 
 ### How it works
 
-PowerChrome will load startup html page with builtin chromimum-base webbrowser, and import `powerchrome.js` 
-to initialize interface, then call `window.onPageReady()` for application start.
+PowerChrome will load startup html page with builtin chromium-base web browser, and import `powerchrome.js` 
+to initialize interface, then call `window.onPageReady()` for application startup.
 
 After interface is initialized, html/javascript application may call `pb.apiFunctions(..)` to application service.
 
@@ -52,12 +52,12 @@ After interface is initialized, html/javascript application may call `pb.apiFunc
 There are three forms for an API call.
 
 * api-function: ``pb.run( 'notepad.exe', 'c:/temp' )``
-* api-raw: ``pb.api( 'run', {cmd: 'notepad.exe', path: 'c:/temp' } )``
+* api-action: ``pb.api( 'run', {cmd: 'notepad.exe', path: 'c:/temp' } )``
 * api-url: ``window.webBrowser.ue_interface( 'run?cmd=notepad.exe&path=c:/temp' )``
 
-It is recommended to use ``api-function`` to access the interface. (``api-url`` is for internal usage)
+It is recommended to use ``api-function`` to access the interface. (``api-action`` is for internal usage)
 
-This document will only cover `api-function` and `api-raw`.
+This document will only cover `api-function` and `api-action`.
 
 
 ## Access window shell
@@ -134,4 +134,4 @@ This document will only cover `api-function` and `api-raw`.
 
 ## Modification History
 
-* 2022/12/03  initial version for v0.56
+* 2022/12/12  initial version for v0.60
