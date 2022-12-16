@@ -18,7 +18,7 @@ th, tr:nth-child(even) { color:#333; background:#aaa!important}
 .toc .active { color:#fc0!important }
 .toc li:hover, a:hover{ background:#06c!important }
 h1, h2 { border-bottom:1px solid grey }
-h2, h3 { color:skyblue!important }
+h2, h3, h5 { color:skyblue!important }
 </style>
 
 ## Overview (API)
@@ -135,13 +135,23 @@ send keystrokes by `WScript.Shell -> SendKeys()`
 
 ##### Parameters
 
-* {keystrokes} := 
-* 
+{keystrokes} support the following special commands with keystrokes, separated by delimiter "/"
+
+* {keystrokes} := `[run={command}] / [title={title} / [s={seconds}] / [ms={ms}] / [js={JavaScript}
+* `run={command}` run dos command, e.g. call notepad.exe
+* `title={title}` go to the app/window which title={title}
+* `s={seconds}` delay for seconds
+* `ms={ms}` delay for millisecond seconds
+* `js={JavaScript}` run JavaScript
 
 ##### Return
 
+return string "1"
+
 ##### Samples
 
+* run notepad. ``pb.sendkeys('run=notepad.exe/title=Untitled - Notepad/s=1/hello!\n/ms=800/Have a nice day!')``
+* run javascript with keystrokes. ``pb.sendkeys('run=notepad.exe/s=2/Hello/js=alert("hello world")')``
 
 
 ## HTML Dialog
