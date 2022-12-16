@@ -41,10 +41,10 @@ Please note that interface call is running in **Synchronization Modes**. no need
 
 ### How it works
 
-PowerChrome will load startup html page with builtin chromium-base web browser, and import `powerchrome.js` 
+PowerChrome will load startup HTML page with builtin chromium-base web browser, and import `powerchrome.js` 
 to initialize interface, then call `window.onPageReady()` for application startup.
 
-After interface is initialized, html/javascript application may call `pb.apiFunctions(..)` to application service.
+After interface is initialized, HTML/JavaScript application may call `pb.apiFunctions(..)` to application service.
 
 
 ### API Syntax
@@ -57,53 +57,202 @@ There are three forms for an API call.
 
 It is recommended to use ``api-function`` to access the interface. (``api-action`` is for internal usage)
 
-This document will only cover `api-function` and `api-action`.
+This document will cover `api-function` and `api-action` only.
 
 
 ## Access window shell
 
 ### pb.run()
 
+execute DOS command by `WScript.Shell -> run()`
+
+##### Syntax
+
+* syntax1: ``pb.run( {command} )`` 
+* syntax2: ``pb.run( {command}, path, style )``
+* syntax3: ``pb.api( 'run', { cmd:{command}, path:{path}, style: {style} } )``
+
+##### Parameters
+
+* {command} := window command
+* {path} := the file path to run the command
+* {style} := [ normal | min | max | hide ] [ +wait ]
+
+##### Return
+
+* for syntax1, returns "1" if it is successful and "-1" if an error occurs.
+* for syntax2/syntax3, return "0"
+
+##### Sample
+
+* run notepad ``pb.run( 'notepad.exe' ) => ``pb.api('run','notepad.exe')``
+* run notepad to edit file ``pb.run('notepad.exe powerchrome.html')``
+* run notepad (maximized)  ``pb.run('notepad.exe powerchrome.html','','max')``
+* run notepad and wait ``pb.run('notepad.exe','','wait')`` 
+* run from a path ``pb.run('notepad2.exe', 'c:/temp')``
+* call windows "Control Panel".  ``pb.run('control')``
+* call windows "Group Policy". ``pb.shell( 'gpedit.msc')``
+
+
 ### pb.shell() 
+
+execute command using window shell. this function will windows library `shell32 -> ShellExecute()`
+
+##### Syntax
+
+* syntax1: ``pb.shell( {file}, {parm}, {path}, {action}, {style} )`` 
+* syntax2: ``pb.api( 'shell', { file:{file}, parm:{parm}, path:{path}, action:{action}, style:{style} } )``
+
+##### Parameters
+
+* {file} := file in windows searchable path
+* {parm} := parameters 
+* {path} := the file path
+* {action} := open | print | runas | edit | explorer | find
+* {style} :=  normal | min | max | hide 
+
+##### Return
+
+* return a string from `shell32 -> ShellExecute()`, details may refer to [microsoft document](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutea)
+* If the function succeeds, it returns a value greater than 32. 
+* If the function fails, it returns an error value that indicates the cause of the failure. 
+
+##### Samples
+
+* open folder in file-explorer ``pb.shell('c:/temp')``
+* open a file (same as click on the file in file explorer). ``pb.shell('powerchrome.html')``
+* print file. ``pb.api( 'shell', { aciton:'print', file:'c:/temp/output.pdf' } )``
+
 
 ### pb.sendkeys()
 
-## Html Dialog
+send keystrokes by `WScript.Shell -> SendKeys()`
+
+##### Syntax
+
+* syntax1: ``pb.sendkeys( {keystrokes} )`` 
+* syntax2: ``pb.api( 'sendkeys', {keystrokes} )``
+
+##### Parameters
+
+* {keystrokes} := 
+* 
+
+##### Return
+
+##### Samples
+
+
+
+## HTML Dialog
 
 ### pb.popup(url)
+
+popup HTML dialog for multiple usages.
+
+* open a HTML dialog
+* crawl a web page
+* print a web page
+* save a web page to HTML or PDF
+
+##### Syntax
+
+* syntax1: ``pb.popup()`` 
+* syntax2: ``pb.api( 'popup', {} )``
+
+##### Parameters
+
+##### Return
+
+##### Samples
+
+
 ### pb.popup(html)
+
+popup HTML dialog by a string in HTML format.
+
+##### Syntax
+
+* syntax1: ``pb.popup()`` 
+* syntax2: ``pb.api( 'popup', {} )``
+
+##### Parameters
+
+##### Return
+
+##### Samples
+
+
+
 ### pb.close()
+
+close current window/dialog, with string return.
+
+##### Syntax
+
+* syntax1: ``pb.close()``
+* syntax2: ``pb.close( {return-string} )`` 
+* syntax2: ``pb.api( 'close', {return-string} )``
+
+##### Return
+
+return specified string
+
+##### Samples
+
+
+
 
 ## Http Request
 
 ### pb.httpSource()
+
 ### pb.httpRequest()
+
 
 ## Work with database
 
 ### pb.dbConnect()
+
 ### pb.dbCommit()
+
 ### pb.dbRollback()
+
 ### pb.dbQuery()
+
 ### pb.dbTabel()
+
 ### pb.dbExecute()
+
 
 ## Access file system
 
 ### pb.fileexists()
+
 ### pb.fileread()
+
 ### pb.fileappend()
+
 ### pb.filewrite()
+
 ### pb.filecopy()
+
 ### pb.filemove()
+
 ### pb.filedelete()
+
+
 
 ## Console and Message
 
 ### pb.console()
+
 ### pb.alert()
+
 ### pb.msgbox()
+
 ### pb.error()
+
 ### pb.status()
 
 ## Application / Misc
@@ -132,6 +281,10 @@ This document will only cover `api-function` and `api-action`.
 
 
 
-## Modification History
+## Document History (in progress..)
 
-* 2022/12/12  initial version for v0.60
+* 2022/12/16  initial version for v0.60, in progress..
+* 
+* to-do: execute sample command within PowerChrome
+* to-do: document for file API
+* to-do: document for database API

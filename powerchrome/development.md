@@ -59,7 +59,7 @@ powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
 
 
 
-## Cloud--Application
+## Cloud-Application
 
 Similar to run application from lcoal web server, but run from internet.
 
@@ -70,7 +70,23 @@ Similar to run application from lcoal web server, but run from internet.
 
 ### pros & cons
 
+
 ## Notes
+
+### Compare with Powerpage
+
+PowerChrome is rewritten based on same design idea of [Powerpage](https://github.com/casualwriter/powerpage) 
+with significant improvement.
+
+| Comparison       | PowerChrome         | PowerPage
+|------------------|---------------------|----------
+| Web Engine       | Chromimum           | IE 11
+| Installation     | portable            | portable
+| Package Size     | 170M                | 14M
+| API (javascript) | sync mode           | async mode
+| Developed By     | powerbuilder 2019R3 | powerbuilder 10.5
+| Capability       | all purposes        |  simple application
+
 
 ### Problems & Solutions
 
@@ -88,7 +104,7 @@ Similar to run application from lcoal web server, but run from internet.
 * [ ] reporting support (using datawindow)
 
 
-### Document History
+### Document History (in progress..)
 
-* 2022/12/12, v0.60
+* 2022/12/16, document for v0.60, in progress...
 

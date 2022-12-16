@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-title     : PowerChrome - Get Started
+title     : PowerChrome - Getting Started
 menu      :    
   Home         : index.md
   Get Started  : get-started.md
@@ -7,7 +7,7 @@ menu      :
   Development  : development.md
   github       : https://github.com/casualwriter/powerchrome
 -----------------------------------------------------------------------------
-<style title="ukraine color theme">
+<style title="ukraine-color-theme">
 #header { background: linear-gradient(to bottom right, #06c, #fc0); }
 body { background:#333!important; color:#bbb!important; FONT-FAMILY:CONSOLAS,ARIAL; } 
 pre, code { background:#444!important; color:#ddd!important; border-radius:6px;}
@@ -30,24 +30,27 @@ With PowerChrome, you can quickly and easily write and run your own desktop appl
 providing a seamless user experience for your users.
 
 
-### Files 
+### Files
 
-Powerchrome is a single execution file (powerchrome.exe), only `powerchrome.exe, powerchrome.js` 
-and `Powerbuilder-Runtime` is requried. The other files are options or depends on usage.
+The following files are included in the downloaded package 
+[powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip)
 
-File Name       | Description
-----------------|------------------------
-powerchrome.exe | Powerchrome progam 
-powerchrome.ini | ini config file (optional, recommeded for development only)
-powerchrome.js  | javascript interface
-powerchrome.html| html program of introduction an quick reference
-powerchrome.pbl | source code of Powerbuilder (2019R3)
-sample.mdb      | sample database (MS access)
-sample-dialog.html | sample html dialog 
-sample-dialog.js  | sample javascript for html dialog 
+File Name       	| Description
+--------------------|------------------------
+powerchrome.exe 	| PowerChrome program 
+powerchrome.js		| JavaScript interface
+powerchrome.ini 	| INI config file (optional, recommended for development only)
+powerchrome.html	| Default HTML program. it is API quick reference 
+powerchrome.pbl 	| Source code of Powerbuilder (2019R3)
+sample*.*      	  | Sample files (HTML and MS Access Database)
+*.dll           	| Powerbuilder-Runtime Libraries
+.\pbcef           | chromium (cef)
+
+PowerChrome is a single execution file (powerchrome.exe), only `powerchrome.exe, powerchrome.js` 
+and `Powerbuilder-Runtime` are required. The other files are optional or depends on usage.
 
 
-### Run PowerChrome
+### Download and Run
 
 1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
 2. Run `powerchrome.exe`.
@@ -58,7 +61,7 @@ sample-dialog.js  | sample javascript for html dialog
 
 ### Application Startup
 
-Powerchrome load the startup page by the following sequence:
+PowerChrome load the startup page by the following sequence:
 
 1. commandline options: `/app={startup.html}`
 2. ini config at [system] section: `start={startup.html}`
@@ -81,24 +84,27 @@ Let's make a hello world program. Please save below code to "index.html".
 <button onclick="pb.api('console')"> Toggle Console </button>
 ```
 
-and run pwerchrome.exe again. 
+and run `pwerchrome.exe` again. 
 
 ![](powerchrome-sample1.jpg)
 
 
+
 ## PowerChrome Parameters
 
-PowerChrome may accept parameters from `command line`  -> `powerchrome.ini` -> `javascript API`
+PowerChrome accepts parameters from `command-line`  -> `powerchrome.ini` -> `JavaScript API`
 
-### Commandline Options
+
+### Command-line Options
 
 ``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
 
 * specify application startup page by ``/app={startup.html}`` or ``/url={startup.html}``
 * open application in fullscreen ``/fullscreen`` or ``/kiosk``
 * use customized interface script by ``/script={interface.js}``
-* crawl page by css-selector, and save to html file ``/ulr={link} /save={name.html} /css=selector``
-* print page to pdf file ``/ulr={link} /save={name.pdf}``
+* crawl page by css-selector, and save to HTML file ``/ulr={link} /save={name.html} /css=selector``
+* print page to PDF file ``/ulr={link} /save={name.pdf}``
+
 
 ### powerchrome.ini 
 
@@ -107,10 +113,10 @@ PowerChrome will load initial setting from `powerchrome.ini`. For example
 ~~~
 [System]
 start   = {startup-page}
-script  = powerpage.js
-icon    = {icon}
+script  = {powerpage.js}
+icon    = {icon-name}
 watch   = [debug][api][sql][js]
-console = 400px
+console = {400px}
 
 [browser]
 top    = 100
@@ -126,16 +132,16 @@ LogId   =
 logPass = 
 ~~~
 
-All setting can be configurated by javascript API. It is recommended use `powerchrome.ini` in development 
-environment, and use javascript to config application in production.
+All setting can be reconfigured by JavaScript API. It is recommended use `powerchrome.ini` in development 
+environment, and use JavaScript to configure application in production.
 
 
 ### Encrypt sensitive information
 
 `secret-string` is an encrypted string leading with '@'. The string could be used for the following sensitive 
-paramaters in `commandline` or `powerchrome.ini`. 
+paymasters in command-line or `powerchrome.ini`. 
 
-for example, use secret-string for startup url in command line. 
+for example, use "secret-string" for startup URL in command line. 
 
 ~~~
 powerchrome.exe /app=@fmdmnmeqlqdqargpdqmpjtduftkpfppobpmp
@@ -163,17 +169,27 @@ pb.api( 'secret', 'https://google.com' )
 
 ### Mini Button
 
-Up to 6 mini-buttons are available in the bottom-right cornor. Normally, it is setup in the event of `onPageReady()`
+Up to 6 mini-buttons are available in the bottom-right corner. 
+
+Normally, it is setup in the event of `onPageReady()`
 
 ~~~
 function onPageReady() {
+
+  // clear all mini-buttons
   pb.api( 'minibutton', 'clear' )
+  
+  // add mini-button of "toggle console panel"
   pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )
+  
+  // add mini-button to show about dialog
   pb.api( 'minibutton', {script:'pb.about()', title:'About', icon:'toolkitabout!'} )
+  
 }  
+
 ~~~
 
-parameter `script` could be any javascript, or below pre-defined action:
+The parameter of "script" could be any valid JavaScript, or below predefined action:
 
 * `console`: toggle console panel
 * `refresh`: refresh the page. => `location.reload()`
@@ -187,8 +203,78 @@ parameter `script` could be any javascript, or below pre-defined action:
 
 let's make a markdown editor
 
-...
-...
+### Basic Programming Skeleton
+
+let's start up with a HTML programming skeleton
+
+~~~
+<!DOCTYPE html>
+<head>
+	<title>PowerChrome Sample</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<!-------------- css style section ------------->
+<style>
+	body   { line-height:1.5; margin:auto; padding:0; ... }  
+	header { background:grey; color:white; height:20px; padding:12px; }
+	sql    { display:none }
+	div    { font-size:14px; margin:0; padding:0; }
+	.....
+</style>
+
+<!-------------- html layout -------------------->
+<body>
+<header>
+  <div id="heading" style="float:left;font-size:14px;font-weight:bold">Let's make a markdown editor</div>
+  <div id="topmenu" style="float:right">
+    <button onclick="app.open()">Open</button>
+    <button onclick="app.save()">Save</button>
+	....
+  </div>  
+</header>
+<div id="content"> 
+....
+</div>
+</body>
+
+<!------------- SQL or data (optional) ------------>
+<sql id="sql-load-list"> ... </sql>
+<sql id="sql-save-data"> ... </sql>
+
+</body>
+
+<!------------- script section -------------------->
+<script>
+
+// when powerchrome page ready, setup mini button and open console 
+function onPageReady() {
+  pb.api( 'minibutton', 'clear' )
+  pb.api( 'minibutton', {script:'refresh', title:'Refresh', icon:'Synchronizer1!'} )
+  pb.api( 'minibutton', {script:'pb.about()', title:'About', icon:'toolkitabout!'} )
+  pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )
+}  
+
+// prompt message before page close 
+function onPageClose() { return 'Close window and exit?' }
+
+// application event/function
+const app = { name: "application service" }
+
+app.open = () => { 
+   pb.fileOpenDialog()
+}
+
+</script>
+~~~
+
+### Code Basic Layout by HTML
+
+### Add functionality
+
+### Debug in chrome browser
+
+### Run within PowerChrome
 
 
 ## Deployment
@@ -216,8 +302,11 @@ powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
 ~~~
 
 
-### To-Be-Continue...
 
+## Document History (in progress)
 
-
+* 2022/12/16  initial version for v0.60, in progress..
+* 
+* to-do: sample program - markdown editor
+* to-do: document for deployment
 

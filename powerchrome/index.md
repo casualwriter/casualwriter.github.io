@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-title     : PowerChrome for HTML/javascript application
+title     : PowerChrome for HTML/JavaScript application
 menu      :    
   Home         : index.md
   Get Started  : get-started.md
@@ -7,12 +7,12 @@ menu      :
   Development  : development.md
   github       : https://github.com/casualwriter/powerchrome
 -----------------------------------------------------------------------------
-<style title="ukraine color theme">
+<style title="ukraine-color-theme">
 #header { background: linear-gradient(to bottom right, #06c, #fc0); }
 body { background:#333!important; color:#bbb!important; FONT-FAMILY:CONSOLAS,ARIAL; } 
 pre, code { background:#444!important; color:#ddd!important; border-radius:6px;}
-a { color:#eee; } 
-ul { margin:8px }
+a 	{ color:#eee; } 
+ul 	{ margin:8px }
 th, tr:nth-child(even) { color:#333; background:#aaa!important}
 .markdown { max-width:900px; margin:auto }
 .toc .active { color:#fc0!important }
@@ -21,13 +21,25 @@ h1, h2 { border-bottom:1px solid grey }
 h2, h3 { color:skyblue!important }
 </style>
 
-## PowerChrome for HTML/javascript application
+## PowerChrome for HTML/JavaScript application
 
-PowerChrome is a powerful and portable web browser that uses the Chromium engine to enable 
-fast and easy development of desktop applications using HTML and JavaScript. 
+PowerChrome is a portable chromium-base web browser to enable fast and easy development 
+of desktop applications using HTML and JavaScript. 
 
 With PowerChrome, you can quickly and easily write and run your own desktop applications, 
 providing a seamless user experience for your users.
+
+### Motivation
+
+HTML is great for UI, and JavaScript is awesome for coding. However, developing web-base program 
+for desktop is somehow frustrated experience as web browser revoke all accessibility of local 
+resources. End-user will not understand why your program cannot access printer, open a file,
+run another program or access database. You are hacking problems with hands and legs tied up. 
+
+I had longed for a web browser which has DB connectivity and OS accessibility, so that can 
+coding JavaScript/HTML/CSS application like Electron. so thankful that have chance to make one.
+
+### JavaScript Interface
 
 PowerChrome provides a natural approach to HTML and JavaScript application development. 
 It allows HTML pages to access the window shell, file system, and database, and provides 
@@ -41,21 +53,23 @@ Examples of the PowerChrome JavaScript Interface include:
 * Connecting to an Oracle database: `pb.dbConnect('O90', dbParm, dbServer, logID, logPass)`
 * Running a SQL query (in sync mode): `rsStr = pb.dbQuery('select * from tablename')`
 * Running a SQL query and converting the results to JSON: `rs = JSON.parse(pb.dbQuery(sql))`
-* Getting the HTML source of a page (in sync mode): `rs = pb.httpSource('https://hacker-* news.firebaseio.com/v0/item/160705.json')`
+* Getting HTML source (in sync mode): `rs = pb.httpSource('https://hacker-news.firebaseio.com/v0/item/160705.json')`
 * Popup an HTML dialog: `pb.popup('sample-dialog.html', {width: 1024, height: 700})`
 
-#### Features
+### Features
 
 * Portable - no installation required
 * Chromium-based - can use Chrome/Chromium for testing and debugging
 * HTML as the application format and JavaScript ES6 for programming
 * API that runs in sync mode - no callback or promise objects
-* Works with Powerbuilder for advanced functionality
+* Work with Powerbuilder for advanced functionality
 * Simple console support
 * Cloud-app enabled
 * Run on Windows 7/8/10/11
 
-### Get Started
+## Get Started
+
+### Download and Run
 
 1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
 2. Run `powerchrome.exe`.
@@ -66,12 +80,12 @@ Examples of the PowerChrome JavaScript Interface include:
 
 ### Application Startup
 
-Powerchrome loads the startup page using the following sequence:
+PowerChrome loads the startup page using the following sequence:
 
-1. Commandline options: /app={startup.html}
-1. INI config in the [system] section: start={startup.html}
-1. index.html
-1. powerchrome.html
+1. Commandline options: `/app={startup.html}`
+1. INI config in the [system] section: `start={startup.html}`
+1. `index.html`
+1. `powerchrome.html`
 
 After the page is loaded, `powerchrome.js` will be imported to initialize the interface, 
 then call the JavaScript function `onPageLoaded()`.
@@ -81,78 +95,99 @@ To start coding, simply create an `index.html` file and write your code in any t
 
 ### Files & Deployment
 
-Powerchrome is a single execution file (powerchrome.exe), only `powerchrome.exe, powerchrome.js` 
-and `Powerbuilder-Runtime` are requried. The other files are optionl or depends on usage.
+The following files are included in the downloaded package 
+[powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip)
 
-File Name       | Description
-----------------|------------------------
-powerchrome.exe | Powerchrome progam 
-powerchrome.js  | javascript interface
-powerchrome.ini | ini config file (optional, recommeded for development only)
-powerchrome.html| default html program. it is API quick reference 
-powerchrome.pbl | source code of Powerbuilder (2019R3)
-sample.mdb      | sample database (MS Access)
-sample-dialog.html | sample html dialog 
-sample-dialog.js  | sample javascript for html dialog 
+File Name       	| Description
+--------------------|------------------------
+powerchrome.exe 	| PowerChrome program 
+powerchrome.js		| JavaScript interface
+powerchrome.ini 	| INI config file (optional, recommended for development only)
+powerchrome.html	| Default HTML program. it is API quick reference 
+powerchrome.pbl 	| Source code of Powerbuilder (2019R3)
+sample*.*      	  | Sample files (HTML and MS Access Database)
+*.dll           	| Powerbuilder-Runtime Libraries
+.\pbcef           | chromium (cef)
+
+PowerChrome is a single execution file (powerchrome.exe), only `powerchrome.exe, powerchrome.js` 
+and `Powerbuilder-Runtime` are required. The other files are optional or depends on usage.
 
 
-### Command Line Options
+### Command-line Options
 
 ``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
 
 * specify application startup page by ``/app={startup.html}`` or ``/url={startup.html}``
 * open application in fullscreen ``/fullscreen`` or ``/kiosk``
 * use customized interface script by ``/script={interface.js}``
-* crawl page by css-selector, and save to html file ``/ulr={link} /save={name.html} /css=selector``
-* print page to pdf file ``/ulr={link} /save={name.pdf}``
+* crawl page by css-selector, and save to HTML file ``/ulr={link} /save={name.html} /css=selector``
+* print page to PDF file ``/ulr={link} /save={name.pdf}``
+
+### Documenation
+
+Sorry that documentation is still in progress, will be available in https://casualwriter.github.io/powerchrome
+
+* [Getting Started](https://casualwriter.github.io/powerchrome/?file=get-started.md)
+* [Interface (API)](https://casualwriter.github.io/powerchrome/?file=interface.md)
+* [Development Guide](https://casualwriter.github.io/powerchrome/?file=development.md)
+
+or click on the button of [documentaion] within PowerChrome.
+
+
+## Misc. Notes
 
 
 ### Cloud Mode and Security
 
-Powerchrome will run in **cloud mode** when the startup link start with `https://` or `https://`. 
+PowerChrome will run in **cloud-mode** when the startup link start with `https://` or `https://`. 
 
-In cloud mode, **PowerChrome-Javascript-Interface** is available for the url in **SAME DOMAIN**. 
+In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
 
-for example, run chromechrome.exe for web-application:
+for example, run `chromechrome.exe` for web-application:
 
 ```
 powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html
-
 ```
 
-API will only available for url start with ``https://casualwriter.github.io/powerchrome/``.
-If navigate to another domain, Powerchrome work like normal chromium browser.
+API will only available for URL start with ``https://casualwriter.github.io/powerchrome/``.
+If navigate to another domain, PowerChrome works like normal chromium browser.
 
 
-### Compare with Powerpage
+### About Powerbuilder
 
-PowerChrome is rewritten based on same design idea of [Powerpage](https://github.com/casualwriter/powerpage) 
-with significant improvement.
+**No need to know anything about Powerbuilder** if just develop HTML/JavaScript application.
 
-| Comparison       | PowerChrom        | PowerPage
-|------------------|-----------------|----------
-| Web Engine       | chromium         | IE 11
-| Installation     | portable          | portable
-| Package Size     | 170M              | 14M
-| API (javascript) | sync mode         | async mode
-| Developed By     | powerbuilder 2019R3 | powerbuilder 10.5
-| Capability       | all purposes        |  simple application
+PowerChrome is developed using `Powerbuilder 2019R3`, (which is regarded outdated in
+development world?). PowerChrome inherits some nice features from Powerbuilder.
+
+#### Connect to database by native driver
+
+PowerChrome uses **native driver** to connect major database server (i.e. Oracle, Sybase, MS SQL Server, Informix), 
+which is more stable and efficient than JDBC/ODBC/ADO, as long as still can use JDBC/ODBC/ADO/OLE-DB to connect 
+all kind of database.
+
+#### Datawindow and Report Builder
+
+PowerChrome will make use of `Datawindow` for reporting. Any version of Powerbuilder IDE could be used 
+as a report builder. 
+
+#### Interact with PB objects
+
+PowerChrome is able to call window/function/datawindow/userobject in Powerbuilder Libraries. 
 
 
 ### To Do List
 
 * documentation - API 
-* documentation - Get Started
 * documentation - Development Guide
-* pb.datawindow(elementID, parm, action) action:=preview|print|form|report
+* pb.datawindow(dwSyntax, parm, action), action:=preview|print|form|report
 * pb.encode(text, manner), pb.decode(text,manner)
 * local application - markdown editor, web crawler
 * cloud application - oracle schema, oracle helper, db-reporting
 
 
-### History
+### Modification History
 
 * 2022/12/01, release version v0.56
 * 2022/12/09, release v0.60, implement security for cloud mode.
-* 2022/12/12, use chatGPT to refine some description
-
+* 2022/12/16, update document, (Home, Getting Started, API, in progress)
