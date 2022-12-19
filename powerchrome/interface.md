@@ -74,9 +74,9 @@ execute DOS command by `WScript.Shell -> run()`
 
 ##### Parameters
 
-* {command} := window command
-* {path} := the file path to run the command
-* {style} := [ normal | min | max | hide ] [ +wait ]
+* `{command}` window command
+* `{path}` the file path to run the command
+* `{style}` := [ normal | min | max | hide ] [ +wait ]
 
 ##### Return
 
@@ -105,11 +105,11 @@ execute command using window shell. this function will windows library `shell32 
 
 ##### Parameters
 
-* {file} := file in windows searchable path
-* {parm} := parameters 
-* {path} := the file path
-* {action} := open | print | runas | edit | explorer | find
-* {style} :=  normal | min | max | hide 
+* `{file}` filename in windows searchable path
+* `{parm}` parameters
+* `{path}` directory of the file
+* `{action}` := open | print | runas | edit | explorer | find
+* `{style}` :=  normal | min | max | hide 
 
 ##### Return
 
@@ -126,7 +126,12 @@ execute command using window shell. this function will windows library `shell32 
 
 ### pb.sendkeys()
 
-send keystrokes by `WScript.Shell -> SendKeys()`
+send keystrokes by `WScript.Shell -> SendKeys()` with the following enhancement.
+
+1. execute DOS command (e.g. may activate an external program)
+2. go to window program for specified title, so that to send keystrokes to this program.
+3. delay for seconds, or milliseconds
+4. execute JavaScript. (e.g. use JavaScript to show hints dialog) 
 
 ##### Syntax
 
@@ -137,12 +142,12 @@ send keystrokes by `WScript.Shell -> SendKeys()`
 
 {keystrokes} support the following special commands with keystrokes, separated by delimiter "/"
 
-* {keystrokes} := `[run={command}] / [title={title} / [s={seconds}] / [ms={ms}] / [js={JavaScript}
-* `run={command}` run dos command, e.g. call notepad.exe
-* `title={title}` go to the app/window which title={title}
-* `s={seconds}` delay for seconds
-* `ms={ms}` delay for millisecond seconds
-* `js={JavaScript}` run JavaScript
+* {keystrokes} := `[/run={command}] [/title={title}] [/s={seconds}] [/ms={ms}] [/js={JavaScript}
+* `/run={command}` run dos command, e.g. call notepad.exe
+* `/title={title}` go to window program for specified title text
+* `/s={seconds}` delay for seconds
+* `/ms={ms}` delay for milliseconds
+* `/js={JavaScript}` run JavaScript
 
 ##### Return
 
@@ -164,34 +169,69 @@ popup HTML dialog for multiple usages.
 * crawl a web page
 * print a web page
 * save a web page to HTML or PDF
+* inject JavaScript
 
 ##### Syntax
 
-* syntax1: ``pb.popup()`` 
-* syntax2: ``pb.api( 'popup', {} )``
+* syntax1: ``pb.popup( {url}, {left:{left}, top:{top}, width:{width}, height:{height}, script:{script}, import:{jsFile} } )`` 
+* syntax2: ``pb.api( 'popup', { url:{url}, {left:{left}, top:{top}, width:{width}, height:{height}, script:{script}, import:{jsFile}  } )``
+
+* syntax3: ``pb.popup( {url}, { save:{file}, select:{selector}, mode:{mode} )``
+* syntax4: ``pb.popup( 'popup', { url:{url}, save:{file}, select:{selector}, mode:{mode} )``
 
 ##### Parameters
 
+* `{width}, {height}` assign the width/height of popup window
+* `{left}, {top}` assign left/top position of popup window. center the window if no specified.
+* `{file}` is the output filename. (filename.html for html format, or filename.pdf for PDF output)
+* `{mode} := min | max | hide`, "min/hide" mode may useful for save/crawling web-page.
+* `{select} := css-selector` for crawling web page. return string if no output file specified.
+* `{script} := JavaScript` to execute JavaScript after page loaded.
+* `{import} := jsFile` to import js library after page loaded.
+
 ##### Return
 
+* return file name if output to html/pdf file
+* return string in html format if crawling web-page
+* return string by `pb.close( {return-string} )` for popup url dialog
+
 ##### Samples
+
+* open url in html dialog ``pb.popup('https://news.ycombinator.com/')``
+* popup dialog in specified width/height ``pb.popup('https://html5test.com/', {width:1024, height:700} )``
+* popup dialog in specified position ``pb.popup('https://html5test.com/', {left:200, top:300, width:400, height:200})``
+* load web page, and save to file ``pb.popup( 'https://html5test.com/', {save:'html5test.html', select:'table'} )``
+* load web page, and save to PDF ``pb.popup( 'https://html5test.com/', {save:'./html5test.pdf', mode:'min'} )``
+* crawl selected html for url  ``pb.popup( 'https://news.ycombinator.com/front', {select:'table'} )``
+* execute JavaScript after page loaded ``pb.popup( 'sample-dialog.html', {script:"pb.alert('welcome')"} )``
+* import JS library after page loaded ``pb.popup( 'sample-dialog.html', {import:"sample-dialog.js"} )``
 
 
 ### pb.popup(html)
 
-popup HTML dialog by a string in HTML format.
+popup HTML dialog, render page by specified HTML string.
 
 ##### Syntax
 
-* syntax1: ``pb.popup()`` 
-* syntax2: ``pb.api( 'popup', {} )``
+* syntax1: ``pb.popup( html, {left:{left}, top:{top}, width:{width}, height:{height}, script:{script}, import:{jsFile}  } )`` 
+* syntax2: ``pb.api( 'popup', { url:{html}, left:{left}, top:{top}, width:{width}, height:{height}, script:{script}, import:{jsFile}  } )``
 
 ##### Parameters
 
+* `{html}` is the string to render page in HTML format.
+* `{width}, {height}` assign the width/height of popup window
+* `{left}, {top}` assign left/top position of popup window. center the window if no specified.
+* `{script} := JavaScript` to inject JavaScript after page loaded.
+* `{import} := jsFile` to import js library after page loaded.
+
 ##### Return
+
+* return string by `pb.close( {return-string} )`
 
 ##### Samples
 
+* render page of hello-world ``pb.popup( '<h2>Hello World!</h2>', { width:300, height:200 } )``
+* render page by html string ``pb.popup( pb('sub-page').innerHTML, { width:500, height:300 } )``
 
 
 ### pb.close()
@@ -202,7 +242,7 @@ close current window/dialog, with string return.
 
 * syntax1: ``pb.close()``
 * syntax2: ``pb.close( {return-string} )`` 
-* syntax2: ``pb.api( 'close', {return-string} )``
+* syntax3: ``pb.api( 'close', {return-string} )``
 
 ##### Return
 
@@ -210,84 +250,181 @@ return specified string
 
 ##### Samples
 
-
+* close and return input value  ``pb.close( pb('user_name').value )`` 
+* close with options  ``pb.close( 'yes' )``, ``pb.close( 'no' )``  
 
 
 ## Http Request
 
 ### pb.httpSource()
 
+get the source of specified link, for multiple purpose
+
+1. get html source for html page
+2. get json result for web-service (cross-domain is ok)
+3. get result in other format
+
+##### Syntax
+
+* syntax1: ``pb.httpSource( {url} )`` 
+* syntax2: ``pb.api( 'http-source', {url} )``
+
+##### Parameters
+
+* `{url}` is the link to get HTML source.
+
+##### Return
+
+a string of the url source (html format, or JSON format, or other format)
+
+##### Samples
+
+* get source of url  ``html = pb.httpSource('https://casualwriter.github.io')``
+* get json data ``rs = pb.httpSource('https://hacker-news.firebaseio.com/v0/item/2921983.json')``
+
+
 ### pb.httpRequest()
+
+Send http-request. 
+
+##### Syntax
+
+* syntax1: ``pb.httpRequest( {method}, {url}, {data}, {contentType} )`` 
+* syntax2: ``pb.api( 'http-request', { method: {method}, url: {url}, content: {contentType}, data: {data} } )``
+
+##### Parameters
+
+* `{method}` := GET | POST | PUT | DELETE 
+* `{url}` is the link to send request.
+* `{data}` is the parameter for POST/PUT action
+* `{contentType}` assign the content type in request header
+
+##### Return
+
+a string in json format. e.g. `{ "status":200, "code": 1 "result":"....." }`
+
+##### Samples
+
+* send http Request ``rs = pb.httpRequest('GET','https://www.google.com/search?q=html')``
+* send POST request. ``rs = pb.httpRequest('GET','https://localhost:8080/myWebService.jsp', {id:"1024"} )``
 
 
 ## Work with database
 
 ### pb.dbConnect()
 
+connect to database transaction. 
+
 ### pb.dbCommit()
+
+commit database transaction. 
 
 ### pb.dbRollback()
 
+rollback database transaction. 
+
 ### pb.dbQuery()
+
+execute SQL query and return string in json format.
 
 ### pb.dbTabel()
 
+execute SQL query and return string in HTML table format.
+
 ### pb.dbExecute()
+
+execute SQL statement.
 
 
 ## Access file system
 
 ### pb.fileexists()
 
+check file existence.
+
 ### pb.fileread()
+
+read a text file.
 
 ### pb.fileappend()
 
+append to a text file 
+
 ### pb.filewrite()
+
+write to a text file
 
 ### pb.filecopy()
 
+copy file.
+
 ### pb.filemove()
+
+move file
 
 ### pb.filedelete()
 
+delete file
 
 
 ## Console and Message
 
 ### pb.console()
 
+show message in console panel.
+
 ### pb.alert()
+
+display alert message box. 
 
 ### pb.msgbox()
 
+display a message box. 
+
 ### pb.error()
 
+display error message in console panel.
+
 ### pb.status()
+
+display message in status bar.
+
 
 ## Application / Misc
 
 ### pb.property()
+
 ### pb.session()
+
 ### pb.print()
+
 ### pb.printSetup()
+
 ### pb.saveas()
+
 ### pb.close()
+
 
 ## Work with Powerbuilder
 
 ### pb.Window()
+
 ### pb.about()
+
 ### pb.login()
+
 ### pb.function()
+
 ### pb.datawindow()
+
 
 ## Browser Setup
 
 ### pb.api('position')
-### pb.api('console')
-### pb.api('minibutton')
 
+### pb.api('console')
+
+### pb.api('minibutton')
 
 
 
