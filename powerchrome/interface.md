@@ -69,7 +69,7 @@ execute DOS command by `WScript.Shell -> run()`
 ##### Syntax
 
 * syntax1: ``pb.run( {command} )`` 
-* syntax2: ``pb.run( {command}, path, style )``
+* syntax2: ``pb.run( {command}, {path}, {style} )``
 * syntax3: ``pb.api( 'run', { cmd:{command}, path:{path}, style: {style} } )``
 
 ##### Parameters
@@ -80,7 +80,7 @@ execute DOS command by `WScript.Shell -> run()`
 
 ##### Return
 
-* for syntax1, returns "1" if it is successful and "-1" if an error occurs.
+* for syntax1, returns "1" for success, and "-1" if an error occurs.
 * for syntax2/syntax3, return "0"
 
 ##### Sample
@@ -177,7 +177,7 @@ popup HTML dialog for multiple usages.
 * syntax2: ``pb.api( 'popup', { url:{url}, {left:{left}, top:{top}, width:{width}, height:{height}, script:{script}, import:{jsFile}  } )``
 
 * syntax3: ``pb.popup( {url}, { save:{file}, select:{selector}, mode:{mode} )``
-* syntax4: ``pb.popup( 'popup', { url:{url}, save:{file}, select:{selector}, mode:{mode} )``
+* syntax4: ``pb.api( 'popup', { url:{url}, save:{file}, select:{selector}, mode:{mode} )``
 
 ##### Parameters
 
@@ -192,8 +192,8 @@ popup HTML dialog for multiple usages.
 ##### Return
 
 * return file name if output to html/pdf file
-* return string in html format if crawling web-page
-* return string by `pb.close( {return-string} )` for popup url dialog
+* return string in html format for crawling web-page
+* return string by `pb.close( {return-string} )` for popup html dialog
 
 ##### Samples
 
@@ -313,7 +313,48 @@ a string in json format. e.g. `{ "status":200, "code": 1 "result":"....." }`
 
 ### pb.dbConnect()
 
-connect to database transaction. 
+connect to database transaction.
+
+##### Syntax
+
+* syntax1: ``pb.dbConnect( {DBMS}, {dbParm}, {ServerName}, {logID}, {logPass} )`` 
+* syntax2: ``pb.api( 'db-connect', { dbms:{DBMS}, dbparm: {dbParm}, servername: {ServerName}, logid: {logID}, logpass: {logPass} )``
+
+##### Parameters
+
+##### Return
+
+* if connect success, return `{ "status":0, "sqlerrtext":"", "dbHandle":106262036 }`
+* if connect failed, return `{ "status":-1, "sqlerrtext":"error message", "dbHandle":0 }`
+
+##### Code Samples
+
+~~~
+// connect to Oracle (native O90) 
+let rtn = JSON.parse( pb.dbConnect( 'O90', '', 'XE', 'scott', 'tiger' ) )
+
+if (rtn.status < 0 ) {
+  pb.alert( 'Error! Cannot connect to database\nMessage:' + rtn.sqlerrtext )
+  return
+}
+~~~
+
+~~~
+// connect to Oracle (native for 11g - 19c) 
+pb.dbConnect( 'ORA', '', 'Oracle19DB', '@jpbpepcqbp', '@lpaqmpmpap' )
+
+// connect to Oracle via JDBC 
+pb.dbConnect( "JDBC", "Driver='oracle.jdbc.driver.OracleDriver',URL='jdbc:oracle:thin:scott/tiger@192.168.1.20:1521/xe'" )
+
+// connect to Oracle via OLEDB (OraOLEDB.Oracle)
+pb.dbConnect('OLE', "Provider='OraOLEDB.Oracle'; DataSource='XE'", '.', 'tiger', 'scott')
+
+// connect to Oracle via OLEDB (MSDAORA) 
+pb.dbConnect('OLE', "Provider='MSDAORA'; DataSource='XE'", '.', 'tiger', 'scott')
+
+// connect to MS Access via ODBC 
+pb.dbConnect( "ODBC", "connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'" )
+~~~
 
 ### pb.dbCommit()
 
@@ -338,31 +379,31 @@ execute SQL statement.
 
 ## Access file system
 
-### pb.fileexists()
+### pb.fileExists()
 
 check file existence.
 
-### pb.fileread()
+### pb.fileRead()
 
 read a text file.
 
-### pb.fileappend()
+### pb.fileAppend()
 
 append to a text file 
 
-### pb.filewrite()
+### pb.fileWrite()
 
 write to a text file
 
-### pb.filecopy()
+### pb.fileCopy()
 
 copy file.
 
-### pb.filemove()
+### pb.fileMove()
 
 move file
 
-### pb.filedelete()
+### pb.fileDelete()
 
 delete file
 
@@ -407,7 +448,7 @@ display message in status bar.
 
 ## Work with Powerbuilder
 
-### pb.Window()
+### pb.window()
 
 ### pb.about()
 

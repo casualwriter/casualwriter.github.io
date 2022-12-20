@@ -136,10 +136,10 @@ All setting can be reconfigured by JavaScript API. It is recommended use `powerc
 environment, and use JavaScript to configure application in production.
 
 
-### Encrypt sensitive information
+### Encrypt sensitive information  {secret-string}
 
 `secret-string` is an encrypted string leading with '@'. The string could be used for the following sensitive 
-paymasters in command-line or `powerchrome.ini`. 
+parameter in command-line or `powerchrome.ini`. 
 
 for example, use "secret-string" for startup URL in command line. 
 
@@ -199,6 +199,95 @@ The parameter of "script" could be any valid JavaScript, or below predefined act
 * `login`: popup login-dialog. => `pb.login()`
 
 
+## Connect to Database
+
+PowerChrome connects to major database using native driver or using JDBC/ODBC/ADO/OLE-DB to 
+connect to all kind of database.
+
+The database driver is provided by following file in `Powerbuilder 2019R3 Run-time`. 
+
+File        | DBMS | Description
+------------|------|--------------
+pbin9.dll   | IN9  | INFORMIX I-Net 9
+pbi10.dll   | I10  | INFORMIX I-Net 10 and 12
+pbo90.dll   | O90  | Oracle 9i
+pbo10.dll   | O10  | Oracle 10g
+pbora.dll   | ORA  | Oracle 11g and later (12c, 18c, and 19c)
+pbsnc.dll   | SNC  | SQL Native Client for Microsoft SQL Server
+pbmsoledbsql.dll | MSO |  Microsoft OLE DB Driver for SQL Server
+pbdir.dll   | DIR  | DirectConnect
+pbase.dll   | ASE  | Adaptive Server Enterprise CT-LIB for Adaptive Server 15 only
+pbsyc.dll   | SYC  | Adaptive Server Enterprise CT-LIB
+pbodb.dll   | ODBC | Microsoft ODBC driver 
+pbole.dll   | OLE  | OLE DB interface
+pbado.dll, pbrth.dll | ADO | ADO.NET database interface
+pbjdb.dll   | JDBC | JDBC database interface
+
+Connection parameters can be defined in the [database] section of `powerchrome.ini`
+
+~~~
+[database]
+DBMS = ORA
+ServerName = {tnsname}
+LogId  = {login Id}  
+logPass= {login password}
+DBParm = {connectstring or DB parameters}
+~~~
+
+or connect database by JavaScript `pb.dbConnect(...)` in startup page.
+
+* Syntax: `pb.dbConnect( {dbms}, {dbParm}, {dbServer}, {logId}, {logPass} )`
+* return: dbHandle if connected successfully.
+
+### Connect to Oracle
+
+PowerChrome may connect to oracle by native driver, JDBC, OLDDB, ODBC.
+
+* Native O90 `pb.dbConnect( 'O90', '', 'XE', 'scott', 'tiger' )`
+* Native ORA `pb.dbConnect( 'ORA', '', 'Oracle19DB', '@jpbpepcqbp', '@lpaqmpmpap' )`
+* JDBC `pb.dbConnect( "JDBC", "Driver='oracle.jdbc.driver.OracleDriver',URL='jdbc:oracle:thin:scott/tiger@192.168.1.20:1521/xe'" )`
+* OLE DB `pb.dbConnect('OLE', "Provider='OraOLEDB.Oracle'; DataSource='XE'", '.', 'tiger', 'scott')
+* OLE DB `pb.dbConnect('OLE', "Provider='MSDAORA'; DataSource='XE'", '.', 'tiger', 'scott')
+
+or defined in `powerchrome.ini` using [secret-string](#secret-string) if necessary.
+
+~~~
+[database]
+DBMS      = O90
+SeverName = XE
+LogId     = scott
+logPass   = tiger
+
+[database]
+DBMS      = ORA
+SeverName = Oracle19DB
+LogId     = @jpbpepcqbp
+logPass   = @lpaqmpmpap
+
+[database-jdbc]
+DBMS   = JDBC
+dbParm = Driver='oracle.jdbc.driver.OracleDriver',URL='jdbc:oracle:thin:scott/tiger@192.168.1.20:1521/xe'
+
+[database-ole1]
+DBMS    = OLE
+LogId   = scott
+logPass = tiger
+dbParm  = Provider='MSDAORA'; DataSource='XE'
+
+[database-ole2]
+DBMS    = OLE
+LogId   = scott
+logPass = tiger
+dbParm  = Provider='OraOLEDB.Oracle'; DataSource='XE'
+
+~~~
+
+### Connect to MS SQL
+
+### Connect to MySQL
+
+
+
 ## Sample application
 
 let's make a markdown editor
@@ -242,8 +331,6 @@ let's start up with a HTML programming skeleton
 <sql id="sql-load-list"> ... </sql>
 <sql id="sql-save-data"> ... </sql>
 
-</body>
-
 <!------------- script section -------------------->
 <script>
 
@@ -275,7 +362,6 @@ app.open = () => {
 ### Debug in chrome browser
 
 ### Run within PowerChrome
-
 
 ## Deployment
 
