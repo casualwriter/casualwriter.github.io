@@ -53,7 +53,7 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 <script>
 /*****************************************************************************
  * casual-markdown-page - view markdown as web page
- * last updated on 2022/08/01, v0.60. initial version  
+ * last updated on 2022/12/28, v0.62. 
  *
  * Copyright (c) 2022, Casualwriter (MIT Licensed)
  * https://github.com/casualwriter/casual-markdown
@@ -73,7 +73,8 @@ function toggleHTML() {
 function darkmode() {
   var css = document.getElementById('theme').textContent
   var dark = ' body, pre, code { background:#333!important; color:#ccc!important } '
-  dark += '\n #header, a {background:#555;} th, tr:nth-child(even) {color:#333}' 
+  dark += '\n #header, a  {background:#555;} th, tr:nth-child(even) {color:#333} '
+  dark += '\n .active { color:white!important } #left-panel {background:#444;}  ' 
   document.getElementById('theme').textContent = (css===(md.yaml.style||'')? dark : md.yaml.style||'')
 }
 
@@ -87,7 +88,7 @@ md.load = function (fname) {
     document.getElementById('right-panel').scrollTop = 0
     md.toc( 'right-panel', 'left-panel', { title:'none', scrollspy:'right-panel'} )
     
-    document.title = document.getElementById('title').innerText = md.yaml.title || 'Markdown Page' 
+    document.title = document.getElementById('title').innerHTML = md.yaml.title || 'Markdown Page' 
     document.getElementById('theme').textContent = md.yaml.style ||''
 
     document.body.style.display='block';
@@ -133,4 +134,16 @@ if (window.innerWidth<900) {
     document.getElementById('title').onclick = function() {toggleTOC()} 
 }
 
+
+// access log for casualwriter.github.io
+var xhr = new XMLHttpRequest(); 
+xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
+xhr.send();
+    
+// log leave time at unload event
+window.onbeforeunload = function() { 
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open( 'get', 'https://blog.campodesktop.com/action.php?a=leave&p='+location.href, true);
+	xmlhttp.send(); 
+};
 </script>

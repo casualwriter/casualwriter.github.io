@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-github    : https://github.com/casualwriter/casual-markdown 
+github    : https://github.com/casualwriter
 title     : Casualwriter
 menu      :    
   Home            : index.md
@@ -7,22 +7,26 @@ menu      :
   Casual-Markdown : ./casual-markdown
   PowerPage       : ./powerpage
   PowerChrome     : ./powerchrome
-  Print           : javascript:print() 
 -----------------------------------------------------------------------------
 
 <style title="ukraine color theme">
 #header { background: linear-gradient(to bottom right, #06c, #fc0); }
 body { background:#333!important; color:#bbb!important; FONT-FAMILY:CONSOLAS,ARIAL; } 
 pre, code { background:#444!important; color:#ddd!important; border-radius:6px;}
-a { color:#eee; } 
+a { color:#eee; border-bottom:1px dashed grey } 
 ul { margin:8px }
 th, tr:nth-child(even) {color:#333}
-.markdown { max-width:900px; margin:auto }
+.markdown { max-width:960px; margin:auto }
 .toc .active { color:#fc0!important }
 .toc li:hover, a:hover{ background:#06c!important }
 h1, h2 { border-bottom:1px solid grey }
 h2, h3 { color:skyblue!important }
 </style>
+<script title="access log">
+  var xhr = new XMLHttpRequest(); 
+  xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
+  xhr.send();  
+</script>  
 
 ## About Casualwriter
 
@@ -118,7 +122,7 @@ to use it in html page, just include the file of `casual-markdown.js` and `casua
    
 ### casual-markdown-doc {casual-markdown-doc}
 
-[casual-markdown-blog](https://github.com/casualwriter/casual-markdown-blog) 
+[casual-markdown-doc](https://github.com/casualwriter/casual-markdown-doc) 
 is a handy solution to use markdown as html document. 
 
 just add 4 line code in the header, make markdown document into a well-look web page.
@@ -136,6 +140,10 @@ just add 4 line code in the header, make markdown document into a well-look web 
 content in markdown format
 
 ~~~
+
+For example: document of `Casual-Markdown Syntax` 
+  [layout](https://casualwriter.github.io/casual-markdown/casual-markdown-syntax.html), 
+  [source](https://github.com/casualwriter/casualwriter.github.io/blob/main/casual-markdown/casual-markdown-syntax.html)
     
 
 ### casual-markdown-page  {casual-markdown-page}
@@ -251,7 +259,7 @@ It is a very simple hta script (275 lines). no dependance. Just click-and-run.
 * responsive design, fit for mobile and desktop
 
  
-### Simple Node Web-Service  {node-simple-ws}
+### Simple Web-Service by Node.js  {node-simple-ws}
 
 [node-simple-ws](https://github.com/casualwriter/node-simple-ws) is simple web-service program for general data retrieval.
 
@@ -280,4 +288,5 @@ It is a very simple hta script (275 lines). no dependance. Just click-and-run.
 * 2022/08/24, release [casual-markdown-blog](https://github.com/casualwriter/casual-markdown-blog) v0.60
 * 2022/09/20, release [casual-markdown-cv](https://github.com/casualwriter/casual-markdown-cv)
 * 2022/11/20, rebuilt this page using [casual-markdown-page](https://github.com/casualwriter/casual-markdown-page)
-* 2022/12/01, release [powerchrome](https://github.com/casualwriter/powerchrome) v0.56
+* 2022/12/09, release [powerchrome](https://github.com/casualwriter/powerchrome) v0.60
+

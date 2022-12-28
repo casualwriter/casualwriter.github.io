@@ -1,16 +1,21 @@
 -----------------------------------------------------------------------------
-title     : PowerChrome for HTML/JavaScript application
-style     : #header { background: linear-gradient(to bottom right, #06c, #fc0); }
+title     : PowerChrome for Desktop Application
 menu      :    
-  Dar<u>k</u>  : javascript:darkmode()
-  Home         : index.md
-  Get-Started  : get-started.md
+  GetStarted   : get-started.md
   Interface    : interface.md
   Development  : development.md
-  github       : https://github.com/casualwriter/powerchrome
+  <img src='sun.svg' width=20>    : javascript:darkmode()
+  <img src='github.svg' width=20> : https://github.com/casualwriter/powerchrome
 -----------------------------------------------------------------------------
-
-## PowerChrome for HTML/JavaScript application
+<style>
+  .markdown   { max-width:900px; margin:auto }
+  #header     { background: linear-gradient(to bottom right, #06c, #fc0) } 
+  #left-panel { background: linear-gradient(to bottom right, #eee, #888) }  
+  h1, h2      { border-bottom:1px solid grey }
+  h2, h3, h4  { color:#06c }  
+</style>
+ 
+## PowerChrome for Desktop Application
 
 PowerChrome is a portable chromium-base web browser to enable fast and easy development 
 of desktop applications using HTML and JavaScript. 
