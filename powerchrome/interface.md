@@ -4,15 +4,15 @@ menu      :
   GetStarted  : get-started.md
   Interface   : interface.md
   Development : development.md
-  <img src='sun.svg' width=20>    : javascript:darkmode()
+  <img src='sun.svg' width=20>  : javascript:darkmode()
   <img src='home.svg' width=20> : index.md
 -----------------------------------------------------------------------------
 <style>
   .markdown   { max-width:900px; margin:auto }
-  #header     { background: linear-gradient(to bottom right, #06c, #fc0) } 
-  #left-panel { background: linear-gradient(to bottom right, #eee, #888) }  
+  #header     { background: linear-gradient(to bottom right, #06c, #fc0) }
+  #left-panel { background: linear-gradient(to bottom right, #eee, #888) }
   h1, h2      { border-bottom:1px solid grey }
-  h2, h3, h4  { color:#06c }  
+  h2, h3, h4  { color:#06c }
 </style>
 
 ## Overview (API)
@@ -20,7 +20,7 @@ menu      :
 PowerChrome is written for html/javascript application. Basically it is a chromium-base (cef) web browser with 
 interface with Powerbuilder application engine.
 
-The interface provides the following all application supports.
+The interface provides the following application supports.
 
 * access `windows shell` to run/execute command
 * access `file system` 
@@ -38,18 +38,23 @@ Please note that interface call is running in **Synchronization Modes**. no need
 PowerChrome will load startup HTML page with builtin chromium-base web browser, and import `powerchrome.js` 
 to initialize interface, then call `window.onPageReady()` for application startup.
 
-After interface is initialized, HTML/JavaScript application may call `pb.apiFunctions(..)` to application service.
+After interface is initialized, HTML/JavaScript application may call `pb.apiFunctions(..)` for application service.
 
 
 ### API Syntax
 
-There are three forms for an API call.
+There are three forms for an API call. For example,
 
 * api-function: ``pb.run( 'notepad.exe', 'c:/temp' )``
 * api-action: ``pb.api( 'run', {cmd: 'notepad.exe', path: 'c:/temp' } )``
 * api-url: ``window.webBrowser.ue_interface( 'run?cmd=notepad.exe&path=c:/temp' )``
 
-It is recommended to use ``api-function`` to access the interface. (``api-action`` is for internal usage)
+Notes:
+
+* `api-function` is the javascript functions created in `powerchrome.js` for specified purpose.
+* `api-action` is a js function calling API by action, in the syntax `pb.api( {action}, { parm1:value1, parm2:value2, ...}`.
+* `api-function` and `api-action` will transform to `api-url` format and pass to interface
+* `api-url` is for internal usage only, not recommended to use directly
 
 This document will cover `api-function` and `api-action` only.
 
@@ -307,7 +312,7 @@ a string in json format. e.g. `{ "status":200, "code": 1 "result":"....." }`
 
 ### pb.dbConnect()
 
-connect to database transaction.
+connect to database transaction. Please refer to [Get-Started - database](?file=get-started.md#database)
 
 ##### Syntax
 
@@ -316,12 +321,18 @@ connect to database transaction.
 
 ##### Parameters
 
+* `{DBMS}` := ORA | O90 | O10 | ODBC | JDBC | ADO | OLE | ...
+* `{dbParm}` is the additional parameters for DB drivers
+* `{ServerName}` is the database server name
+* `{LogID}` is the login user id for database server
+* `{logPass}` is the login password for database server
+
 ##### Return
 
 * if connect success, return `{ "status":0, "sqlerrtext":"", "dbHandle":106262036 }`
 * if connect failed, return `{ "status":-1, "sqlerrtext":"error message", "dbHandle":0 }`
 
-##### Code Samples
+##### Samples
 
 ~~~
 // connect to Oracle (native O90) 
@@ -362,44 +373,263 @@ rollback database transaction.
 
 execute SQL query and return string in json format.
 
-### pb.dbTabel()
+##### Syntax
+
+* syntax1: ``pb.dbQuery( {sql} )`` 
+* syntax2: ``pb.api( 'db-query', { sql:{sql} } )``
+
+##### Parameters
+
+* `{sql}` is the SQL query script
+
+##### Return
+
+~~~
+// if query success, return json string like 
+{ "colCount":4 , "rowCount":8 , 
+    "colLabels": [ "col-label-1", "col-label-2", "col-label-3", etc... ], 
+    "columns":  [ "col-name-1", "col-name-2", "col-name-3", etc.. ] , 
+    "data": [ { "col-name-1": row0-val1 , "col-name-2": row0-val2, ""col-name-3": row0-val3, etc..}, 
+              { "col-name-1": row1-val1 , "col-name-2": row1-val2, ""col-name-3": row1-val3, etc..}, 
+              etc...
+            ] 
+}
+
+// if query failed, return json string like below
+`{ "status":-2, "error": "cannot find table categories...\n\nselect * from categories" }
+~~~
+
+##### Samples
+
+* run query, return json string.  ``pb.dbQuery("select * from categories")``
+* run query, get json.  ``rs = JSON.parse(pb.dbQuery('select * from categories'))``
+
+
+### pb.dbTable()
 
 execute SQL query and return string in HTML table format.
+
+##### Syntax
+
+* syntax1: ``pb.dbTable( {sql} )`` 
+* syntax2: ``pb.api( 'db-table', { sql:{sql} } )``
+
+##### Parameters
+
+* `{sql}` is the SQL query script
+
+##### Return
+
+return a html table like below 
+
+~~~
+<table class=\"pb-table\">
+<tr><th>Categoryid</th> <th>Categoryname</th> <th>Description</th> <th>Remarks</th> </tr>
+<tr><td>1</td><td>Beverages</td><td>Soft drinks, coffees, teas</td><td>&nbsp;</td></tr>
+<tr><td>2</td><td>Condiments</td><td>Sweet and savory sauces</td><td>&nbsp;</td></tr>
+<tr><td>3</td><td>Confections</td><td>Desserts, candies, and sweet breads</td><td>&nbsp;</td></tr>
+</table>
+~~~
+
+##### Samples
+
+* run SQL query, return html table.  ``pb.dbTable('select * from categories')``
+* run SQL query, return html table.  ``pb.dbTable('SELECT * FROM NLS_DATABASE_PARAMETERS')``
+
 
 ### pb.dbExecute()
 
 execute SQL statement.
+
+##### Syntax
+
+##### Syntax
+
+* syntax1: ``pb.dbExecute( {sql} )`` 
+* syntax2: ``pb.api( 'db-execute', { sql:{sql} } )``
+
+##### Parameters
+
+* `{sql}` is the executable SQL script
+
+##### Return 
+
+* if success, return json string `{ "status": 1, "sqlcode":0, "sqlerrtext":"null" }`
+* if error, return json string `{ "status": -1, "sqlcode":-1, "sqlerrtext":"error message..." }
+
+##### Samples
+
+* Update Record. ``pb.dbExecute("update categories set remarks='testing..' where CategoryName='PowerChrome'")``
+* Insert Record. ``pb.dbExecute("insert into categories values (99, 'PowerChrome', 'Test Record', '')")``
+* Delete Record. ``pb.dbExecute("delete from categories where CategoryName like 'PowerChrome%'")``
 
 
 ## Access file system
 
 ### pb.fileExists()
 
-check file existence.
+check file existence, return a string of "true/false"
+
+##### Syntax
+
+* syntax1: ``pb.fileExists( {file} )``
+* syntax2: ``pb.api( 'file-exists', {file} )``
+
+##### Parameters
+
+* {file} is the file name or full path
+
+##### Return
+
+return string `"true"` if file exists, `"false"` if not exists
+
+##### Samples
+
+* check file existence. ``pb.fileExists('sample.txt')``
+* check file existence. ``pb.api( 'file-exists', 'sample.txt')``
 
 ### pb.fileRead()
 
-read a text file.
+read a text file. return file content in string.
+
+##### Syntax
+
+* syntax1: ``pb.fileRead( {file} )``
+* syntax2: ``pb.api( 'file-read', {file} )``
+
+##### Parameters
+
+* {file} is the file name or full path
+
+##### Return
+
+return file content in string. return empty string if file not found
+
+##### Samples
+
+* read ini file ``pb.fileRead('powerchrome.ini')``
+* read js file ``pb.api( 'file-read', 'powerchrome.js')``
+
 
 ### pb.fileAppend()
 
-append to a text file 
+append to a file in text format. if file not exists, create the file then append text
+
+##### Syntax
+
+* syntax1: ``pb.fileAppend( {file}, {text} )``
+* syntax2: ``pb.api( 'file-append', { file: {file}, text: {text} } )``
+
+##### Parameters
+
+* {file} is the file name or full path
+* {text} is the text to append
+
+##### Return
+
+return the count of characters appended.
+
+##### Samples
+
+* Append text to file. ``pb.fileAppend('sample.html', '<h3>hello world!</h3>\n')``
+* Append text to file. ``pb.api( 'file-append', {file:'sample.html', text:'this is a test message\n'} )``
+
 
 ### pb.fileWrite()
 
-write to a text file
+write to a file in text format. overwrite if file exists, create new file if file not exists.
+
+##### Syntax
+
+* syntax1: ``pb.fileWrite( {file}, {text} )``
+* syntax2: ``pb.api( 'file-write', { file: {file}, text: {text} } )``
+
+##### Parameters
+
+* {file} is the file name or full path
+* {text} is the text to write
+
+##### Return
+
+return the count of characters written.
+
+##### Samples
+
+* Write text. ``pb.fileAppend('sample.html', '<h3>hello world!</h3>\n')``
+* Write text. ``pb.api( 'file-write', { file:'sample.html', text:'<h3>hello world!</h3>\n' } )``
 
 ### pb.fileCopy()
 
-copy file.
+Copies one file to another.
+
+##### Syntax
+
+* syntax1: ``pb.fileCopy( {source}, {target} )``
+* syntax2: ``pb.api( 'file-copy', { source: {source}, target: {target} } )``
+
+##### Parameters
+
+* {source} is the source file name (or full path）
+* {target} is the destination to copy file
+
+##### Return
+
+* "1" for Success
+* "-1" for error opening source file
+* "-2" for error writing target file
+
+##### Samples
+
+* Copy file. ``pb.fileCopy( 'sample.txt', 'sample1.txt' )``
+* Copy file. ``pb.api( 'file-copy', {source:'sample1.txt', target:'sample2.txt'} )``
 
 ### pb.fileMove()
 
-move file
+move a file
+
+##### Syntax
+
+* syntax1: ``pb.fileMove( {source}, {target} )``
+* syntax2: ``pb.api( 'file-move', { source: {source}, target: {target} } )``
+
+##### Parameters
+
+* {source} is the source file name (or full path）
+* {target} is the destination to copy file
+
+##### Return
+
+* "1" for Success
+* "-1" for error opening source file
+* "-2" for error writing target file
+
+##### Samples
+
+* Move file. ``pb.fileMove( 'sample.txt', 'sample2.txt' )``
+* Move file. ``pb.api( 'file-move', { source:'sample1.txt', target:'sample.txt' } )``
+
 
 ### pb.fileDelete()
 
-delete file
+delete a file.
+
+##### Syntax
+
+* syntax1: ``pb.fileDelete( {file} )``
+* syntax2: ``pb.api( 'file-delete', {file} )``
+
+##### Parameters
+
+* {file} is the file name or full path
+
+##### Return
+
+return string `"true"` if file exists, `"false"` if not exists
+
+##### Samples
+
+* delete file. ``pb.fileDelete('sample1.txt')``
+* delete file. ``pb.api( 'file-delete', 'sample2.txt' )``
 
 
 ## Console and Message
@@ -466,7 +696,6 @@ display message in status bar.
 ## Document History (in progress..)
 
 * 2022/12/16  initial version for v0.60, in progress..
+* 2023/01/02  document db/file functions
 * 
 * to-do: execute sample command within PowerChrome
-* to-do: document for file API
-* to-do: document for database API

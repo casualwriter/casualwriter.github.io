@@ -9,10 +9,10 @@ menu      :
 -----------------------------------------------------------------------------
 <style>
   .markdown   { max-width:900px; margin:auto }
-  #header     { background: linear-gradient(to bottom right, #06c, #fc0) } 
-  #left-panel { background: linear-gradient(to bottom right, #eee, #888) }  
+  #header     { background: linear-gradient(to bottom right, #06c, #fc0) }
+  #left-panel { background: linear-gradient(to bottom right, #eee, #888) } 
   h1, h2      { border-bottom:1px solid grey }
-  h2, h3, h4  { color:#06c }  
+  h2, h3, h4  { color:#06c }
 </style>
 
 ## Side-Application
