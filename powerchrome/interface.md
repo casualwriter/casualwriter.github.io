@@ -12,7 +12,7 @@ menu      :
   #header     { background: linear-gradient(to bottom right, #06c, #fc0) }
   #left-panel { background: linear-gradient(to bottom right, #eee, #888) }
   h1, h2      { border-bottom:1px solid grey }
-  h2, h3, h4  { color:#06c }
+  h2, h3, h4  { color:#06c } 
 </style>
 
 ## Overview (API)
@@ -61,7 +61,7 @@ This document will cover `api-function` and `api-action` only.
 
 ## Access window shell
 
-### pb.run()
+### pb.run()    {run}
 
 execute DOS command by `WScript.Shell -> run()`
 
@@ -93,7 +93,7 @@ execute DOS command by `WScript.Shell -> run()`
 * call windows "Group Policy". ``pb.shell( 'gpedit.msc')``
 
 
-### pb.shell() 
+### pb.shell()    {shell}
 
 execute command using window shell. this function will windows library `shell32 -> ShellExecute()`
 
@@ -123,7 +123,7 @@ execute command using window shell. this function will windows library `shell32 
 * print file. ``pb.api( 'shell', { aciton:'print', file:'c:/temp/output.pdf' } )``
 
 
-### pb.sendkeys()
+### pb.sendkeys()   {sendkeys}
 
 send keystrokes by `WScript.Shell -> SendKeys()` with the following enhancement.
 
@@ -160,7 +160,7 @@ return string "1"
 
 ## HTML Dialog
 
-### pb.popup(url)
+### pb.popup(url)    {popup}
 
 popup HTML dialog for multiple usages.
 
@@ -233,7 +233,7 @@ popup HTML dialog, render page by specified HTML string.
 * render page by html string ``pb.popup( pb('sub-page').innerHTML, { width:500, height:300 } )``
 
 
-### pb.close()
+### pb.close()    {close}
 
 close current window/dialog, with string return.
 
@@ -253,9 +253,9 @@ return specified string
 * close with options  ``pb.close( 'yes' )``, ``pb.close( 'no' )``  
 
 
-## Http Request
+## Http Request   {http}
 
-### pb.httpSource()
+### pb.httpSource()    {httpsource}
 
 get the source of specified link, for multiple purpose
 
@@ -282,7 +282,7 @@ a string of the url source (html format, or JSON format, or other format)
 * get json data ``rs = pb.httpSource('https://hacker-news.firebaseio.com/v0/item/2921983.json')``
 
 
-### pb.httpRequest()
+### pb.httpRequest()    {httprequest}
 
 Send http-request. 
 
@@ -308,7 +308,7 @@ a string in json format. e.g. `{ "status":200, "code": 1 "result":"....." }`
 * send POST request. ``rs = pb.httpRequest('GET','https://localhost:8080/myWebService.jsp', {id:"1024"} )``
 
 
-## Work with database
+## Work with database   {db}
 
 ### pb.dbConnect()
 
@@ -464,7 +464,7 @@ execute SQL statement.
 * Delete Record. ``pb.dbExecute("delete from categories where CategoryName like 'PowerChrome%'")``
 
 
-## Access file system
+## Access file system    {file}
 
 ### pb.fileExists()
 
@@ -636,54 +636,168 @@ return string `"true"` if file exists, `"false"` if not exists
 
 ### pb.console()
 
-show message in console panel.
+show message in console panel. `console.log()` will be diverted to this function to show message.
+
+##### Syntax
+
+* syntax1: ``pb.console( {args} )``
+* syntax2: ``console.log( {args} )``
+
+##### Parameters
+
+{args} is the text/objects to show in console.
+
+##### Return
+
+string of the message showing in console
+
+##### Samples
+
+* show message. ``pb.console( 'hello world!' )``
+* show multiple values. ``pb.console( 'hello', 3+4, {status:1, msg:"done"} )``
+* use console.log. ``console.log( 'hello', 3+4, {status:1, msg:"done"} )``
+
+### pb.status()
+
+display message in status bar.
+
+##### Syntax
+
+``pb.status( {text} )``
+
+##### Return
+
+return {text}
+
+##### Samples
+
+* prompt message in status-bar ``pb.status('ready')``
+* prompt message in status-bar ``pb.status('file sample.ini not found!')``
+
 
 ### pb.alert()
 
-display alert message box. 
+display alert message box. this function call MessageBox() instead of `javascript:alert()`
+
+##### Syntax
+
+``pb.alert( {text} )``
+
+##### Parameters
+
+{text} is the text message for alert box
+
+##### Return
+
+return {text}
+
+##### Samples
+
+* show message ``pb.status('Data has been saved')``
+* alert for problem ``pb.status('file sample.ini not found!')``
 
 ### pb.msgbox()
 
-display a message box. 
+display a message box with options 
+
+##### Syntax
+
+``pb.msgbox( {title}, {message}, {options} )``
+
+##### Parameters
+
+* {title} is the title of message box
+* {message} is the message of the dialog box
+* {options} := ok | yes,no | yes,no,cancel | ok,cancel | retry,cancel | abort,retry,cancel
+* {options} := ok | yn | ync | oc | rc | arc  (in short form)
+
+##### Return
+
+return "1"/"2"/"3" depends of selection
+
+##### Samples
+
+* show message with title. ``pb.msgbox( 'ABC system', 'Data has been saved!' )``
+* with Yes/No options. ``pb.msgbox( '', 'Save data?', 'yes,no' )``
+* with ok/cancel options ``if ( pb.msgbox( 'System', 'Close and exit?', 'ok,cancel' ) == 1 ) pb.close();``
 
 ### pb.error()
 
 display error message in console panel.
 
-### pb.status()
+##### Parameters
 
-display message in status bar.
+* {code} is the error code
+* {message} is the error message 
+
+##### Source
+
+this function is defined in `powerchrome.js` by the following code. It will show to console only.
+
+```
+pb.error = (code,msg) => { return window.webBrowser.ue_message('console?[error='+code+'] '+msg) }
+```
+
+This function is used to standardize error handling. It can be redefined/customized with logging or other 
+handling in application.
 
 
 ## Application / Misc
 
 ### pb.property()
 
-### pb.session()
+get or set application properties
 
-### pb.print()
+### pb.session()    {session}
+
+get or set session variables
+
+### pb.print()      {print}
+
+show print dialog of printing current page. similar to `javascript:window.print()`
 
 ### pb.printSetup()
 
-### pb.saveas()
+show printer setup dialog
 
-### pb.close()
+### pb.saveas()     {saveas}
+
+save current page to HTML file or PDF file
 
 
 ## Work with Powerbuilder
 
-### pb.window()
+### pb.about()      {about}
 
-### pb.about()
+show about dialog
 
-### pb.login()
+### pb.login()      {login}
 
-### pb.function()
+popup login dialog for Windows account authentication.
 
-### pb.datawindow()
+### pb.window()     {window}
+
+call powerbuilder window entry
+
+### pb.function()   {function}
+
+call powerbuilder global function entry
+
+### pb.datawindow() - in development  {datawindow}
+
+make use of Powerbuilder datawindow for multiple purposes.
+
+1. display datawindow as report, preview and print out.
+2. use datawindow to print special labels
+3. use datawindow for data input
+
+#### Syntax
+
+* syntax1  ``pb.datawindow( {dwSyntax}, {Options} )``
+* syntax2  ``pb.api( 'datawindow', { syntax: {dwSyntax}, {Options} } )``
 
 
-## Browser Setup
+## Browser Setup    {browser}
 
 ### pb.api('position')
 
@@ -695,7 +809,6 @@ display message in status bar.
 
 ## Document History (in progress..)
 
-* 2022/12/16  initial version for v0.60, in progress..
+* 2022/12/16  initial version for v0.60
 * 2023/01/02  document db/file functions
-* 
-* to-do: execute sample command within PowerChrome
+* 2023/01/03  update document

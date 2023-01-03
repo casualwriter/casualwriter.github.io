@@ -92,16 +92,16 @@ To start coding, simply create an `index.html` file and write your code in any t
 The following files are included in the downloaded package 
 [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip)
 
-File Name       	| Description
---------------------|------------------------
-powerchrome.exe 	| PowerChrome program 
-powerchrome.js		| JavaScript interface
-powerchrome.ini 	| INI config file (optional, recommended for development only)
-powerchrome.html	| Default HTML program. it is API quick reference 
-powerchrome.pbl 	| Source code of Powerbuilder (2019R3)
-sample*.*      	  | Sample files (HTML and MS Access Database)
-*.dll           	| Powerbuilder-Runtime Libraries
-.\pbcef           | chromium (cef)
+Deploy | File Name       	| Description
+-------|--------------------|------------------------
+Yes | powerchrome.exe 	| PowerChrome program 
+Yes | powerchrome.js		| JavaScript interface
+    | powerchrome.ini 	| INI config file (optional, recommended for development only)
+    | powerchrome.html	| Default HTML program. it is API quick reference 
+    | powerchrome.pbl 	| Source code of Powerbuilder (2019R3)
+    | sample*.*      	  | Sample files (HTML and MS Access Database)
+Yes | *.dll           	| Powerbuilder-Runtime Libraries
+Yes | .\pbcef           | chromium (cef)
 
 PowerChrome is a single execution file (powerchrome.exe), only `powerchrome.exe, powerchrome.js` 
 and `Powerbuilder-Runtime` are required. The other files are optional or depends on usage.

@@ -84,18 +84,26 @@ with significant improvement.
 
 ### Problems & Solutions
 
-* [v] access window shell
-* [v] access file system
-* [v] access database 
-* [v] output html, pdf, printing
-* [v] session, application variables
-* [v] html pages interaction
-* [v] synchronization mode
-* [v] web-crawling
-* [v] ajax, corss-domain ajax
-* [v] login by window account
-* [ ] security alert for cloud-app
-* [ ] reporting support (using datawindow)
+Status | Problem | solution / remarks
+-------|---------|----------------------------------------
+v | synchronization mode   | no callback or promise.js
+v | access window shell    | api [pb.run()](?file=interface.md#run), [pb.shell](?file=interface.md#shell)
+v | access file system     | api [pb.file???()](?file=interface.md#file)
+v | access database        | api [pb.db???()](?file=interface.md#db)
+v | access printer         | api [pb.print(), pb.printSetup()](?file=interface.md#print)
+v | save to PDF / HTML     | api [pb.saveas()](?file=interface.md#saveas)
+v | session, app variables | api [pb.session()](?file=interface.md#session), [pb.property()](?file=interface.md#property)
+v | html pages interaction | api [pb.popup()](?file=interface.md#popup), [pb.session()](?file=interface.md#session)
+v | web-crawling           | api [pb.popup()](?file=interface.md#popup), [pb.httpSource()](?file=interface.md#httpsource)
+v | ajax, corss-domain ajax| api [pb.httpSource(), pb.httpRequest()](?file=interface.md#httpsource)
+v | login by window account| api [pb.login()](?file=interface.md#login)
+v | send keystrokes        | api [pb.sendkeys()](?file=interface.md#sendkeys)
+v | make use of pb windows | api [pb.window()](?file=interface.md#window)
+v | security for cloud-app | api works for same domain only 
+  | more control for cloud-app | api `pb.consent()`,  in development
+  | reporting using datawindow | api `pb.datawindow()`, in development
+  | simple app framework       | 
+  
 
 
 ### Document History (in progress..)
