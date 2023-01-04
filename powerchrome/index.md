@@ -15,7 +15,7 @@ menu      :
   h2, h3, h4  { color:#06c }
 </style>
  
-## PowerChrome for Desktop Application
+## PowerChrome for HTML/JS Application
 
 PowerChrome is a portable chromium-base web browser to enable fast and easy development 
 of desktop applications using HTML and JavaScript. 
@@ -55,15 +55,14 @@ Examples of the PowerChrome JavaScript Interface include:
 * Portable - no installation required
 * Chromium-based - can use Chrome/Chromium for testing and debugging
 * HTML as the application format and JavaScript ES6 for programming
-* API that runs in sync mode - no callback or promise objects
-* Work with Powerbuilder for advanced functionality
+* API runs in sync mode - no callback or promise objects
 * Simple console support
 * Cloud-app enabled
 * Run on Windows 7/8/10/11
   
   
 ## Get Started
-   
+
 ### Download and Run
 
 1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
@@ -71,7 +70,7 @@ Examples of the PowerChrome JavaScript Interface include:
 3. `powerchrome.html` will be loaded to demonstrate how PowerChrome works with an HTML desktop application.
 
 ![](https://casualwriter.github.io/powerchrome/powerchrome.jpg)
-   
+  
 
 ### Application Startup
 
@@ -110,30 +109,46 @@ and `Powerbuilder-Runtime` are required. The other files are optional or depends
 
 ### Command-line Options
 
-``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
+``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``  
 
 * specify application startup page by ``/app={startup.html}`` or ``/url={startup.html}``
-* open application in fullscreen ``/fullscreen`` or ``/kiosk``
+* open application in fullscreen by ``/fullscreen`` or ``/kiosk``
 * use customized interface script by ``/script={interface.js}``
-* crawl page by css-selector, and save to HTML file ``/ulr={link} /save={name.html} /css=selector``
-* print page to PDF file ``/ulr={link} /save={name.pdf}``
+* crawl page by css-selector, and save to HTML file ``/url={link} /save={name.html} /css=selector``
+* print page to PDF file ``/url={link} /save={name.pdf}``
+  
+  
+### Cloud Mode and Security
 
-### Documenation
+PowerChrome will run in **cloud-mode** when the startup link start with `https://` or `http://`. 
 
-Sorry that documentation is still in progress, will be available in https://casualwriter.github.io/powerchrome
+In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
 
+for example, run `chromechrome.exe` for web-application:
+
+```
+powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html
+```
+
+API will only available for URL start with ``https://casualwriter.github.io/powerchrome/``.
+If navigate to another domain, PowerChrome works like normal chromium browser.
+  
+  
+## Documenation
+
+still working on Documentation at https://casualwriter.github.io/powerchrome
+
+* [Document Home](https://casualwriter.github.io/powerchrome/?file=index.md)
 * [Getting Started](https://casualwriter.github.io/powerchrome/?file=get-started.md)
 * [Interface (API)](https://casualwriter.github.io/powerchrome/?file=interface.md)
 * [Development Guide](https://casualwriter.github.io/powerchrome/?file=development.md)
 
-or click on the button of [documentaion] within PowerChrome.
-   
+  
+### History
 
-## Modification History
-
+* 2022/12/01, release version v0.56
 * 2022/12/09, release v0.60, implement security for cloud mode.
-* 2022/12/16, draft document framework (Home, Getting Started, API, Dev)
-* 2023/01/02-04, update document - interface.md, get-started.md
+* 2022/12/16-2023/01/04, update document, (Home, Getting Started, API, in progress..)
 
 ### To Do List
 
