@@ -4,7 +4,7 @@ menu      :
   GetStarted  : get-started.md
   Interface   : interface.md
   Development : development.md
-  <img src='sun.svg' width=20>  : javascript:darkmode()
+  <img src='moon.svg' width=20> : javascript:darkmode()
   <img src='home.svg' width=20> : index.md
 -----------------------------------------------------------------------------
 <style>
@@ -163,7 +163,7 @@ pb.api( 'secret', 'https://google.com' )
 
 ### Mini Button
 
-Up to 6 mini-buttons are available in the bottom-right corner. 
+Up to 6 mini-buttons can be customized in the bottom-right corner. 
 
 Normally, it is setup in the event of `onPageReady()`
 
@@ -276,9 +276,9 @@ dbParm  = Provider='OraOLEDB.Oracle'; DataSource='XE'
 
 ~~~
 
-### Connect to MS SQL
+### Connect to MS SQL Server
 
-### Connect to MySQL
+### Connect to MySQL database
 
 
 
@@ -359,19 +359,19 @@ app.open = () => {
 
 ## Deployment
 
-### quick deployment (same folder)
+### Quick deployment (same folder)
 
 * deploy `powerchrome.exe, powerchrome.js` to client's folder
 * deploy `powerbuilder runtime` to same folder
 * copy html program to the same folder
 
-### deploy runtime to another folder
+### Deploy runtime to another folder
 
 * deploy `powerbuilder runtime` to a folder, e.g. c:\app\pb2019-runtime
 * add the folder to PATH, `PATH=c:\app\pb2019-runtime;%PATH%`
 * deploy `powerchrome.exe, powerchrome.js` and html program to any folder
 
-### deploy application
+### Deploy application
 
 HTML application would be deployed to different folder of powerchrome.exe, and run by `powerchrome.exe /app={url}`
 
@@ -381,12 +381,20 @@ powerchrome.exe /app=\\it-server\app\myprogram\index.html
 powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
 ~~~
 
+### Cloud Mode and Security
+
+PowerChrome will run in **cloud-mode** when the startup link start with `https://` or `https://`. 
+
+In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
+
+for example, run `chromechrome.exe` for web-application:
+
+```
+powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html
+```
+
+API will only available for URL start with ``https://casualwriter.github.io/powerchrome/``.
+If navigate to another domain, PowerChrome works like normal chromium browser.
 
 
-## Document History (in progress)
-
-* 2022/12/16  initial version for v0.60, in progress..
-* 
-* to-do: sample program - markdown editor
-* to-do: document for deployment
 

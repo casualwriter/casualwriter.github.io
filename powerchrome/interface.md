@@ -4,11 +4,11 @@ menu      :
   GetStarted  : get-started.md
   Interface   : interface.md
   Development : development.md
-  <img src='sun.svg' width=20>  : javascript:darkmode()
+  <img src='moon.svg' width=20> : javascript:darkmode()
   <img src='home.svg' width=20> : index.md
 -----------------------------------------------------------------------------
 <style>
-  .markdown   { max-width:900px; margin:auto }
+  .markdown   { max-width:960px; margin:auto }
   #header     { background: linear-gradient(to bottom right, #06c, #fc0) }
   #left-panel { background: linear-gradient(to bottom right, #eee, #888) }
   h1, h2      { border-bottom:1px solid grey }
@@ -60,6 +60,7 @@ This document will cover `api-function` and `api-action` only.
 
 
 ## Access window shell
+   
 
 ### pb.run()    {run}
 
@@ -91,7 +92,7 @@ execute DOS command by `WScript.Shell -> run()`
 * run from a path ``pb.run('notepad2.exe', 'c:/temp')``
 * call windows "Control Panel".  ``pb.run('control')``
 * call windows "Group Policy". ``pb.shell( 'gpedit.msc')``
-
+   
 
 ### pb.shell()    {shell}
 
@@ -121,7 +122,7 @@ execute command using window shell. this function will windows library `shell32 
 * open folder in file-explorer ``pb.shell('c:/temp')``
 * open a file (same as click on the file in file explorer). ``pb.shell('powerchrome.html')``
 * print file. ``pb.api( 'shell', { aciton:'print', file:'c:/temp/output.pdf' } )``
-
+   
 
 ### pb.sendkeys()   {sendkeys}
 
@@ -156,7 +157,7 @@ return string "1"
 
 * run notepad. ``pb.sendkeys('run=notepad.exe/title=Untitled - Notepad/s=1/hello!\n/ms=800/Have a nice day!')``
 * run javascript with keystrokes. ``pb.sendkeys('run=notepad.exe/s=2/Hello/js=alert("hello world")')``
-
+   
 
 ## HTML Dialog
 
@@ -204,7 +205,7 @@ popup HTML dialog for multiple usages.
 * crawl selected html for url  ``pb.popup( 'https://news.ycombinator.com/front', {select:'table'} )``
 * execute JavaScript after page loaded ``pb.popup( 'sample-dialog.html', {script:"pb.alert('welcome')"} )``
 * import JS library after page loaded ``pb.popup( 'sample-dialog.html', {import:"sample-dialog.js"} )``
-
+  
 
 ### pb.popup(html)
 
@@ -231,7 +232,7 @@ popup HTML dialog, render page by specified HTML string.
 
 * render page of hello-world ``pb.popup( '<h2>Hello World!</h2>', { width:300, height:200 } )``
 * render page by html string ``pb.popup( pb('sub-page').innerHTML, { width:500, height:300 } )``
-
+  
 
 ### pb.close()    {close}
 
@@ -251,10 +252,10 @@ return specified string
 
 * close and return input value  ``pb.close( pb('user_name').value )`` 
 * close with options  ``pb.close( 'yes' )``, ``pb.close( 'no' )``  
-
+   
 
 ## Http Request   {http}
-
+   
 ### pb.httpSource()    {httpsource}
 
 get the source of specified link, for multiple purpose
@@ -280,7 +281,7 @@ a string of the url source (html format, or JSON format, or other format)
 
 * get source of url  ``html = pb.httpSource('https://casualwriter.github.io')``
 * get json data ``rs = pb.httpSource('https://hacker-news.firebaseio.com/v0/item/2921983.json')``
-
+  
 
 ### pb.httpRequest()    {httprequest}
 
@@ -306,7 +307,7 @@ a string in json format. e.g. `{ "status":200, "code": 1 "result":"....." }`
 
 * send http Request ``rs = pb.httpRequest('GET','https://www.google.com/search?q=html')``
 * send POST request. ``rs = pb.httpRequest('GET','https://localhost:8080/myWebService.jsp', {id:"1024"} )``
-
+  
 
 ## Work with database   {db}
 
@@ -360,15 +361,15 @@ pb.dbConnect('OLE', "Provider='MSDAORA'; DataSource='XE'", '.', 'tiger', 'scott'
 // connect to MS Access via ODBC 
 pb.dbConnect( "ODBC", "connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'" )
 ~~~
-
+  
 ### pb.dbCommit()
 
 commit database transaction. 
-
+  
 ### pb.dbRollback()
 
 rollback database transaction. 
-
+  
 ### pb.dbQuery()
 
 execute SQL query and return string in json format.
@@ -403,7 +404,7 @@ execute SQL query and return string in json format.
 
 * run query, return json string.  ``pb.dbQuery("select * from categories")``
 * run query, get json.  ``rs = JSON.parse(pb.dbQuery('select * from categories'))``
-
+  
 
 ### pb.dbTable()
 
@@ -435,7 +436,7 @@ return a html table like below
 
 * run SQL query, return html table.  ``pb.dbTable('select * from categories')``
 * run SQL query, return html table.  ``pb.dbTable('SELECT * FROM NLS_DATABASE_PARAMETERS')``
-
+  
 
 ### pb.dbExecute()
 
@@ -462,10 +463,11 @@ execute SQL statement.
 * Update Record. ``pb.dbExecute("update categories set remarks='testing..' where CategoryName='PowerChrome'")``
 * Insert Record. ``pb.dbExecute("insert into categories values (99, 'PowerChrome', 'Test Record', '')")``
 * Delete Record. ``pb.dbExecute("delete from categories where CategoryName like 'PowerChrome%'")``
-
+  
 
 ## Access file system    {file}
-
+   
+   
 ### pb.fileExists()
 
 check file existence, return a string of "true/false"
@@ -487,7 +489,8 @@ return string `"true"` if file exists, `"false"` if not exists
 
 * check file existence. ``pb.fileExists('sample.txt')``
 * check file existence. ``pb.api( 'file-exists', 'sample.txt')``
-
+  
+  
 ### pb.fileRead()
 
 read a text file. return file content in string.
@@ -509,7 +512,7 @@ return file content in string. return empty string if file not found
 
 * read ini file ``pb.fileRead('powerchrome.ini')``
 * read js file ``pb.api( 'file-read', 'powerchrome.js')``
-
+  
 
 ### pb.fileAppend()
 
@@ -533,7 +536,7 @@ return the count of characters appended.
 
 * Append text to file. ``pb.fileAppend('sample.html', '<h3>hello world!</h3>\n')``
 * Append text to file. ``pb.api( 'file-append', {file:'sample.html', text:'this is a test message\n'} )``
-
+  
 
 ### pb.fileWrite()
 
@@ -557,7 +560,8 @@ return the count of characters written.
 
 * Write text. ``pb.fileAppend('sample.html', '<h3>hello world!</h3>\n')``
 * Write text. ``pb.api( 'file-write', { file:'sample.html', text:'<h3>hello world!</h3>\n' } )``
-
+  
+  
 ### pb.fileCopy()
 
 Copies one file to another.
@@ -582,7 +586,8 @@ Copies one file to another.
 
 * Copy file. ``pb.fileCopy( 'sample.txt', 'sample1.txt' )``
 * Copy file. ``pb.api( 'file-copy', {source:'sample1.txt', target:'sample2.txt'} )``
-
+  
+  
 ### pb.fileMove()
 
 move a file
@@ -607,7 +612,7 @@ move a file
 
 * Move file. ``pb.fileMove( 'sample.txt', 'sample2.txt' )``
 * Move file. ``pb.api( 'file-move', { source:'sample1.txt', target:'sample.txt' } )``
-
+  
 
 ### pb.fileDelete()
 
@@ -630,10 +635,11 @@ return string `"true"` if file exists, `"false"` if not exists
 
 * delete file. ``pb.fileDelete('sample1.txt')``
 * delete file. ``pb.api( 'file-delete', 'sample2.txt' )``
-
+  
 
 ## Console and Message
-
+  
+  
 ### pb.console()
 
 show message in console panel. `console.log()` will be diverted to this function to show message.
@@ -656,7 +662,8 @@ string of the message showing in console
 * show message. ``pb.console( 'hello world!' )``
 * show multiple values. ``pb.console( 'hello', 3+4, {status:1, msg:"done"} )``
 * use console.log. ``console.log( 'hello', 3+4, {status:1, msg:"done"} )``
-
+  
+  
 ### pb.status()
 
 display message in status bar.
@@ -673,7 +680,7 @@ return {text}
 
 * prompt message in status-bar ``pb.status('ready')``
 * prompt message in status-bar ``pb.status('file sample.ini not found!')``
-
+  
 
 ### pb.alert()
 
@@ -695,7 +702,8 @@ return {text}
 
 * show message ``pb.status('Data has been saved')``
 * alert for problem ``pb.status('file sample.ini not found!')``
-
+  
+  
 ### pb.msgbox()
 
 display a message box with options 
@@ -720,17 +728,11 @@ return "1"/"2"/"3" depends of selection
 * show message with title. ``pb.msgbox( 'ABC system', 'Data has been saved!' )``
 * with Yes/No options. ``pb.msgbox( '', 'Save data?', 'yes,no' )``
 * with ok/cancel options ``if ( pb.msgbox( 'System', 'Close and exit?', 'ok,cancel' ) == 1 ) pb.close();``
-
+  
+  
 ### pb.error()
 
 display error message in console panel.
-
-##### Parameters
-
-* {code} is the error code
-* {message} is the error message 
-
-##### Source
 
 this function is defined in `powerchrome.js` by the following code. It will show to console only.
 
@@ -741,74 +743,266 @@ pb.error = (code,msg) => { return window.webBrowser.ue_message('console?[error='
 This function is used to standardize error handling. It can be redefined/customized with logging or other 
 handling in application.
 
+##### Syntax
 
+``pb.error( {code}, {message} )``
+
+##### Parameters
+
+* {code} is the error code
+* {message} is the error message 
+  
+    
 ## Application / Misc
-
+   
+   
 ### pb.property()
 
 get or set application properties
 
+##### Syntax
+
+* get property value: ``pb.property( {name} )``
+* set property value: ``pb.property( {name}, {value} )``
+
+##### Property Name
+
+Property name shall be one of the following values. 
+Please noted that some of them are read-only/get-only (i.e. marked with *).
+
+Name  | Description
+------|--------------------------------
+popupwindow | `true` to allow popup window by `window.open()`, `false` to disable
+contextmenu | `true` to enable popup content menu, `false` to disable
+app.title   | application title.
+app.version | version information. e.g. `v0.60 build on 2022/12/09`
+app.about   | description about the application, which will show in about-dialog.
+app.credit  | credit or copyright info. which will show in about-dialog.
+app.github  | link to github (for about-dialog)
+app.home    | link to product home (for about-dialog)
+app.watch   | options for showing debug message, a combination of `[debug] [sql] [api]`
+app.icon    | application icon.
+app.cmdline* | (read-only) command line options
+app.runtime* | (read-only) path of powerbuilder runtime
+app.screenheight* | (read-only) screen height
+app.screenwidth* | (read-only) screen width
+app.hostname* | (read-only) host name, i.e. computer name
+app.path* | (read-only) current path when application starts
+app.mode* | (read-only) application mode. i.e. `local` or `cloud`
+app.domain* | (read-only) application domain for cloud mode. e.g `https://casualwriter.github.io/app/`
+env.{name}* | (read-only) get environment variables. e.g. `PATH`, `JAVA_HOME`, `CLASSPATH`
+
+##### Return
+
+the value of application property
+
+##### Samples
+
+* get the setting of JAVA_HOME. ``pb.property( 'env.JAVA_HOME' )``
+* get the setting of CLASSPATH. ``pb.property( 'env.CLASSPATH' )``
+* set application title. ``pb.property( 'app.title', 'ABC Inventory System' )``
+* set product home. ``pb.property( 'app.home', 'https://abc-inventory.com' )``
+* show watch options for debug. ``pb.property( 'app.watch', '[debug][api]' )``
+* disable contextmenu. ``pb.property( 'contextmenu', 'false' )``
+   
+   
 ### pb.session()    {session}
 
 get or set session variables
-
+   
+   
 ### pb.print()      {print}
 
-show print dialog of printing current page. similar to `javascript:window.print()`
-
+show print dialog. similar to `javascript:window.print()`
+   
+   
 ### pb.printSetup()
 
-show printer setup dialog
-
+show printer setup dialog to setup printer
+   
+   
 ### pb.saveas()     {saveas}
 
 save current page to HTML file or PDF file
 
+##### Syntax
 
+* syntax1: ``pb.saveas( {filename} )``
+* syntax2: ``pb.api( 'saveas', {filename} )``
+
+##### Parameters
+
+* save as PDF file if file name end with `.pdf`
+* otherwise, save as html file.
+
+##### Samples
+
+* save curent page as PDF. ``pb.saveas('c:/temp/output.pdf')``
+* save curent page in HTML format. ``pb.saveas('c:/temp/output.html')``
+  
+  
 ## Work with Powerbuilder
-
+   
+      
 ### pb.about()      {about}
 
-show about dialog
+show about dialog. The dialog includes application information, and the link to `product home` or `github`
 
-### pb.login()      {login}
+![](powerchrome-about.jpg "width=500")
 
-popup login dialog for Windows account authentication.
+##### Syntax
 
+* syntax1: ``pb.about()``
+* syntax2: ``pb.window( 'w_about' )``
+   
+   
 ### pb.window()     {window}
 
-call powerbuilder window entry
+call powerbuilder window entry.
 
-### pb.function()   {function}
+##### Syntax
 
-call powerbuilder global function entry
+* syntax1: ``pb.window( {winName}, {parm} )``
+* syntax2: ``pb.api( 'window', {winName} )``
+* syntax3: ``pb.api( 'window', { name:{winName}, parm:{parm} )``
+
+##### Parameters
+
+Currently, the following builtin windows can be called by {winName}.
+
+Window Name | Description
+------------|----------------------
+w_about     | about dialog
+w_login     | login by windows account
+w_power_dialog | PowerChrome dialog. similar to `pb.popup(url)`
+w_power_kiosk | PowerChrome kiosk. 
+
+##### Samples
+
+* open w_about dialog.  ``pb.window('w_about')`` => ``pb.api('window','w_about')``
+* login by windows account  ``pb.window('w_login')`` => ``pb.api('window','w_login')``
+   
+   
+### pb.extfunc()    {extfunc}
+
+Call powerbuilder user-defined functions. 
+
+This function shall use with `powerbuilder-extent-library` in business version.
+
+##### Syntax
+
+* syntax1  ``pb.extfunc( {funcName}, {parm} )``
+* syntax2: ``pb.api( 'extfunc', { name:{funcName}, parm: {parm} } )``
+
+##### Samples
+
+* call day-end process.  ``pb.extFunc('f_dayend_process')``
+* call user-defined function.  ``pb.extFunc( 'f_my_business', cus_no )``
+   
 
 ### pb.datawindow() - in development  {datawindow}
 
-make use of Powerbuilder datawindow for multiple purposes.
+make use of powerbuilder datawindow for multiple purposes.
 
 1. display datawindow as report, preview and print out.
 2. use datawindow to print special labels
 3. use datawindow for data input
 
-#### Syntax
+##### Syntax
 
-* syntax1  ``pb.datawindow( {dwSyntax}, {Options} )``
-* syntax2  ``pb.api( 'datawindow', { syntax: {dwSyntax}, {Options} } )``
+* syntax1  ``pb.datawindow( {dwSyntax}, {style}, {parm} )``
+* syntax2  ``pb.api( 'datawindow', { syntax: {dwSyntax}, parm:{parm}, style:{style} } )``
 
+##### Parameters
 
+* {dwSyntax} is the datawindow syntax, exported from Powerbuilder IDE (old version is ok)
+* {parm} is the parameter passed to datawindow for data retrieval.
+* {style} := retrieve | preview | print | print-silent | form | label | no-print
+  
+  
 ## Browser Setup    {browser}
 
 ### pb.api('position')
 
+maximize window, or set window position
+
+##### Syntax
+
+* maximized window. ``pb.api( 'position', 'max' )``
+* set window position. ``pb.api( 'position', { top:{top}, left:{left}, width:{width}, height:{height} } )``
+
+##### Samples
+
+* maximized window. ``pb.api( 'position' ,'max' )``
+* set width/height ``pb.api( 'position', { width:1024, height:700 } )
+* set position ``pb.api( 'position', {top:200, left:80, width:1024, height:700} )
+
 ### pb.api('console')
+
+show/hide console panel, or set console width.
+
+##### Syntax
+
+* show/hide console. ``pb.api( 'console', {status} )
+* set console width. ``pb.api( 'console', {width} )``
+
+##### Samples
+
+* toggle console panel. ``pb.api( 'console' )``
+* show console. ``pb.api( 'console', 'show' )``
+* hide console. ``pb.api( 'console', 'hide' )``
+* set console width. ``pb.api( 'console', '500px' )``
 
 ### pb.api('minibutton')
 
+Up to 6 mini-buttons can be customized in the bottom-right corner. 
 
+##### Syntax
 
-## Document History (in progress..)
+* clear all mini-buttons. ``pb.api( 'minibutton', 'clear' )``
+* add mini-button. ``pb.api( 'minibutton', {script:{jsScript}, title:{title}, icon:{icon} } )``
 
-* 2022/12/16  initial version for v0.60
-* 2023/01/02  document db/file functions
-* 2023/01/03  update document
+The parameter of "script" could be any valid JavaScript, or below predefined action:
+
+* `console`: toggle console panel
+* `refresh`: refresh the page. => `location.reload()`
+* `back`: go back to previous page. => `history.back()`
+* `forward`: go forward. => `history.forward()`
+* `about`: popup about-dialog. => `pb.about()` 
+* `login`: popup login-dialog. => `pb.login()`
+
+##### Samples
+
+Normally, it is setup in the event of `onPageReady()`
+
+~~~
+function onPageReady() {
+
+  // clear all mini-buttons
+  pb.api( 'minibutton', 'clear' )
+  
+  // add mini-button of "toggle console panel"
+  pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )
+  
+  // add mini-button to show about dialog
+  pb.api( 'minibutton', {script:'pb.about()', title:'About', icon:'toolkitabout!'} )
+  
+}  
+~~~
+
+### pb.api('secret')   {secret}
+
+generate `secret-string` for the following system parameters. 
+
+* startup url from command line `/app={secret-string}` or powerchrome.ini
+* db connection parameter. i.e. `dbParm, ServerName, logId, logPass`
+
+##### Syntax
+
+may run from console panel by `pb.api( 'secret', {keyword} )`
+
+##### Samples
+
+* encrypt db login user id. ``pb.api( 'secret', 'scott' )``
+* encrypt db login password. ``pb.api( 'secret', 'tiger' )``
+* encrypt startup url. ``pb.api( 'secret', 'https://192.168.1.36/powerchome/index.html' )``

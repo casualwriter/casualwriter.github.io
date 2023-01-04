@@ -4,7 +4,7 @@ menu      :
   GetStarted  : get-started.md
   Interface   : interface.md
   Development : development.md
-  <img src='sun.svg' width=20>  : javascript:darkmode()
+  <img src='moon.svg' width=20> : javascript:darkmode()
   <img src='home.svg' width=20> : index.md
 -----------------------------------------------------------------------------
 <style>
@@ -63,9 +63,33 @@ Similar to run application from lcoal web server, but run from internet.
 ### security issue
 
 ### pros & cons
-
+   
 
 ## Notes
+
+
+### About Powerbuilder
+
+**No need to know anything about Powerbuilder** if just develop HTML/JavaScript application.
+
+PowerChrome is developed using `Powerbuilder 2019R3`, (which is regarded outdated in
+development world?). PowerChrome inherits some nice features from Powerbuilder.
+
+#### Connect to database by native driver
+
+PowerChrome uses **native driver** to connect major database server (i.e. Oracle, Sybase, MS SQL Server, Informix), 
+which is more stable and efficient than JDBC/ODBC/ADO, as long as still can use JDBC/ODBC/ADO/OLE-DB to connect 
+all kind of database.
+
+#### Datawindow and Report Builder
+
+PowerChrome will make use of `Datawindow` for reporting. Any version of Powerbuilder IDE could be used 
+as a report builder. 
+
+#### Interact with PB objects
+
+PowerChrome is able to call window/function/datawindow/userobject in Powerbuilder Libraries. 
+  
 
 ### Compare with Powerpage
 
@@ -80,7 +104,7 @@ with significant improvement.
 | API (javascript) | sync mode           | async mode
 | Developed By     | powerbuilder 2019R3 | powerbuilder 10.5
 | Capability       | all purposes        |  simple application
-
+  
 
 ### Problems & Solutions
 
@@ -104,9 +128,3 @@ v | security for cloud-app | api works for same domain only
   | reporting using datawindow | api `pb.datawindow()`, in development
   | simple app framework       | 
   
-
-
-### Document History (in progress..)
-
-* 2022/12/16, document for v0.60, in progress...
-

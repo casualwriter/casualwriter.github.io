@@ -4,7 +4,7 @@ menu      :
   GetStarted   : get-started.md
   Interface    : interface.md
   Development  : development.md
-  <img src='sun.svg' width=20>    : javascript:darkmode()
+  <img src='moon.svg' width=20>   : javascript:darkmode()
   <img src='github.svg' width=20> : https://github.com/casualwriter/powerchrome
 -----------------------------------------------------------------------------
 <style>
@@ -60,9 +60,10 @@ Examples of the PowerChrome JavaScript Interface include:
 * Simple console support
 * Cloud-app enabled
 * Run on Windows 7/8/10/11
-
+  
+  
 ## Get Started
-
+   
 ### Download and Run
 
 1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
@@ -70,7 +71,7 @@ Examples of the PowerChrome JavaScript Interface include:
 3. `powerchrome.html` will be loaded to demonstrate how PowerChrome works with an HTML desktop application.
 
 ![](https://casualwriter.github.io/powerchrome/powerchrome.jpg)
-
+   
 
 ### Application Startup
 
@@ -85,7 +86,7 @@ After the page is loaded, `powerchrome.js` will be imported to initialize the in
 then call the JavaScript function `onPageLoaded()`.
 
 To start coding, simply create an `index.html` file and write your code in any text editor.
-
+   
 
 ### Files & Deployment
 
@@ -126,62 +127,22 @@ Sorry that documentation is still in progress, will be available in https://casu
 * [Development Guide](https://casualwriter.github.io/powerchrome/?file=development.md)
 
 or click on the button of [documentaion] within PowerChrome.
+   
 
+## Modification History
 
-## Misc. Notes
-
-
-### Cloud Mode and Security
-
-PowerChrome will run in **cloud-mode** when the startup link start with `https://` or `https://`. 
-
-In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
-
-for example, run `chromechrome.exe` for web-application:
-
-```
-powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html
-```
-
-API will only available for URL start with ``https://casualwriter.github.io/powerchrome/``.
-If navigate to another domain, PowerChrome works like normal chromium browser.
-
-
-### About Powerbuilder
-
-**No need to know anything about Powerbuilder** if just develop HTML/JavaScript application.
-
-PowerChrome is developed using `Powerbuilder 2019R3`, (which is regarded outdated in
-development world?). PowerChrome inherits some nice features from Powerbuilder.
-
-#### Connect to database by native driver
-
-PowerChrome uses **native driver** to connect major database server (i.e. Oracle, Sybase, MS SQL Server, Informix), 
-which is more stable and efficient than JDBC/ODBC/ADO, as long as still can use JDBC/ODBC/ADO/OLE-DB to connect 
-all kind of database.
-
-#### Datawindow and Report Builder
-
-PowerChrome will make use of `Datawindow` for reporting. Any version of Powerbuilder IDE could be used 
-as a report builder. 
-
-#### Interact with PB objects
-
-PowerChrome is able to call window/function/datawindow/userobject in Powerbuilder Libraries. 
-
+* 2022/12/09, release v0.60, implement security for cloud mode.
+* 2022/12/16, draft document framework (Home, Getting Started, API, Dev)
+* 2023/01/02-04, update document - interface.md, get-started.md
 
 ### To Do List
 
-* documentation - API 
-* documentation - Development Guide
-* pb.datawindow(dwSyntax, parm, action), action:=preview|print|form|report
-* pb.encode(text, manner), pb.decode(text,manner)
-* local application - markdown editor, web crawler
-* cloud application - oracle schema, oracle helper, db-reporting
+* [.] documentation - Get Started
+* [.] documentation - Development Guide
+* [ ] enable api-call when load document within PowerChrome
+* [ ] make use of datawindow for application reporting
+* [ ] pb.encode(manner,text), pb.decode(manner,text)
+* [ ] local application - markdown editor
+* [ ] local application - web crawler
+* [ ] cloud application - oracle schema, oracle helper, db-reporting
 
-
-### Modification History
-
-* 2022/12/01, release version v0.56
-* 2022/12/09, release v0.60, implement security for cloud mode.
-* 2022/12/16, update document, (Home, Getting Started, API, in progress)
