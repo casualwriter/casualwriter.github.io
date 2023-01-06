@@ -1,11 +1,11 @@
 ## Overview (API)
 
-Powerpage open a window with MS WebBrowser Control. When HTML page is loaded, Powerpage will import ``powerpage.js`` 
+Powerpage open a window with MS Webbrowser Control. When HTML page is loaded, Powerpage will import ``powerpage.js`` 
 to initialize ``pb`` javascript object to provide Powerpage interface.
 
 HTML page may via the following channel to talk to main program
 
-1. recommented call by by javascript: ``pb.apiFunction()``, e.g. pb.run('notepad.exe')
+1. recommended call by by javascript: ``pb.apiFunction()``, e.g. pb.run('notepad.exe')
 2. by url: ``&lt;a href="pb://command/parameters">Text&lt;/a>`` or ``window.location = "pb://command/parameters"``
 3. by change title: ``document.title = "pb://command/parameters"``
 
@@ -98,23 +98,7 @@ For string parameter start with "@' (i.e. `@{var}`) will be replace with the val
 * javascript: pb.db.query(`'@sql1'`)
 * url-protocol: pb://sql/query/`@sql1``
 
-#### Source Code (powerbuilder + powerpage.js)
-
-For string paramter start with '@', Powerbuilder call javascript function pb('@var') to retrieve its value. 
-
-~~~ powerbuilder
-string function of_get_string( string as_text ) 
-  // load string from js variable
-  if left(as_text,1)='@' then 
-  	as_text = this.object.document.script.pb( mid(as_text,2) )	
-  end if
-  
-  // handle some special characters
-  as_text = of_replaceall( as_text, '&gt;', '>' )
-  as_text = of_replaceall( as_text, '&lt;', '<' )
-	
-return as_text
-~~~
+#### Source Code (powerpage.js)
 
 in powerpage.js, declare function pb('@var') to return js variable value.
 
@@ -141,21 +125,6 @@ Once use ``Secured`` protocol, Powerpage will prompt user login by windows accou
 *  `javascript:pb.secure().run('resmon.exe')`
 * ps-protocol: `ps://run/resmon.exe` 
  
-#### Source Code (powerbuilder)
-
-~~~ powerbuilder
-//=== powerbuilder.event titlechange() 
-// handle ps:// security mode
-if lower(left(text,5)) = 'ps://' and trim(gnv_app.is_login_user) = '' then
-  open(w_login)
-  if trim(gnv_app.is_login_user) = '' then 
-    return
-  end if
-  gnv_app.of_microhelp( 'window user login. id=' + gnv_app.is_login_user )
-end if  
-~~~  
- 
-    
            
 ## Run / Shell 
  
@@ -187,54 +156,6 @@ Run a program, e.g. resmon.exe
 * ``javascript:pb.run('powerpage.exe', 'c:\app')`` run powerpage at c:\app
 * ``javascript:pb.run('notepad.exe powerpage.html','.','max+wait','alert')`` edit edit powerpage.html and show status 
  
-#### Source Code (powerbuilder+powerpage.js)
-
-~~~ powerbuilder
-//## [20210611] pb://run/folder=?,cmd=?,style=[min|max|normal|hide]+wait
-if is_type = 'run' then
-	
-	ls_opts = mid(is_command,5) 
-	ls_path = of_get_keyword( ls_opts, 'path', ',', of_get_keyword( ls_opts, 'folder', ',', ls_null ) )
-	ls_run = of_get_keyword( ls_opts, 'cmd', ',', ls_null )
-	ls_style = of_get_keyword( ls_opts, 'style', ',', 'normal' ) 
-
-	if pos(lower(ls_style),'normal')>0 then
-		ll_show = 1
-	elseif pos(lower(ls_style),'min')>0 then
-		ll_show = 2
-	elseif pos(lower(ls_style),'max')>0 then
-		ll_show = 3
-	elseif pos(lower(ls_style),'hide')>0 then
-		ll_show = 0
-	else
-		ll_show = 1
-	end if
-
-	if ls_run > ' ' then
-		changedirectory( ls_path )
-		ll_rtn = of_wsh_run( ls_run, ll_show, pos(ls_style,'wait')>0 )
-		changedirectory( gnv_app.is_currentPath )
-	else
-		ll_rtn = run( mid( is_command, 5 ) )
-	end if
-	
-	return event ue_callback( as_callback, '{ "status":'+string(ll_rtn)+'}' )	
-	
-end if 
-~~~
-
-
-~~~ powerpage.js
-pb.run = function ( cmd, path, style, callback ) { 
-  if (arguments.length==1) {
-    pb.submit( 'run', cmd ) 
-  } else {
-    var ls_opt = 'cmd=' + cmd + (path? ',path='+path : '' ) + (style? ',style='+style : '' )
-    pb.submit( 'run', ls_opt, callback )
-  } 
-}
-~~~
-
 
 -----------------------------------------------------------------------------------
 ### pb.shell(command)
@@ -242,17 +163,6 @@ pb.run = function ( cmd, path, style, callback ) {
 
 * Description: calling window.shell object to "Open/Run/Print" an file. 
 * pb-protocol: `` pb://shell/{command}`` or `` pb://shell/file={file},path={path},show={show},action={action}``
-
-```
-pb.shell = function ( action, file, parm, path, show, callback ) { 
-  if (arguments.length==1) {
-    pb.submit( 'shell', action )
-  } else {
-    var ls_opt = 'file=' + file + (action? ',action='+action : '' ) + (parm? ',parm='+parm : '' )
-    pb.submit( 'shell', ls_opt + (path? ',path='+path : '' ) + (show? ',show='+show : '' ), callback )
-  } 
-}
-```
 
 ##### Arguments
 
@@ -284,61 +194,6 @@ keys := /js={js-function}/run={cmd}/title={goto Title}/s={delay}/ms={delay ms}/K
 * ``javascript:pb.sendkeys(keys)``  
 * ``javascript:pb.sendkeys('@keys')`` or ``pb://sendkeys/@keys`` pass keystrokes by variable
 
-#### Source Code (powerbuilder)
-
-~~~ powerbuilder
-//# [20210604] ck, call Wscript to process sendkeys and commands
-//# keys := run=command/go=title/js=jsFunciton/s=1000/&#47;&sol;
-//#=============================================
-
-string ls_cmd
-long  ll_ms, ll_cpu
-
-if not iole_wsh.IsAlive() then
-	ii_connect = iole_wsh.ConnectToNewObject("WScript.Shell")
-	if ii_connect<0 then return ii_connect
-end if  
-
-do 
-	ls_cmd = trim( of_gettoken( as_keys, '/' ) )
-	ls_cmd = of_replaceall( of_replaceall( ls_cmd, '&#47;', '/' ), '&sol;', '/' )
-	
-	// run shell command
-	if left(ls_cmd,4) = 'run=' then 
-		iole_wsh.run( mid( ls_cmd, 5 ) )
-		
-	// goto window by title	
-	elseif left(ls_cmd,6) = 'title=' then 
-		iole_wsh.AppActivate( mid( ls_cmd, 7 ) )
-		
-	// call js function	 (call pb.router to activate js command)
-	elseif left(ls_cmd,3) = 'js=' then
-		this.object.document.script.pb.router( mid( ls_cmd, 4 ), as_keys, 'sendkeys', 'call' )
-
-	// wait for seconds	
-	elseif left(ls_cmd,2) = 's=' then 
-		sleep( long( mid( ls_cmd, 3 ) ) )
-		
-	// wait for milliseconds	
-	elseif left(ls_cmd,3) = 'ms=' then
-		ll_cpu = cpu()
-		ll_ms = long( mid( ls_cmd, 4 ) )
-		do
-			yield()
-		loop while (cpu() - ll_cpu) < ll_ms
-		
-	// send keystrokes.	
-	else
-		iole_wsh.SendKeys(ls_cmd)
-		
-	end if
-
-loop while trim(as_keys)>''
-
-return 1
-~~~
-
-
    
 ## Database Accessibility
   
@@ -364,74 +219,6 @@ Run SQL select statement, and return result-set in json string format.
 * ``pb://db/query/@sql1``  run SQL query using js variable sql1   
 
 
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-PUBLIC FUNCTION string of_sql_to_json (string as_sql)
-
-datastore lds
-long i, j, ll_colCount, ll_rowCount
-string ls_syntax, ls_error, ls_json, ls_colName, ls_colType[], ls_row
-
-// conenct db
-if not of_connectdb(3) then return '{ "error": "database not connected" }'
-
-// dw syntax
-sqlca.autocommit=TRUE
-ls_syntax = sqlca.syntaxfromsql( as_sql, 'Style(Type=grid)', ls_error )
-sqlca.autocommit=FALSE
-if ls_error > '' then
-	messagebox( 'Invlaid SQL Syntax', ls_error )
-	return '{ "error": "' + ls_error + '" }'
-end if
-
-lds = create datastore
-lds.create(ls_syntax)
-
-lds.settransobject(sqlca)
-lds.retrieve()
-
-ll_colCount = integer( lds.Object.DataWindow.Column.Count )
-ll_rowCount = lds.rowcount()
-ls_json   = '{  "colCount":' + string(ll_colCount) + ' ~r~n '
-ls_json += ' , "rowCount":' + string(ll_rowCount) + ' ~r~n '
-ls_json += ' , "columns": [ ~r~n ' 
-
-for i = 1 to ll_colCount
-	ls_colName = lds.Describe( '#'+String(i)+'.name')
-	ls_colName = lds.Describe( ls_colname+'_t.text' )
-	ls_colType[i] = lds.Describe( '#'+String(i)+'.coltype')
-	if i>1 then ls_json += ', '
-	ls_json += '"' + of_replaceall( of_replaceall(ls_colName,'"','' ), '~r~n', ' ' ) + '"' 
-next
-
-ls_json += '] ~r~n, "data": [ ~r~n ' 
-
-for i = 1 to ll_rowcount
-	ls_row = ' [ '
-	for j=1 to ll_colCount
-		if j>1 then ls_row += ' , '
-		if left( ls_colType[j], 5 ) = 'char('  then
-			ls_row += of_default( '"' +  of_js_string( lds.getitemstring( i, j ) ) + '"', 'null' )
-		elseif  ls_colType[j] = 'date' then
-			ls_row += of_default( '"' + string( lds.getitemdate( i, j ), 'yyyy/mm/dd' ) + '"', 'null' )
-		elseif  ls_colType[j] = 'datetime' or  ls_colType[j] = 'timestamp' then
-			ls_row += of_default( '"' + string( lds.getitemdatetime( i, j ), 'yyyy/mm/dd hh:mm:ss' ) + '"', 'null' )
-		elseif ls_colType[j] = 'time' then
-			ls_row += of_default( '"' + string( lds.getitemtime( i, j ), 'hh:mm:ss' ) + '"', 'null' )
-		else
-			ls_row += of_default( string( lds.GetItemDecimal( i, j ) ), 'null' )
-		end if
-	next
-	//ls_row = of_replaceall( ls_row, '\"','&quot;' )
-	//ls_row = of_replaceall( ls_row, '~r~n','\n' )
-	ls_json += of_replaceall( ls_row, '~r~n','\n' ) + ' ]  ,~r~n'
-next
-
-return left( ls_json, len(ls_json) - 4 ) + ' ~r~n ] } '
-~~~
-
-   
 -----------------------------------------------------------------------------------
 ### pb.db.html( sql, callback )
 
@@ -469,29 +256,6 @@ execute SQL statement, and return result in json string format.
 * ``javascript:pb.db.update(sql3)`` Execute update statement 
 * ``pb://db/execute/@sql3`` Execute update statement 
 
-#### Source (powerbuilder)
-
-~~~
-PUBLIC FUNCTION string of_sql_execute (string as_sql)
-string ls_msg
-
-// run sql
-of_connectdb(3)
-EXECUTE IMMEDIATE :as_sql using sqlca; 
-
-// return
-if sqlca.sqlcode<>0 then 
-	gnv_app.of_microhelp( '[Error] code:'+string(sqlca.sqlcode)+', message:' + of_default(sqlca.sqlerrtext,'null')  )
-	ROLLBACK using sqlca;
-	return '{ "status": -1, "error":' + string(sqlca.sqlcode)+ ', "message": "' + of_default(sqlca.sqlerrtext,'null') + '" }' 
-end if
-
-COMMIT USING sqlca;
-
-gnv_app.of_microhelp( '>> SQL Executed Sucessfully!' )
-RETURN '{ "status": 1, "message": "SQL Executed Sucessfully!" }' 
-~~~
-
 -----------------------------------------------------------------------------------
 ### pb.db.prompt( sql, callback )
 
@@ -509,12 +273,7 @@ prompt SQL statement for confirmation, then execute SQL statement.
 * ``pb://db/prompt/@sql3`` confirm then execute update statement 
 
 
------------------------------------------------------------------------------------
-### to-do: pb.db.queryById( id, args[], callback )  
-### to-do: pb.db.executeById( id, args[], callback )  
-  
-
-                                                                  
+                                                                 
 ## File Accessibility
 
 Powerpage provide the following function to access file system.   
@@ -529,25 +288,6 @@ copy file {from} to {to}, then activate callback function.
 * ``javascript:pb.file.copy( 'powerpage.ini', 'newfile.ini' )`` Copy powerpage.ini to newfile.ini 
 * ``pb://file/copy/powerpage.ini/newfile.ini`` Copy powerpage.ini to newfile.ini 
 
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/copy/{SourceFile}/{targetFile}
-if as_action='copy' then
-	
-	ls_text = as_parm
-	ls_name = of_gettoken(ls_text,'/')
-	ll_rtn = FileCopy ( ls_name, ls_text, true )
-	
-	if ll_rtn > 0 then
-		return gnv_app.of_replaceall( '{ "status": 1, "message":"copy file ' + ls_name + ' to ' + ls_text + '" } ', '\', '\\' )
-	else
-		return gnv_app.of_replaceall( '{ "status": '+string(ll_rtn)+', "message":"failed to copy file ' + ls_name + '" } ', '\', '\\' )
-	end if
-	
-end if
-~~~
-
 
 ----------------------------------------------------------------------------------
 ### pb.file.move(from, to, callback)
@@ -558,25 +298,6 @@ move file {from} to {to}, then activate callback function.
 
 * ``javascript:pb.file.move( 'newfile.ini', 'another.ini' )`` Move newfile.ini to another.ini 
 * ``pb://file/move/newfile.ini/another.ini`` Move newfile.ini to another.ini
-
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/move/{SourceFile}/{targetFile}
-if as_action='move' then
-	
-	ls_text = as_parm
-	ls_name = of_gettoken(ls_text,'/')
-	ll_rtn = FileMove ( ls_name, ls_text )
-	
-	if ll_rtn > 0 then
-		return  gnv_app.of_replaceall( '{ "status": 1, "message":"move file ' + ls_name + ' to ' + ls_text + '" } ', '\', '\\' )
-	else
-		return gnv_app.of_replaceall( '{ "status": '+string(ll_rtn)+', "message":"failed to move file ' + ls_name + '" } ', '\', '\\' )
-	end if
-	
-end if
-~~~
 
 
 ----------------------------------------------------------------------------------
@@ -590,20 +311,6 @@ check file existance, return 'true/false' if found/notFound.
 * ``javascript:pb.file.exists('another.ini','alert')``  Check file existance of another.ini
 * ``pb://file/exists/another.ini`` Check file existance of another.ini
 
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/exists/{FileName}
-if as_action = 'exists' then
-	if fileexists( as_parm ) then
-		return 'true'
-	else
-		return 'false'
-	end if
-end if
-~~~
-
-
 ----------------------------------------------------------------------------------
 ### pb.file.read(file, callback)
 
@@ -614,22 +321,6 @@ return empty string if not found.
  
 * ``javascript:pb.file.read('another.ini','alert')`` read file and show by alert()
 * ``pb://file/read/another.ini`` read file and show by default callback()
-
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/read/{FileName}
-if as_action = 'read' then
-	
-	ll_file = fileopen( as_parm, TextMode!, Read! )
-	if ll_file<=0 then return ''
-
-	filereadex( ll_file, ls_result )
-	fileclose(ll_file)
-	return ls_result
-	
-end if
-~~~
 
 
 ----------------------------------------------------------------------------------
@@ -648,39 +339,6 @@ write text to file, and callback.
 * ``pb://file/write/another.ini/@sql1`` write sql1 to file 
 * ``pb://callback/alert/file/write/another.ini/@sql2`` write sql1 to file 
 
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/append/{FileName}/{Content|@var}
-if as_action='append' or as_action='write' then
-	
-	ls_text = as_parm
-	ls_name = of_gettoken( ls_text, '/' )
-	ls_text  = of_get_string( ls_text )
-	
-	if as_action='write' then
-		filedelete(ls_name)
-		ll_file = fileopen( ls_name, TextMode!, Write!, LockReadWrite!, Replace!, EncodingUTF8! )
-	else
-		ll_file = fileopen( ls_name, TextMode!, Write!, LockReadWrite!, Append! )
-	end if
-	
-	if ll_file<=0 then 
-		event ue_pb_error( '[File Error] canot open file.', as_action+'/' +as_parm )
-		return  '{ "status": '+string(ll_file)+' , "message":"failed to open file ' + gnv_app.of_replaceall(ls_name,'\','\\') + '" } '
-	end if
-	
-	if filewriteex( ll_file, ls_text )<0 then
-		fileclose(ll_file)
-		event ue_pb_error( '[File Error] canot write file.', as_action+'/' +as_parm )
-		return '{ "status": -9, "message":"failed to write file ' + gnv_app.of_replaceall(ls_name,'\','\\') + '" } '
-	end if
-	
-	fileclose(ll_file)
-	return '{ "status":' + string(len(ls_text)) + ', "message":"write to ' + gnv_app.of_replaceall(ls_name,'\','\\') + ' successfully." } '
-
-end if
-~~~
 
 
 ----------------------------------------------------------------------------------
@@ -712,18 +370,6 @@ delete file, and callback.
 * ``javascript:pb.file.delete('newfile.ini')`` delete file another.ini 
 * ``pb://file/delete/another.ini`` delete file another.ini  
 
-#### Source (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/delete/{FileName}
-if as_action='delete' then
-	if filedelete( as_parm  ) then
-		return  '{ "status": 1, "message":"file ' + gnv_app.of_replaceall(as_parm,'\','\\') + ' deleted" } '
-	else
-		return '{ "status": -1, "message":"failed to delete file ' + gnv_app.of_replaceall(as_parm,'\','\\') + '!" } '
-	end if
-end if
-~~~
   
 
 ----------------------------------------------------------------------------------
@@ -731,7 +377,7 @@ end if
 
 open a dialog to select file for **open**. 
 
-**Filter**
+#### Filter
 
 A string whose value is a text description of the files to include in the list box 
 and the file mask that you want to use to select the displayed files (for example, *.* or *.exe). 
@@ -742,36 +388,24 @@ for example: "Graphic Files (*.bmp;*.gif;*.jpg;*.jpeg),*.bmp;*.gif;*.jpg;*.jpeg"
 
 The default is:"All Files (*.*),*.*"
 
-**Return**
+#### Return
+
 * return ``{ status:1, path: {path}, file: {file} }`` if file selected
 * return ``{ status:0 }`` if file not selected
 
-**Samples**
+#### Samples
  
 * ``javascript:pb.file.opendialog('Markdown (*.md),*.md')`` open dialog for markdown file 
 * ``javascript:pb.file.opendialog('Javascript (*.js),*.js')`` select js files 
 * ``pb://file/opendialog/Ini (*.ini),*.ini`` open dialog for ini   
 
-**Source** (powerbuilder)
-
-~~~ powerbuilder
-if as_action='opendialog' then
-	ll_rtn = GetFileOpenName ( '', ls_path, ls_file, '', as_parm )
-	if ll_rtn >0 then 
-		return gnv_app.of_replaceall( '{ "status": 1, "path":"' + ls_path + '", "file":"' + ls_file + '" } ', '\', '\\' )
-	else
-		return '{ "status": '+string(ll_rtn)+' } '
-	end if
-end if	
-~~~
-  
 
 -----------------------------------------------------
 ### pb.file.savedialog(filter, callback)
 
 Open a dialog to select file for **save**. 
 
-**Filter**
+#### Filter
 
 A string whose value is a text description of the files to include in the list box 
 and the file mask that you want to use to select the displayed files (for example, *.* or *.exe). 
@@ -782,30 +416,17 @@ for example: `Graphic Files (*.bmp;*.gif;*.jpg;*.jpeg),*.bmp;*.gif;*.jpg;*.jpeg`
 
 The default is: `All Files (*.*),*.*`
 
-**Return**
+#### Return
+
 * return ``{ status:1, path: {path}, file: {file} }`` if file selected
 * return ``{ status:0 }`` if file not selected
 
-**Samples**
+#### Samples
  
 * ``javascript:pb.file.savedialog('Markdown (*.md),*.md')`` open dialog for markdown file 
 * ``javascript:pb.file.savedialog('Javascript (*.js),*.js')`` select js files 
 * ``pb://file/savedialog/Ini (*.ini),*.ini`` open dialog for ini   
 
-**Source** (powerbuilder)
-
-~~~ powerbuilder
-// pb://file/select/extension
-if as_action='select' or as_action='savedialog' then
-	ll_rtn = GetFileSaveName ( 'Select File', ls_path, ls_file, '', as_parm )
-	if ll_rtn >0 then 
-		return gnv_app.of_replaceall( '{ "status": 1, "path":"' + ls_path + '", "file":"' + ls_file + '" } ', '\', '\\' )
-	else
-		return '{ "status": '+string(ll_rtn)+' } '
-	end if
-end if	
-~~~
-  
     
    
 ## Work with Powerbuilder
@@ -819,31 +440,13 @@ It is supported to call powerbuilder customized window/function from html.
 
 Open Powerbuilder window with parameters.
 
-**Samples**
+#### Samples
 
 * `javascript: pb.window('w_about')` open about dialog  
 * `pb://window/w_about` open about dialog  
 * `javascript: pb.window('w_power_dialog','left=50,height=500,url=https://google.com')` open google in popup dialog   
 * `pb://window/w_power_dialog/top=20,width=800,url=https://google.com` open google in popup dialog  
 
-**Source** (powerbuilder)
-
-~~~ powerbuilder
-//## pb://window/{windowName}[/{parm}] => Call PB dialog window (with parm)
-if is_type='window' then
-	setnull(message.stringparm)
-	if trim(ls_parm)>'' then
-		ll_rtn = openwithparm( lw_win, ls_parm, ls_name )	
-	else
-		ll_rtn = open( lw_win, ls_name )	
-	end if
-	if message.stringparm > '' then
-		return event ue_callback( as_callback, '{ "status":'+string(ll_rtn)+', "return":"' + message.stringparm + '"}' )
-	else
-		return event ue_callback( as_callback, '{ "status":'+string(ll_rtn)+'}' )
-	end if
-end if
-~~~
 
 
 -----------------------------------------------------
@@ -855,19 +458,6 @@ call Powerbuilder user-defined function. This is advanced feature for extented P
 2. code global function `f_functions( name, parm )` 
 3. handle ( name, parm ) within the function, e.g. run SQL, or call other funcitons. 
 
-**Source** (powerbuilder)
-
-~~~ powerbuilder     
-//## pb://function/{name}/{parameter} => dynamic call f_functions() to handle. it shall be defined in ext pb library
-if is_type='func' then
-	TRY	
-		ls_result = dynamic f_functions(ls_name, ls_parm)
-	CATCH (runtimeerror er)
-		ls_result = '{ "status":-1, "message":"function not found - ' + ls_name + '()" } ' 
-	END TRY	
-	return event ue_callback( as_callback, ls_result )
-end if
-~~~     
      
 ## Misc Features
 
@@ -889,6 +479,7 @@ when page loaded, pb.session will be initialed as
                          remarks: 'this is a test message', 
                          user: { "id":"admin", "role":"admin", "group":"IT" } 
                        }
+
 to retrieve session variables, may use `pb.session[{name}]` in javascript, or function ``pb.session({name})`` 
  
 to update session variables, may use protocol ``pb://session/remarks/new content`` or by javascript ``pb.session({name}, {new-value})``   
@@ -946,60 +537,12 @@ This function required `wkhtmltopdf.exe` as pdf-factory.
 * preview index. ``javascript: pb.pdf('dialog', 'h3, h4')``
 
 
-### Source Code (Powerbuilder)
-
-~~~ Powerbuilder
-//## pb://pdf, pb://pdf/print|open|dialog|divs/querySelector
-if is_type = 'pdf' then
-	
-	ls_opts = profilestring(gnv_app.is_ini, 'system', 'pdf-preview', 'width=1024,height=768')
-    ls_run = profilestring(gnv_app.is_ini, 'system', 'pdf-factory', 'wkhtmltopdf.exe')
-	 
-    ll_timeout = long( profilestring(gnv_app.is_ini, 'system', 'pdf-timeout', '10') )
-	 
-	if not fileexists(ls_run) then
-		event ue_pb_error( 'PDF factory not found.', is_command )
-		return '{"status":-1, "message":"PDF factory not found." } '
-	end if
-		
-	ll_file = fileopen( gnv_app.is_temp_file+'.html', LineMode!, Write!, LockWrite!, Replace!, EncodingUTF8! )
-	
-	if ll_file<=0 then 
-		event ue_pb_error( 'Canot open temp file for PDF generation.', is_command )
-		return '{"status":-2, "message":"Canot open temp file for PDF generation" } '
-	end if
-	
-	filewriteex( ll_file, of_get_html(ls_parm) )
-	fileclose(ll_file)
-
-	of_run_wait( ls_run +  '  ' + gnv_app.is_temp_file +'.html ' + gnv_app.is_temp_file + '.pdf', 0 )
-
-	filedelete( gnv_app.is_temp_file+ +'.html' )
-	
-	// open pdf file. 
-	if ls_name = 'print' then
-		ll_rtn = ShellExecute( handle(this), 'print',  gnv_app.is_temp_file+'.pdf', gnv_app.is_currentPath, ls_null, 1)
-	elseif ls_name = 'open' then
-		ll_rtn = ShellExecute( handle(this), 'open',  gnv_app.is_temp_file+'.pdf', gnv_app.is_currentPath, ls_null, 1)
-	elseif ls_name = 'dialog' then
-		ll_rtn = openwithparm( w_power_dialog, ls_opts + ',mode=print,url='+gnv_app.is_temp_file+'.pdf' )
-		filedelete( gnv_app.is_temp_file+ +'.pdf' )
-	else
-		ll_rtn = openwithparm( w_power_dialog, ls_opts + ',url='+gnv_app.is_temp_file+'.pdf' )
-		filedelete( gnv_app.is_temp_file+ +'.pdf' )
-	end if
-	
-	return '{"status":' + string(ll_rtn) + ' } '
-	
-end if
-~~~
-
 -----------------------------------------------------
 ### pb.spider( url, key, callback )
 
-This function maily developed for [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler). 
+This function mainly developed for [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler). 
 
-It will load url in a hidden browser, and calling pb.crawl() to return html result.
+It will load web page in a hidden browser, and calling pb.crawl() to return html result.
 
 ~~~ powerpage.js
 // powerpage.js
