@@ -58,6 +58,64 @@ Notes:
 
 This document will cover `api-function` and `api-action` only.
 
+## Events
+
+### window.onPageReady()
+
+After `powerchrome.js` is loaded and interface initialized, event `window.onPageReady()` will be called for page/application startup.
+
+Normally, will setup mini-button, DB connection, application variables in this event for application main page.
+for example,
+
+~~~
+// when page ready, setup mini button
+function onPageReady() {
+  
+  // setup mini buttons 
+  pb.api( 'minibutton', 'clear' )
+  pb.api( 'minibutton', {script:'pb.about()', title:'About', icon:'toolkitabout!'} )
+  pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )
+  pb.api( 'minibutton', {script:'refresh', title:'Refresh', icon:'Synchronizer1!'} )
+  pb.api( 'minibutton', {script:'back', title:'Go Back', icon:'Prior3!'} )
+  
+  // connect to database
+  pb.dbConnect('ODBC',"connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'")
+  
+  // user sign in, close if failed. 
+  let userid = pb.login()
+  
+  if ( userid == '1'  ) {
+     pb.close()
+  } else {
+     pb.session( 'userid',  pb.login() )
+  }
+
+  // app. startup...
+  
+}  
+
+~~~
+
+
+### window.onPageClose()
+
+When user try to close PowerChrome (i.e. click on [X] or press [Alt-F4]), event `window.onPageClose()` 
+will be executed for closing application process.
+
+##### Return
+
+* return `ture` or `yes` to close window
+* return `false` or `no` to prevent closing window. 
+* return a string {message} to prompt user for confirmation 
+
+##### sample
+
+~~~
+// prompt message before page close 
+function onPageClose() { 
+  return 'Close window and exit?' 
+}
+~~~
 
 ## Access window shell
    
@@ -637,6 +695,121 @@ return string `"true"` if file exists, `"false"` if not exists
 * delete file. ``pb.api( 'file-delete', 'sample2.txt' )``
   
 
+### pb.dir()    {dir}
+
+get current directory.
+
+##### Syntax
+
+* syntax1: ``pb.dir()``  
+* syntax2: ``pb.api( 'dir-current' )``  
+
+##### Return
+
+return the path of current directory
+  
+
+### pb.dirExists()
+
+check directory existence, return a string of "true/false"
+
+##### Syntax
+
+* syntax1: ``pb.dirExists( {directory} )``
+* syntax2: ``pb.api( 'dir-exists', {directory} )``
+
+##### Parameters
+
+* {directory} is the path of directory
+
+##### Return
+
+return string `"true"` if directory exists, `"false"` if not exists
+
+##### Samples
+
+* check directory existence. ``pb.fileExists('c:\\temp')``
+* check directory existence. ``pb.api( 'dir-exists', 'c:/temp')``
+  
+  
+### pb.dirChange()
+
+change directory
+
+##### Syntax
+
+* syntax1: ``pb.dirExists( {directory} )``
+* syntax2: ``pb.api( 'dir-change', {directory} )``
+
+##### Parameters
+
+* {directory} is the path of directory
+
+##### Samples
+
+* change the parent folder ``pb.dirChange( '..' )``
+* change to app start folder  ``pb.dirChange( pb.property('app.path') )``
+* change to temp folder ``pb.api( 'dir-change', 'c:/temp' )``
+  
+  
+### pb.dirCreate()
+
+create a directory
+
+##### Syntax
+
+* syntax1: ``pb.dirCreate( {directory} )``
+* syntax2: ``pb.api( 'dir-create', {directory} )``
+
+##### Parameters
+
+* {directory} is the path of directory
+
+##### Samples
+
+* create directory ``pb.dirCreate('tempfolder')``
+* create directory ``pb.api( 'dir-create', 'tempfolder' )``
+  
+
+### pb.dirDelete()
+
+delete a directory
+
+##### Syntax
+
+* syntax1: ``pb.dirDelete( {directory} )``
+* syntax2: ``pb.api( 'dir-delete', {directory} )``
+
+##### Parameters
+
+* {directory} is the path of directory
+
+##### Samples
+
+* delete directory ``pb.dirDelete('tempfolder')``
+* delete directory ``pb.api( 'dir-delete', 'tempfolder' )``
+   
+   
+### pb.dirSelect()
+
+select a directory
+
+##### Syntax
+
+* syntax1: ``pb.dirSelect( {message} )
+* syntax2: ``pb.api( 'dir-select', {message} )``
+
+##### Parameters
+
+* {message} is the prompt messgae for selec dialog
+
+##### Samples
+
+* select a directory ``myFolder = pb.dirSelect('please select a folder')``
+* select a directory ``myFolder = pb.api( 'dir-select', 'please select a folder')``
+   
+ 
+
 ## Console and Message
   
   
@@ -781,7 +954,7 @@ app.credit  | credit or copyright info. which will show in about-dialog.
 app.github  | link to github (for about-dialog)
 app.home    | link to product home (for about-dialog)
 app.watch   | options for showing debug message, a combination of `[debug] [sql] [api]`
-app.icon    | application icon.
+app.icon    | application icon. [builtin-icons](#icons) can be used for this property.
 app.cmdline* | (read-only) command line options
 app.runtime* | (read-only) path of powerbuilder runtime
 app.screenheight* | (read-only) screen height
@@ -990,6 +1163,12 @@ function onPageReady() {
 }  
 ~~~
 
+##### Builtin Icons   {icons}
+
+The following builtin icons (provided by Powerbuilder 2019R3) can be used for icon value
+
+![builtin icons](pb2019-icons.png)
+
 ### pb.api('secret')   {secret}
 
 generate `secret-string` for the following system parameters. 
@@ -1006,3 +1185,13 @@ may run from console panel by `pb.api( 'secret', {keyword} )`
 * encrypt db login user id. ``pb.api( 'secret', 'scott' )``
 * encrypt db login password. ``pb.api( 'secret', 'tiger' )``
 * encrypt startup url. ``pb.api( 'secret', 'https://192.168.1.36/powerchome/index.html' )``
+
+
+## More Information
+
+More documentation can be found at https://casualwriter.github.io/powerchrome
+
+* [Document Home](?file=index.md)
+* [Getting Started](?file=get-started.md)
+* [Interface (API)](?file=interface.md)
+* [Development Guide](?file=development.md)

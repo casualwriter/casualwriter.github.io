@@ -19,9 +19,24 @@ menu      :
 
 There are some interesting scenarios for PowerChrome Applications
 
+### display board
+
+It is so easy to code a html page for display board. 
+ 
+1. connect to database
+2. retrieve data from database
+3. render data by javascript
+4. make use of `/kiosk` mode to show the page in full-screen.
+
 ### demonstration
 
 make use of ``pb.sendkeys()`` to interact with existing web page
+
+1. make a javascript file. e.g. `sample-demo.js`
+2. code js function of showing hints. e.g. `showHints()`
+3. send keystrokes, with calling `showHints()`
+2. navigate to the web page, and send keystrokes. `powchrome.exe /url={link} /script=sample-demo.js`
+
 
 ### web crawler
 
@@ -41,39 +56,101 @@ it is quite simple to inject javascript for automation by ``pb.popup()``
 
 ## Local-Application
 
-Local-application would be deployed to same folder of powerchrome.exe, 
 
-or deploy to different folder and run by `powerchrome.exe /app={url}`
+### Deployment
+
+Local-application would be deployed to same folder of powerchrome.exe, or deploy to different 
+folder and run by `powerchrome.exe /app={url}`
 
 ~~~
+-- run index.html from same folder
+powerchrome.exe
+
+-- run main.html from same folder
+powerchrome.exe /app=main.html
+
+-- run html application in another folder
 powerchrome.exe /app=c:\app\myprogram\index.html
-powerchrome.exe /app=\\it-server\app\myprogram\index.html
-powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
-~~~
 
+-- run html application in network share folder
+powerchrome.exe /app=\\it-server\app\myprogram\index.html
+~~~
 
 
 ## Cloud-Application
 
-Similar to run application from lcoal web server, but run from internet.
+HTML application can be deployed to internal web server, or external web server. 
 
-### startup page
+~~~
+// local web server
+powerchrome.exe /app=https://localhost:8080/cms
 
+// external web server
+powerchrome.exe /app=https://app.myserver.com/cms
+
+// use secret-string
+powerchrome.exe /app=@ppgpfqducqopcqftdpppmlamlmplhpcqjufpcqcqjtduftkpfppobpmp
+~~~
+
+### cloud mode
+
+Application run in `cloud mode` if startup url starts with `https://` or `http://` 
+
+In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
+
+for example, run `chromechrome.exe` for web-application:
+
+```
+powerchrome.exe /app=https://app.mycompany.com/crm/index.html
+```
+
+API will only available for URL start with ``https://app.mycompany.com/crm/``.
+
+If navigate to another domain, PowerChrome works like **normal chromium browser**.
 
 ### security issue
 
+Be aware the security concern if HTML application is deployed to external web server. 
+
+It is highly recommended to 
+
+1. Not use local `powerchrom.ini`
+2. use `pb.dbConnect()` to connect DB. use `secret-string` for DB connection parameters.
+3. use `secret-string` for startup url
+
+~~~
+-- command line
+powerchrome.exe /app=@ppgpfqducqopcqftdpppmlamlmplhpcqjufpcqcqjtduftkpfppobpmp
+
+-- javascript for main page, connect database
+function onPageReady() {
+  
+  // connect to database, close if failed.
+  let rs = JSON.parse( pb.dbConnect( 'ORA', '', 'Oracle19DB', '@jpbpepcqbp', '@lpaqmpmpap' ) )
+
+  if ( rs.status < 0 ) {
+    pb.alert( 'falied to connect database! \n' + rs.sqlerrtext )
+    pb.close()
+    return
+  }
+  
+  // application startup...
+}
+
+~~~
+
+
 ### pros & cons
    
-
+   
+  
 ## Notes
-
 
 ### About Powerbuilder
 
 **No need to know anything about Powerbuilder** if just develop HTML/JavaScript application.
 
-PowerChrome is developed using `Powerbuilder 2019R3`, (which is regarded outdated in
-development world?). PowerChrome inherits some nice features from Powerbuilder.
+PowerChrome is developed using `Powerbuilder 2019R3`. PowerChrome inherits some features from Powerbuilder.
 
 #### Connect to database by native driver
 
@@ -128,3 +205,11 @@ v | security for cloud-app | api works for same domain only
   | reporting using datawindow | api `pb.datawindow()`, in development
   | simple app framework       | 
   
+## More Information
+
+More documentation can be found at https://casualwriter.github.io/powerchrome
+
+* [Document Home](?file=index.md)
+* [Getting Started](?file=get-started.md)
+* [Interface (API)](?file=interface.md)
+* [Development Guide](?file=development.md)

@@ -24,7 +24,7 @@ With PowerChrome, you can quickly and easily write and run your own desktop appl
 providing a seamless user experience for your users.
 
 
-### Files
+### Files   {files}
 
 The following files are included in the downloaded package 
 [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip)
@@ -89,7 +89,7 @@ and run `pwerchrome.exe` again.
 PowerChrome accepts parameters from `command-line`  -> `powerchrome.ini` -> `JavaScript API`
 
 
-### Command-line Options
+### Command-line Options    {commandline}
 
 ``powerchrome.exe /app={startup.html} /fullscreen /script={interface.js} /save={name.html} /save={name.pdf} /select={selector}``    
 
@@ -100,7 +100,7 @@ PowerChrome accepts parameters from `command-line`  -> `powerchrome.ini` -> `Jav
 * print page to PDF file ``/ulr={link} /save={name.pdf}``
 
 
-### powerchrome.ini 
+### powerchrome.ini     {ini}
 
 PowerChrome will load initial setting from `powerchrome.ini`. For example
 
@@ -132,7 +132,7 @@ environment, and use JavaScript to configure application in production.
 
 ### Encrypt sensitive information  {secret-string}
 
-`secret-string` is an encrypted string leading with '@'. The string could be used for the following sensitive 
+`Secret-String` is an encrypted string leading with '@'. The string could be used for the following sensitive 
 parameter in command-line or `powerchrome.ini`. 
 
 for example, use "secret-string" for startup URL in command line. 
@@ -153,7 +153,7 @@ logPass= @secretstring
 DBParm = @secretstring
 ~~~
 
-to generate `secret string`, please call out console in PowerChrome, and run 
+to generate [secret string](?file=interface.md#secret), please call out console in PowerChrome, and run 
 
 ~~~
 pb.api( 'secret', keystring )
@@ -161,7 +161,7 @@ pb.api( 'secret', 'https://google.com' )
 ~~~
 
 
-### Mini Button
+### Mini Button     {minibutton}
 
 Up to 6 mini-buttons can be customized in the bottom-right corner. 
 
@@ -195,8 +195,9 @@ The parameter of "script" could be any valid JavaScript, or below predefined act
 
 ## Connect to Database  {database}
 
-PowerChrome connects to major database using native driver or using JDBC/ODBC/ADO/OLE-DB to 
-connect to all kind of database.
+PowerChrome uses native driver to connect major database server (i.e. Oracle, Sybase, MS SQL Server, Informix), 
+which is more stable and efficient than JDBC/ODBC/ADO, as long as still can use JDBC/ODBC/ADO/OLE-DB to 
+connect all kind of database.
 
 The database driver is provided by following file in `Powerbuilder 2019R3 Run-time`. 
 
@@ -276,7 +277,7 @@ dbParm  = Provider='OraOLEDB.Oracle'; DataSource='XE'
 
 ~~~
 
-### Connect to MS SQL Server
+### Connect to Microsoft SQL Server
 
 ### Connect to MySQL database
 
@@ -288,7 +289,13 @@ let's make a markdown editor
 
 ### Basic Programming Skeleton
 
-let's start up with a HTML programming skeleton
+let's start up with a HTML programming skeleton, which consists of the following sections
+
+1. html header
+1. css style
+1. html layout
+1. data section (sql, etc.., optional)
+1. script section
 
 ~~~
 <!DOCTYPE html>
@@ -349,37 +356,109 @@ app.open = () => {
 </script>
 ~~~
 
-### Code Basic Layout by HTML
+### Code Basic Layout by HTML/CSS
+
+Code basic layout by HTML/CSS. As it still a html web page, just simply preview and debug by chrome
 
 ### Add functionality
 
+Add program logic by Javascript function Code. before calling `PowerChrome Interface` function, 
+it still a normal html page, and simply preview and debug by chrome.
+
+then start code more functionality which required `PowerChrome Interface`.
+
 ### Debug in chrome browser
+
+Add the following code to import `powerchrome.js` if `PowerChrome Interface` not found.
+
+~~~
+// if run in chrome browser, load interface for debug
+window.onload = function() {
+  if (typeof webBrowser === "undefined") {
+    let scriptEle = document.createElement("script");
+    scriptEle.setAttribute("src", "powerchrome.js");
+    scriptEle.setAttribute("type", "text/javascript");
+    document.body.appendChild(scriptEle);
+  } 
+}
+~~~
+
+Now calling `PowerChrome Interface` in chrome browser will not cause error, it will show API message in console.
 
 ### Run within PowerChrome
 
+There is a simple console available in Powerchrome. It can be activated by ini setup.
+
+~~~
+[system]
+console = 500px
+~~~
+
+or activate by javascript `pb.api( 'console', '500px' )`
+
+or activate from mini-button `pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )`
+
 ## Deployment
+
+To execute Powerchrome HTML application, please make sure the following files are available
+
+1. main program `powerchrome.exe` and interface `powerchrome.js`
+2. Powerbuilder run-time files in current path or OS search path.
+3. your HTML application files.
+
+There are several ways to deploy PowerChrome Application for different purpose.
 
 ### Quick deployment (same folder)
 
+The most simple way to deploy PowerChrome Application is put all files in same folder. 
+
 * deploy `powerchrome.exe, powerchrome.js` to client's folder
 * deploy `powerbuilder runtime` to same folder
-* copy html program to the same folder
+* copy html program to the same folder. e.g. `index.html`, `main.html`
+
+It is **portable**. No need to setup anything but run application. may directly run from local path or USB stick. 
+
+* run application by `powerchrome.exe`, if application main is `index.html`
+* run application by `powerchrome.exe /app=main.html`, if application main is `main.html`
 
 ### Deploy runtime to another folder
 
-* deploy `powerbuilder runtime` to a folder, e.g. c:\app\pb2019-runtime
-* add the folder to PATH, `PATH=c:\app\pb2019-runtime;%PATH%`
-* deploy `powerchrome.exe, powerchrome.js` and html program to any folder
+Another recommended way is put run-time files to system search path, and deploy PowerChrome Application to another folder.
 
-### Deploy application
+* deploy `powerbuilder runtime` to a folder, e.g. `c:\app\pb2019-runtime`
+* add the folder to PATH. e.g. `PATH=c:\app\pb2019-runtime;%PATH%`
+* deploy `powerchrome.exe, powerchrome.js` and html program to any folder. e.g. `c:\app\crm\`
 
-HTML application would be deployed to different folder of powerchrome.exe, and run by `powerchrome.exe /app={url}`
+This setup is suitable for multiple PwerChrome applications in client's PC, which no need to 
+copy duplicated run-time to a client's local storage.
 
-~~~
-powerchrome.exe /app=c:\app\myprogram\index.html
-powerchrome.exe /app=\\it-server\app\myprogram\index.html
-powerchrome.exe /app=http://192.168.1.20:8080/myprogram/index.html
-~~~
+### Deploy application to network folder
+
+Deploy PowerChrome program with run-time files to a folder, and deploy HTML application to network share folder.
+
+* deploy `powerchrome.exe, powerchrome.js` to local. e.g. `c:\app\powerchrome`
+* deploy `powerbuilder runtime` to same folder 
+* deploy html application to network folder. e.g. `\\it-server1\cms\*.html`
+* run application by `powerchrome.exe /app=\\it-server1\cms`
+* or use secret-string for start url. `powerchrome.exe /app=@npcqeretaqopcpaqkqkpitpompiq`
+
+### Deploy application to web server
+
+Deploy PowerChrome program with run-time files to a folder, and deploy HTML application to 
+internal/external web server.
+
+* deploy `powerchrome.exe, powerchrome.js` to client's folder
+* deploy `powerbuilder runtime` to same folder
+* deploy html application to internal/external web server
+* run application by `powerchrome.exe /app=https://web-server:8080/cms`
+* or use secret-string for start url. `powerchrome.exe /app=@apipbqamnmklamlqmpkudqnqmojtduftkpfppobpmp`
+    
+Be aware the security concern if HTML application is deployed to **external web server**.
+
+Highly recommended use `secret-string` for startup url!
+
+* run application by `powerchrome.exe /app=https://app.myserver.com/cms`
+* recommented use secret-string. `powerchrome.exe /app=@ppgpfqducqopcqftdpppmlamlmplhpcqjufpcqcqjtduftkpfppobpmp`
 
 ### Cloud Mode and Security
 
@@ -390,11 +469,20 @@ In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in 
 for example, run `chromechrome.exe` for web-application:
 
 ```
-powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html
+powerchrome.exe /app=https://app.mycompany.com/crm/index.html
 ```
 
-API will only available for URL start with ``https://casualwriter.github.io/powerchrome/``.
-If navigate to another domain, PowerChrome works like normal chromium browser.
+API will only available for URL start with ``https://app.mycompany.com/crm/``.
 
+If navigate to another domain, PowerChrome works like **normal chromium browser**.
+
+## More Information
+
+More documentation can be found at https://casualwriter.github.io/powerchrome
+
+* [Document Home](?file=index.md)
+* [Getting Started](?file=get-started.md)
+* [Interface (API)](?file=interface.md)
+* [Development Guide](?file=development.md)
 
 
