@@ -17,7 +17,7 @@ menu      :
  
 ## PowerChrome for HTML Application
 
-PowerChrome is a portable chromium-base web browser to enable fast and easy development 
+[PowerChrome](https://github.com/casualwriter/powerchrome) is a portable chromium-base web browser to enable fast and easy development 
 of desktop applications using HTML and JavaScript. 
 
 With PowerChrome, you can quickly and easily write and run your own desktop applications, 
@@ -147,7 +147,6 @@ More documentation can be found at https://casualwriter.github.io/powerchrome
 
 ### To Do List
 
-* [.] documentation - Get Started
 * [.] documentation - Development Guide
 * [ ] enable api-call when load document within PowerChrome
 * [ ] make use of datawindow for application reporting

@@ -116,7 +116,43 @@ function onPageClose() {
   return 'Close window and exit?' 
 }
 ~~~
+  
+  
+## Basic Functions
 
+### pb()
+
+equivalent to `document.getElementById( {id} )`, this function is defined by the following code in `powerchrome.js`
+
+~~~
+const pb = (id) => { return document.getElementById(id) }
+~~~
+
+##### Sample
+
+* `pb('left-panel')` is same as `document.getElementById('left-panel')`
+* `html = pb('left-panel').innerHTML` is same as `html = document.getElementById('left-panel').innerHTML`
+  
+
+### pb.api()
+
+##### Syntax
+
+* syntax1: `pb.api( {action}, {string} )`
+* syntax1: `pb.api( {action}, {parms} )`
+
+##### Parameters
+
+* `{action}` is the API action
+* `{string}` is the string parameter. 
+* `{parms}` is the object parameter. e.g. `{cmd:'notepad.exe', path:'c:\temp'}`
+
+##### Sample
+
+* run notepad. `pb.api( 'run', 'notepad.exe' )
+* run notepad. `pb.api( 'run', { cmd:'notepad.exe', path:'c:\temp'} )`
+   
+   
 ## Access window shell
    
 

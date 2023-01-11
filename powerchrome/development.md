@@ -14,6 +14,14 @@ menu      :
   h1, h2      { border-bottom:1px solid grey }
   h2, h3, h4  { color:#06c }
 </style>
+## Introduction
+
+This document will discuss some concerns for HTML application development, mainly for the following topic.
+
+1. Application Scenarios
+1. Deployment Approach
+1. Security Concern
+1. Pros & Cons
 
 ## Side-Application
 
@@ -33,8 +41,8 @@ It is very simple and easy to code a HTML application for display board.
 ~~~
 <!DOCTYPE html>
 <style>
-	body   { line-height:1.5; margin:auto; padding:0; font-family:Verdana,arial }  
-	header { background:darkgrey; color:white; height:20px; padding:12px; }
+  body   { line-height:1.5; margin:auto; padding:0; font-family:Verdana,arial }  
+  header { background:darkgrey; color:white; height:20px; padding:12px; }
   h1     { margin-top:200px; font-size:40px; text-align:center; }
 </style>
 
@@ -69,7 +77,7 @@ function loadData() {
   let rs = JSON.parse( pb.dbQuery( document.getElementById('sql-data1').innerHTML ) )
 
   // then render page
-  pb('info').innerHTML = new Date().toISOString()
+  document.getElementById('info').innerHTML = new Date().toISOString()
   document.getElementById('content').innerHTML = '<h1>' + rs.data[0].current + '</h1>'
 
 }
@@ -132,6 +140,15 @@ powerchrome.exe /app=c:\app\myprogram\index.html
 powerchrome.exe /app=\\it-server\app\myprogram\index.html
 ~~~
 
+### Security Issue
+
+Be aware the security concern if HTML application is client's local storage. 
+
+As HTML program is deployed by `source code` and they are visible for end-user. Please make sure that
+
+1. affordable that user can read the source code
+1. affordable that user know some technical information. e.g. server name, url
+1. no sensitive information in source code. e.g. password, login id
 
 ## Cloud-Application
 
@@ -148,7 +165,7 @@ powerchrome.exe /app=https://app.myserver.com/cms
 powerchrome.exe /app=@ppgpfqducqopcqftdpppmlamlmplhpcqjufpcqcqjtduftkpfppobpmp
 ~~~
 
-### cloud mode
+### Cloud Mode
 
 Application run in `cloud mode` if startup url starts with `https://` or `http://` 
 
@@ -164,7 +181,7 @@ API will only available for URL start with ``https://app.mycompany.com/crm/``.
 
 If navigate to another domain, PowerChrome works like **normal chromium browser**.
 
-### security issue
+### Security Issue
 
 Be aware the security concern if HTML application is deployed to external web server. 
 
@@ -196,7 +213,7 @@ function onPageReady() {
 ~~~
 
 
-### pros & cons
+### Pros & Cons
    
    
   
