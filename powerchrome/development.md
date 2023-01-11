@@ -19,28 +19,84 @@ menu      :
 
 There are some interesting scenarios for PowerChrome Applications
 
-### display board
+### Display Board
 
-It is so easy to code a html page for display board. 
+It is very simple and easy to code a HTML application for display board. 
  
-1. connect to database
-2. retrieve data from database
-3. render data by javascript
-4. make use of `/kiosk` mode to show the page in full-screen.
+1. Connect to database 
+2. Retrieve data from database
+3. Render data by JavaScript
+4. run in fullscreen mode by command: `powerchrome.exe /kiosk /app=sample-board.html`
 
-### demonstration
+##### Sample Code
+
+~~~
+<!DOCTYPE html>
+<style>
+	body   { line-height:1.5; margin:auto; padding:0; font-family:Verdana,arial }  
+	header { background:darkgrey; color:white; height:20px; padding:12px; }
+  h1     { margin-top:200px; font-size:40px; text-align:center; }
+</style>
+
+<!-------------- html layout -------------------->
+<body>
+<header>
+  <div id="heading" style="float:left;font-size:14px;font-weight:bold">Sample DisplayBoard</div>
+  <div id="info" style="float:right;font-size:8px" onclick="window.close()">click to close</div>
+</header>
+<div id="content"></div>
+</body>
+
+<!------------- SQL or data (optional) ------------>
+<template id="sql-data1" title="SQL to retrieve data from DB">
+select now() as current
+</template>
+
+<!------------- script section -------------------->
+<script>
+
+// when powerchrome page ready, connect database, and go to data retrieval
+function onPageReady() {
+  pb.dbConnect('ODBC',"connectstring='DRIVER={Microsoft Access Driver (*.mdb)};DBQ=sample.mdb'")
+  loadData()
+  setInterval( loadData, 1000 );
+}  
+
+// load data and render page
+function loadData() {
+
+  // load data (from database or web service) 
+  let rs = JSON.parse( pb.dbQuery( document.getElementById('sql-data1').innerHTML ) )
+
+  // then render page
+  pb('info').innerHTML = new Date().toISOString()
+  document.getElementById('content').innerHTML = '<h1>' + rs.data[0].current + '</h1>'
+
+}
+</script>
+~~~
+
+### Demonstration
 
 make use of ``pb.sendkeys()`` to interact with existing web page
 
 1. make a javascript file. e.g. `sample-demo.js`
 2. code js function of showing hints. e.g. `showHints()`
 3. send keystrokes, with calling `showHints()`
-2. navigate to the web page, and send keystrokes. `powchrome.exe /url={link} /script=sample-demo.js`
+4. navigate to the web page, and send keystrokes. `powchrome.exe /url={link} /script=sample-demo.js`
 
 
-### web crawler
+### Web Crawler
 
-it is so easy to write a web crawler by using ``pb.popup()``
+it is so easy to write a web crawler by using ``pb.popup( {url}, { select:{selector} } )``
+
+~~~
+// crawl README content from PowerChrome github-repo
+let html = pb.popup( 'https://github.com/casualwriter/powerchrome', {select:'.markdown-body'} )
+
+// crawl content from PowerChrome Document
+html = pb.popup( 'https://casualwriter.github.io/powerchrome', {select:'#right-panel'} )
+~~~
 
 ### Ajax -> Sjax
 
@@ -51,7 +107,7 @@ using ``pb.httpRequest()``, a similar way to call ajax for web service/
 
 ### Automation
 
-it is quite simple to inject javascript for automation by ``pb.popup()``
+inject javascript for automation by ``pb.popup( {url}, { script:'import.js' } )``
 
 
 ## Local-Application
@@ -152,7 +208,7 @@ function onPageReady() {
 
 PowerChrome is developed using `Powerbuilder 2019R3`. PowerChrome inherits some features from Powerbuilder.
 
-#### Connect to database by native driver
+#### Connect DB by native driver
 
 PowerChrome uses **native driver** to connect major database server (i.e. Oracle, Sybase, MS SQL Server, Informix), 
 which is more stable and efficient than JDBC/ODBC/ADO, as long as still can use JDBC/ODBC/ADO/OLE-DB to connect 

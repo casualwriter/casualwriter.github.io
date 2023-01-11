@@ -15,7 +15,7 @@ menu      :
   h2, h3, h4  { color:#06c }
 </style>
  
-## PowerChrome for HTML/JS Application
+## PowerChrome for HTML Application
 
 PowerChrome is a portable chromium-base web browser to enable fast and easy development 
 of desktop applications using HTML and JavaScript. 
@@ -63,9 +63,9 @@ For example,
   
 ## Get Started
   
-### Download and Run
+### Download and Run    {download}
 
-1. Download [powerchrome-0.60-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.60-with-runtime.zip) and unzip the all-in-one package.
+1. Download [powerchrome-0.62-with-runtime.zip](https://casualwriter.github.io/download/powerchrome-0.62-with-runtime.zip) and unzip the all-in-one package.
 2. Run `powerchrome.exe`.
 3. `powerchrome.html` will be loaded to demonstrate how PowerChrome works with an HTML desktop application.
 
@@ -147,8 +147,8 @@ More documentation can be found at https://casualwriter.github.io/powerchrome
 
 ### To Do List
 
-* [..] documentation - Get Started
-* [..] documentation - Development Guide
+* [.] documentation - Get Started
+* [.] documentation - Development Guide
 * [ ] enable api-call when load document within PowerChrome
 * [ ] make use of datawindow for application reporting
 * [ ] pb.encode(manner,text), pb.decode(manner,text)
