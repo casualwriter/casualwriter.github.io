@@ -116,11 +116,11 @@ and `Powerbuilder-Runtime` are required. The other files are optional or depends
 
 ### Cloud Mode and Security
 
-PowerChrome will run in **cloud-mode** when the startup link start with `https://` or `http://`. 
+PowerChrome will run in **cloud-mode** when the startup link starts with `https://` or `http://`. 
 
-In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN**. 
+In cloud mode, **PowerChrome-JavaScript-Interface** is available for the URL in **SAME DOMAIN** ONLY. 
 
-for example, run `chromechrome.exe` for web-application:
+For example, running `powerchrome.exe` with the following command will launch the web-application in cloud mode:
 
 ```
 powerchrome.exe /app=https://casualwriter.github.io/powerchrome/powerchrome.html

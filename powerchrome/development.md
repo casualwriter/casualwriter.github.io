@@ -16,12 +16,13 @@ menu      :
 </style>
 ## Introduction
 
-This document will discuss some concerns for HTML application development, mainly for the following topic.
+This document will discuss some considerations for HTML application development, 
+focusing on the following topics: 
 
 1. Application Scenarios
-1. Deployment Approach
-1. Security Concern
-1. Pros & Cons
+2. Deployment Approach
+3. Security Concerns
+4. Pros and Cons. 
 
 ## Side-Application
 
@@ -34,7 +35,7 @@ It is very simple and easy to code a HTML application for display board.
 1. Connect to database 
 2. Retrieve data from database
 3. Render data by JavaScript
-4. run in fullscreen mode by command: `powerchrome.exe /kiosk /app=sample-board.html`
+4. run in full-screen mode by command: `powerchrome.exe /kiosk /app=sample-board.html`
 
 ##### Sample Code
 
@@ -96,7 +97,7 @@ make use of ``pb.sendkeys()`` to interact with existing web page
 
 ### Web Crawler
 
-it is so easy to write a web crawler by using ``pb.popup( {url}, { select:{selector} } )``
+it is simple to crawl a web page by ``pb.popup( {url}, { select:{selector} } )``, for example,
 
 ~~~
 // crawl README content from PowerChrome github-repo
@@ -115,7 +116,7 @@ using ``pb.httpRequest()``, a similar way to call ajax for web service/
 
 ### Automation
 
-inject javascript for automation by ``pb.popup( {url}, { script:'import.js' } )``
+Inject JavaScript for automation by ``pb.popup( {url}, { script:'import.js' } )``.
 
 
 ## Local-Application
@@ -142,13 +143,13 @@ powerchrome.exe /app=\\it-server\app\myprogram\index.html
 
 ### Security Issue
 
-Be aware the security concern if HTML application is client's local storage. 
+Be aware the security concern if HTML application is deployed to client's local storage. 
 
 As HTML program is deployed by `source code` and they are visible for end-user. Please make sure that
 
-1. affordable that user can read the source code
-1. affordable that user know some technical information. e.g. server name, url
-1. no sensitive information in source code. e.g. password, login id
+1. Acceptable that user is possible to read the source code
+1. Acceptable that user possibly read some technical information from source code. e.g. server name, url
+1. Make sure no sensitive information in source code. e.g. password, login id
 
 ## Cloud-Application
 

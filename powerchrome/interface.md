@@ -35,11 +35,12 @@ Please note that interface call is running in **Synchronization Modes**. no need
 
 ### How it works
 
-PowerChrome will load startup HTML page with builtin chromium-base web browser, and import `powerchrome.js` 
-to initialize interface, then call `window.onPageReady()` for application startup.
+PowerChrome will load the startup HTML page with built-in Chromium-based web browser, import the 
+`powerchrome.js` file to initialize the interface, and then call `window.onPageReady()` to start the application.
 
-After interface is initialized, HTML/JavaScript application may call `pb.apiFunctions(..)` for application service.
-
+Once the interface has been initialized, the HTML/JavaScript application can call `pb.apiFunctions(..)` to 
+access the application's services.
+  
 
 ### API Syntax
 
@@ -1199,11 +1200,27 @@ function onPageReady() {
 }  
 ~~~
 
-##### Builtin Icons   {icons}
+### Builtin Icons   {icons}
 
-The following builtin icons (provided by Powerbuilder 2019R3) can be used for icon value
+##### Application Icons
 
-![builtin icons](pb2019-icons.png)
+The following builtin images can be used for application icon by
+
+``pb.property( 'app.icon', {iconName} )``, e.g. ``pb.property( 'app.icon', 'applicationicon2!' )``
+
+![builtin icons](pb2019-icon-app.png)
+
+##### Mini-button Icons
+
+The following builtin images can be used as mini-button icon.
+
+``pb.api( 'minibutton', {script:"console", title:'Console', icon:'tile!'} )``
+
+![builtin icons - actions](pb2019-icon-action.png)
+
+Click here to [expand this image](pb2019-icon-action.png), or [full list of builtin icons](pb2019-icon-full.png)
+
+
 
 ### pb.api('secret')   {secret}
 
