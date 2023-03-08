@@ -4,18 +4,18 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.css">
 <script src="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.js"></script>
 <style>  
-body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
+body { font-family:"Segoe UI",Helvetica,Arial; font-size:18px; line-height:1.5; margin:0; }
 a 	 { background:transparent; text-decoration:none; color:grey } a:hover { background:#ffd700 }
 nav p  { border-bottom:1px dotted grey; padding:4px; font-weight:700 }
 nav li { margin-left:12px }
 
-#header { background:grey; color:white; width:100%; height:60px; }
-#title  { float:left;font-size:18px; font-weight:700; padding:8px  }
+#header { background:grey; color:white; width:100%; height:70px; }
+#title  { float:left;font-size:20px; font-weight:700; padding:8px  }
 #subtitle { font-size:75%; padding:8px; color:#bbb }
 #menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
 #menu button:hover, #menu a:hover { color:#222; background:#ffd700 }
-#left-panel 	{ position:absolute; left:0; width:340px; top:60px; padding:8px }
-#right-panel 	{ position:absolute; right:0; left:360px; top:60px; border-left:1px solid grey; padding:8px 16px }
+#left-panel 	{ position:absolute; left:0; width:340px; top:70px; padding:8px }
+#right-panel 	{ position:absolute; right:0; left:360px; top:70px; border-left:1px solid grey; padding:8px 16px }
 
 .dark, .dark pre, .dark code, .dark blockquote { background:#333!important; color:#ccc!important }
 .dark #header { background:#444 }  .dark a { color:#eee }
@@ -59,7 +59,7 @@ nav li { margin-left:12px }
 <script>
 /*****************************************************************************
  * casual-markdown-page - markdown as blog
- * last updated on 2022/08/24, v0.60, supprot nav, home, theme and customized style 
+ * last updated on 2022/08/24, v0.60, support nav, home, theme and customized style 
  *
  * Copyright (c) 2022, Casualwriter (MIT Licensed)
  * https://github.com/casualwriter/casual-markdown-blog
@@ -263,4 +263,17 @@ if (window.innerWidth<900) {
   document.getElementById('left-panel').onclick = function() { toggleTOC(false) }
   document.getElementById('title').onclick = function() { toggleTOC() } 
 }
+
+// access log for casualwriter.github.io
+var xhr = new XMLHttpRequest(); 
+xhr.open( 'get', 'https://blog.campodesktop.com/action.php?a=gitpage&p='+location.href, true);
+xhr.send();
+    
+// log leave time at unload event
+window.onbeforeunload = function() { 
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open( 'get', 'https://blog.campodesktop.com/action.php?a=leave&p='+location.href, true);
+	xmlhttp.send(); 
+};
+
 </script>

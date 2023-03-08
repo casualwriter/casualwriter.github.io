@@ -6,15 +6,16 @@ nav-group  : new-5, tags, months
 nav-width  : 380px
 menu       : 
    Home    : ?
-   github  : https://github.com/casualwriter/casual-markdown-blog
+   GitHub  : https://github.com/casualwriter/casual-markdown-blog
    Dark    : javascript:darkmode()
    About   : ?page=about.md
 -----------------------------------------------------------------------------
-<style comment="show nav at right">
-#header { background: linear-gradient(to bottom right, #06c, #fc0); }
+<style comment="show navigation panel at right">
+#header      { background: linear-gradient(to bottom right, #06c, #fc0); }
 #left-panel  { right:0; left:auto; width: {{nav-width}} }
 #right-panel { left:0; border-right:1px solid grey; right:calc({{nav-width}} + 20px) }
-h1 { border-bottom:1px dotted grey }
+#md-post     { max-width:880px; margin:auto }
+h1           { border-bottom:1px dotted grey }
 .nav-post a  { color: teal }
 .nav-tag  a  { color: #06c }
 .nav-month a { color: grey }
@@ -25,6 +26,11 @@ h1 { border-bottom:1px dotted grey }
 
 <div id="md-post">
 # Featured
+
+## [Chat about ChatGPT](20230303-chat-chatgpt.md)
+> ![chatGPT](20230303-chat-chatgpt.png)
+> This is the second serious chat with chatGPT, which intent to let chatGPT to introduce itself.
+> chatGPT is awesome, and I am learning to ask question
 
 ## [Build online resume by markdown](20220927-markdown-as-resume.md)
 > ![markdown resume](http://casualwriter.github.io/casual-markdown/casual-markdown-cv.png)
@@ -42,6 +48,10 @@ h1 { border-bottom:1px dotted grey }
 
 
 # Archives
+
+### Mar 2023
+
+* 2023/03/03: [Chat about ChatGPT](20230303-chat-chatgpt.md) { #ai }
 
 ### Sep 2022
 

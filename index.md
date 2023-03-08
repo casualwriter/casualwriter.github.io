@@ -89,13 +89,13 @@ Example of PowerChome-Javascript-Interface:
 
 #### Features
 
-* Portable, no installation.
-* Chromimum-base, may use Chrome/Chromimum for testing/debug.
-* HTML as application. Javascript ES6 for programming.
-* API run in **sync mode**. no callback, no promise object.
-* Work with Powerbuilder for advanced functionality.
-* Simple console support.
-* Cloud-App Enabled.
+* Portable - no installation required
+* Chromium-based - can use Chrome/Chromium for testing and debugging
+* HTML as the application and JavaScript ES6 for programming
+* API runs in sync mode - no callback or promise objects
+* Simple console support
+* Cloud-app enabled
+* Run on Windows 7/8/10/11
 
    
 ## Casual-Markdown  {casual-markdown}
