@@ -6,9 +6,9 @@
 </head>
 
 <style>
-body  { font-family:Roboto,Lato,Arial; line-height:1.5; font-size:16px; margin:0; padding:0; overflow:hidden; }
+body  { font-family: Roboto,Lato,Arial; line-height:1.5; font-size:16px; margin:0; padding:0; overflow:hidden; }
 header { background: linear-gradient(to bottom right, #06c, #fc0); }
-header { color:#eee; padding:12px; font-size:20px; height:45px }
+header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Open Sans" }
 #left  { float:left;  width:calc(60vw - 30px); height:calc(100vh - 100px); }
 #right { float:right; width:40%; height:calc(100vh - 100px); } 
 #left, #prompt, #list { border:1px solid grey; padding:6px; overflow:auto }
@@ -47,7 +47,7 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
     <button onclick="chat.logout()" title="remove API key">Logout</button> 
     <button onclick="chat.export()" title="export conversation">Export</button>
     <button onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
-    <button id=btnSent accesskey=s onclick="chat.submit()" title="submit prompt"><b>S</b>end</button>
+    <button id=btnSent accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
   </div>
 </header>
 
@@ -308,7 +308,7 @@ chat.oncomplete = (text) => {
   chat.history.push( { prompt: chat.prompt, result: chat.result } )
   
   for (let i=0; i<chat.history.length; i++) {
-     html1 += '<h4 class=prompt id=prompt'+i+' onclick="chat.clipboard('+i+')" title="doubleclick to copy">' 
+     html1 += '<h4 class=prompt id=prompt'+i+' ondblclick="chat.clipboard('+i+')" title="doubleclick to copy">' 
      html1 += chat.history[i].prompt + '</h4>\n' + chat.history[i].result + '\n\n'
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
@@ -356,6 +356,7 @@ chat.showPrompts = () => {
 
 chat.clipboard = (i) => {
   navigator.clipboard.writeText( '### '+ chat.history[i].prompt + '\n\n' + chat.history[i].result )
+  chat("message").innerText = 'dialogue has been copied to clipboard'
 }
 
 // prompt for API key if not found in localStorage
