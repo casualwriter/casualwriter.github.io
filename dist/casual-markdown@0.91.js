@@ -1,7 +1,7 @@
 /*****************************************************************************
  * casual-markdown - a lightweight regexp-base markdown parser with TOC support
- * 2022/07/31, v0.90, refine frontmatter (simple yaml)  
- * 2023/04/12, v0.92, addCopyButton for code-block
+ * updated on 2022/07/31, v0.90, refine frontmatter (simple yaml)  
+ * last updated on 2023/03/27, v0.91, some refinement for chatgpt markdown
  *
  * Copyright (c) 2022-2023, Casualwriter (MIT Licensed)
  * https://github.com/casualwriter/casual-markdown
@@ -38,19 +38,12 @@
       block = block.replace(/(\s?)(select|update|delete|insert|create|from|where|group by|having|set)(\s)/gim,'$1<b>$2</b>$3')
     } else if ((title||'none')!=='none') {
       block = block.replace(/^\/\/(.*)/gm,'<rem>//$1</rem>').replace(/\s\/\/(.*)/gm,' <rem>//$1</rem>')   
-      block = block.replace(/(\s?)(function|procedure|return|exit|if|then|else|end|loop|while|or|and|case|when)(\s)/gim,'$1<b>$2</b>$3')
-      block = block.replace(/(\s?)(var|let|const|=>|for|next|do|while|loop|continue|break|switch|try|catch|finally)(\s)/gim,'$1<b>$2</b>$3')
+      block = block.replace(/(\s?)(function|procedure|return|if|then|else|end|loop|while|or|and|case|when)(\s)/gim,'$1<b>$2</b>$3')
+      block = block.replace(/(\s?)(var|let|const|for|next|do|while|loop|continue|break|switch|try|catch|finally)(\s)/gim,'$1<b>$2</b>$3')
     }
-    
-    return '<pre title="' + title + '"><button onclick="md.clipboard(this)">copy</button><code>'  + block + '</code></pre>'
+    return '<pre title="' + title + '"><code>'  + block + '</code></pre>'
   }
-
-  // copy to clipboard for code-block
-  md.clipboard = (e) => {
-    navigator.clipboard.writeText( e.parentNode.innerText.replace('copy\n','') )
-    e.innerText = 'copied'
-  }
-
+  
   //===== parse markdown string into HTML string (exclude code-block)
   md.parser = function( mdstr ) {
   
@@ -146,7 +139,7 @@
 
     return '<div class="markdown">' + mdHTML + md.after( md.parser( md.before(mdText) ) ) + '</div>'
   }
-  
+
   //===== TOC support
   md.toc = function (srcDiv, tocDiv, options ) {
 
