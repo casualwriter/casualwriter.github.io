@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+  <title>CK Toolbox</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon"/>
+</head>
+
+<style>
+body { padding:10px; background-image: url("lionrock.jpg"); background-repeat:no-repeat; }
+item { display:inline-block; border-radius:10px; background:#eee; padding:12px; margin:8px;}
+item:hover { background:skyblue; font-weight:600; color:purple }
+h1, h2     { color:#4c4b50 }
+@media screen and (max-width: 600px) {
+  body { background-image: url("lionrock-m.jpg");  background-size:100% 100%; }
+}
+</style>
+
+<body>
+<h2>AI Applications (Developed by CK)</h2>
+<div>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-email.php">郵件助手 Email Composer</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-writer.php">內容寫手 Content Writer</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-job.php">職位分析 Job Analysis</item>
+</div>
+<div>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-fitness.php">健身教練 AI Fitness</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-dietitian.php">營養師 AI Dietitian</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-dream.php">夢之解析 Dream</item>
+</div>
+<div>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-hexagram.php">易經卦象 Hexagram</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-bible.php">聖經學習 Bible Study</item>
+  <item onclick="gotitle(this)" title="https://pingshan-tech.com/demo/psai-bodhi.php">菩提智慧 Bodhi</item>
+</div>
+
+<h2>About CK</h2>
+<div>
+  <item onclick="gotitle(this)" title="https://github.com/casualwriter">Github</item>
+  <item onclick="gotitle(this)" title="https://casualwriter.github.io/">casualwriter.io</item>
+  <item onclick="gotitle(this)" title="https://www.buymeacoffee.com/casualwriter">Buy me a coffee</item>
+</div>
+
+<div>
+<br><br><br>
+</div>
+</body>
+
+<script>
+function gotitle(element) {
+  if (element.title) window.open(element.title);
+}
+</script>
+
