@@ -131,7 +131,7 @@ return s
 window.dwocolumn = '@font.face="Calibri" @font.height="-9"'
 window.dwoheader  = '@color="8388608" @font.face="Arial" @font.weight="700" @font.height="-9"'
 window.dwosummary = 'color="250" font.face="Arial" font.height="-10" font.weight="700" font.underline="1"'
-window.is_remarks = 'Copyright 2007-2024, All rights are reserved.'
+window.remarks = 'Copyright 2007-2024, All rights are reserved.'
 
 // remove the <pre> </pre> at begin and end
 s = document.body.innerHTML
