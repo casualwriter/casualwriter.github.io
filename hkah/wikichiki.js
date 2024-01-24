@@ -135,7 +135,7 @@ window.dwoheader  = '@color="8388608" @font.face="Arial" @font.weight="700" @fon
 window.dwosummary = 'color="250" font.face="Arial" font.height="-10" font.weight="700" font.underline="1"'
 window.remarks = 'Copyright 2007-2024, All rights are reserved.'
 window.appdata = 'http://192.168.0.21:88/wikichiki'
-//window["appdata@IM-CK2"] = 'http://192.168.0.21:88/im-ck'  
+window["appdata@IM-CK2"] = 'http://192.168.0.21:88/wikichiki/im-ck2.html'  
 
 // remove the <pre> </pre> at begin and end
 s = document.body.innerHTML
