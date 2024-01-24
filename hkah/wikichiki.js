@@ -1,4 +1,6 @@
-
+//=====================================================================
+// Copyright 2005-2008, casualwriter. wikichiki syntax for hkah
+//=====================================================================
 function wikichiki( s ) {
 // remove comment and self-script.
 s = s.replace( /<!--(.+)-->/g, '' )
@@ -132,7 +134,8 @@ window.dwocolumn = '@font.face="Calibri" @font.height="-9"'
 window.dwoheader  = '@color="8388608" @font.face="Arial" @font.weight="700" @font.height="-9"'
 window.dwosummary = 'color="250" font.face="Arial" font.height="-10" font.weight="700" font.underline="1"'
 window.remarks = 'Copyright 2007-2024, All rights are reserved.'
-window.repo = 'http://192.168.0.21:88/wikichiki'
+window.appdata = 'http://192.168.0.21:88/wikichiki'
+//window["appdata@IM-CK2"] = 'http://192.168.0.21:88/im-ck'  
 
 // remove the <pre> </pre> at begin and end
 s = document.body.innerHTML
